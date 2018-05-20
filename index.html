@@ -1,28 +1,29 @@
-<!-- development version, includes helpful console warnings -->
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<!doctype html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+  <title>reflect (development) - a personal helper system</title>
+</head>
+<body>
+  <header>
+    <h1>reflect</h1><span id="header-beta">development</span>
+  </header>
 
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <nav id="topics-list">
+    <h2>Topics</h2>
+    <ul>
+      <li v-for="topic in topics" :id="topic">
+        <a href="#" v-on:click="toggle_select(topic)">{{ topic }}</a>
+      </li>
+    </ul>
+    <!-- display selected list here -->
+    Selected topics: {{ selected_topics }}
+  </nav>
 
+  <article></article>
 
-
-<div id="app">
-  {{ message }}
-</div>
-
-<h2>Topics</h2>
-<nav id="topics-list">
-  <ul>
-    <li v-for="topic in topics" :id="topic">
-      {{ topic }}
-    </li>
-  </ul>
-</nav>
-
-<div id="babone-data">
-  <h1>BACKEND OUTPUT</h1>
-    <p>{{ text }}</p>
-</div>
-
-
-
-<script src="main.js"></script>
+  <!-- development version, includes helpful console warnings -->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <!-- fetch api helper -->
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="main.js"></script>
+</body>

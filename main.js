@@ -1,20 +1,9 @@
-
-var app = new Vue({
-  el: '#app',
-  data: {
-    message: 'Hello Vue!'
-  }
-})
-
 var topics_url = "http://localhost:5010/api/topics";
 var topics_list = new Vue({
   el: "#topics-list",
   data: {
-    topics: [
-      { title: 't1' },
-      { title: 't2' },
-      { title: 't3' },
-    ]
+    topics: [],
+    selected_topics: []
   },
   created: function () {
     //this.update_text();
@@ -22,6 +11,20 @@ var topics_list = new Vue({
     this.get_topics();
   },
   methods: {
+    toggle_select: function(topic) {
+      var li_el = document.getElementById(topic);
+      var sel_class = "selected";
+      if (this.selected_topics.indexOf(topic) === -1) {
+        this.selected_topics.push(topic);
+        li_el.classList.add(sel_class)
+      } else {
+        let r = this.selected_topics.indexOf(topic);
+        this.selected_topics.splice(r, 1);
+        li_el.classList.remove(sel_class)
+      }
+      this.selected_topics.sort();
+      //alert(topic);
+    },
     get_topics: function() {
       var vm = this
       axios.get(topics_url)
@@ -36,8 +39,8 @@ var topics_list = new Vue({
   }
 })
 
+/*
 var hello_url = "http://localhost:5010/api/hello";
-
 var vm = new Vue({
   el: "#babone-data",
   data: { text: "This is some textBB. :D" },
@@ -62,4 +65,4 @@ var vm = new Vue({
         });
     }
   }
-})
+})*/
