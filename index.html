@@ -1,0 +1,28 @@
+<!-- development version, includes helpful console warnings -->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+
+
+<div id="app">
+  {{ message }}
+</div>
+
+<h2>Topics</h2>
+<nav id="topics-list">
+  <ul>
+    <li v-for="topic in topics" :id="topic">
+      {{ topic }}
+    </li>
+  </ul>
+</nav>
+
+<div id="babone-data">
+  <h1>BACKEND OUTPUT</h1>
+    <p>{{ text }}</p>
+</div>
+
+
+
+<script src="main.js"></script>
