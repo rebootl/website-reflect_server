@@ -1,0 +1,37 @@
+body {
+  background-color: #333;
+  color: #aaa;
+}
+header {
+  border-bottom: 1px solid #555;
+}
+a {
+  color: #bbb;
+}
+#topics-list {
+  max-width: 250px;
+}
+#topics-list ul {
+  list-style-type: none;
+  margin-left: 5px;
+  margin-right: 5px;
+  padding: 0;
+}
+#topics-list li {
+  border: 1px solid #555;
+}
+#topics-list li:hover {
+  background-color: #383848;
+}
+#topics-list a {
+  padding: 5px 5px 5px 10px;
+  display: block;
+  height: 100%;
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: bold;
+  color: #888;
+}
+.selected {
+  background-color: #223333;
+}

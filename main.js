@@ -38,31 +38,3 @@ var topics_list = new Vue({
     }
   }
 })
-
-/*
-var hello_url = "http://localhost:5010/api/hello";
-var vm = new Vue({
-  el: "#babone-data",
-  data: { text: "This is some textBB. :D" },
-  created: function () {
-    //this.update_text();
-    //this.text= "Now some other text :]";
-    this.get_hello_data();
-  },
-  methods: {
-	  update_text: function () {
-      this.text = "Here some updated text. :OOO";
-    },
-    get_hello_data: function () {
-      var vm = this
-      axios.get(hello_url)
-        .then( function (response) {
-          vm.text = response.data.text;
-          console.log(response);
-        })
-        .catch( function (error) {
-          console.log(error);
-        });
-    }
-  }
-})*/
