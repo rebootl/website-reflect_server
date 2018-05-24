@@ -1,19 +1,38 @@
+@base-color-floor: #1b1b1b;
+@base-color-box: #1d1d25;
+@border-line-color: #464646;
+
+
 body {
-  background-color: #333;
+  background-color: @base-color-floor;
   color: #aaa;
 }
 header {
-  border-bottom: 1px solid #555;
+  border-bottom: 1px solid @border-line-color;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-family: serif;
 }
 a {
   color: #bbb;
 }
 #topics-list {
-  max-width: 250px;
+  margin-top: 10px;
+  background-color: @base-color-box;
+  border: 1px solid @border-line-color;
+  max-width: 230px;
+  h2 {
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    font-weight: normal;
+  }
   ul {
     list-style-type: none;
-    margin-left: 5px;
-    margin-right: 5px;
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-top: 0;
     padding: 0;
 
   }
