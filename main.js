@@ -1,3 +1,22 @@
+Vue.component('subtags', {
+  template: `<nav id="subtags">
+      <ul>
+        <li v-for="subtag in subtags" :id="subtag">
+          <a href="#" v-on:click="toggle_select(subtag)">{{ subtag }}</a>
+        </li>
+      </ul>
+    </nav>
+  `,
+  created: function () {
+    //this.subtags.push("a");
+  },
+  data() { return {
+    subtags: [ "a", "b" ],
+    selected_subtags: []
+  } }
+})
+
+
 var topics_url = "http://localhost:5010/api/topics";
 var topics_list = new Vue({
   el: "#topics-list",
@@ -38,3 +57,5 @@ var topics_list = new Vue({
     }
   }
 })
+
+new Vue({ el: '#subtags' })
