@@ -10,19 +10,11 @@
     <h1>reflect</h1><span id="header-beta">development</span>
   </header>
 
-  <nav id="topics-list">
-    <h2>Topics</h2>
-    <ul>
-      <li v-for="topic in topics" :id="topic">
-        <a href="#" v-on:click="toggle_select(topic)">{{ topic }}</a>
-      </li>
-    </ul>
-    <!-- display selected list here -->
-    Selected topics: {{ selected_topics }}
-  </nav>
-
-  <subtags id="subtags"></subtags>
-
+  <sidebar-left id="sidebar-left"></sidebar-left>
+  <!--
+    <topics></topics>
+    <subtags></subtags>
+  -->
   <article></article>
 
   <!-- development version, includes helpful console warnings -->

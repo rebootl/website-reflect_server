@@ -13,8 +13,16 @@ def api_hello():
     data = { 'text': "Hello flask API :D" }
     return jsonify(data)
 
-@app.route('/api/topics')
+@app.route('/api/get_selection_data')
 @cross_origin()
-def api_topics():
-    data = { 'topics': [ "Astro", "Chess", "Comp.", "Gaming" ] }
+def api_get_selection_data():
+    data = {
+        'topics': [ "Astro", "Chess", "Comp.", "Gaming" ],
+        'subtags': {
+            "Astro": [ "apod", "planets", "observation" ],
+            "Chess": [ "opening", "tutorials", "theory" ],
+            "Comp": [ "javascript", "python", "ai" ],
+            "Gaming": [ "WoW", "league", "game theory" ]
+        }
+    }
     return jsonify(data)
