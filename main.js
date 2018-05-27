@@ -1,8 +1,11 @@
 const get_sel_data_url = "http://localhost:5010/api/get_selection_data";
 
-Vue.component('sidebar-left', {
-  template: `<div id="sidebar-left">
-      <topics v-bind:topics="topics"></topics>
+Vue.component('selection', {
+  template: `<div id="selection">
+      <topics v-bind:topics="topics"
+              @selection_change="update_selected_topics"></topics>
+      <!-- display selected list here -->
+      Selected topics: {{ selected_topics }}
       <subtags v-bind:subtags="subtags"></subtags>
     </div>
   `,
@@ -21,11 +24,15 @@ Vue.component('sidebar-left', {
         .catch( function (error) {
           console.log(error);
         });
+    },
+    update_selected_topics: function(selected_topics) {
+      this.selected_topics = selected_topics;
     }
   },
   data() { return {
     topics: [],
-    subtags: []
+    subtags: [],
+    selected_topics: []
   }}
 })
 
@@ -38,8 +45,6 @@ Vue.component('topics', {
           <a href="#" v-on:click="toggle_select(topic)">{{ topic }}</a>
         </li>
       </ul>
-      <!-- display selected list here -->
-      Selected topics: {{ selected_topics }}
     </nav>
   `,
   created: function () {
@@ -60,6 +65,7 @@ Vue.component('topics', {
         li_el.classList.remove(sel_class)
       }
       this.selected_topics.sort();
+      this.$emit('selection_change', this.selected_topics);
       //alert(topic);
     }
   },
@@ -88,4 +94,4 @@ Vue.component('subtags', {
   } }
 })
 
-new Vue({ el: '#sidebar-left' })
+new Vue({ el: '#selection' })
