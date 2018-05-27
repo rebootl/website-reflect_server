@@ -1,12 +1,13 @@
-const get_sel_data_url = "http://localhost:5010/api/get_selection_data";
+const get_sel_data_url = "http://hplaptop:5010/api/get_selection_data";
 
 Vue.component('selection', {
   template: `<div id="selection">
       <topics v-bind:topics="topics"
               @selection_change="update_selected_topics"></topics>
       <!-- display selected list here -->
-      Selected topics: {{ selected_topics }}
-      <subtags v-bind:subtags="subtags"></subtags>
+      Selected topics: {{ selected_topics }}<br />
+      Shown subtags: {{ shown_subtags }}
+      <subtags v-bind:shown_subtags="shown_subtags"></subtags>
     </div>
   `,
   created: function() {
@@ -27,12 +28,23 @@ Vue.component('selection', {
     },
     update_selected_topics: function(selected_topics) {
       this.selected_topics = selected_topics;
+      // --> update content (send to api)
+      this.update_shown_subtags();
+    },
+    update_shown_subtags: function() {
+      this.shown_subtags = [];
+      for (let subtag in this.subtags) {
+        if (this.selected_topics.includes(subtag)) {
+          this.shown_subtags = this.shown_subtags.concat(this.subtags[subtag]);
+        }
+      }
     }
   },
   data() { return {
     topics: [],
     subtags: [],
-    selected_topics: []
+    selected_topics: [],
+    shown_subtags: []
   }}
 })
 
@@ -74,12 +86,13 @@ Vue.component('topics', {
     selected_topics: []
   } }
 })
-
+//v-if="subtag in selected_topics"
 Vue.component('subtags', {
-  props: [ "subtags" ],
+  props: [ "shown_subtags" ],
   template: `<nav id="subtags">
       <ul>
-        <li v-for="subtag in subtags" :id="subtag">
+        <li v-for="subtag in shown_subtags"
+            :id="subtag">
           <a href="#" v-on:click="toggle_select(subtag)">{{ subtag }}</a>
         </li>
       </ul>
@@ -90,7 +103,7 @@ Vue.component('subtags', {
   },
   data() { return {
     //subtags: [],
-    selected_subtags: []
+    //selected_subtags: []
   } }
 })
 
