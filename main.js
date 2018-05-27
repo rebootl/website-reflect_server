@@ -7,7 +7,8 @@ Vue.component('selection', {
       <!-- display selected list here -->
       Selected topics: {{ selected_topics }}<br />
       Shown subtags: {{ shown_subtags }}
-      <subtags v-bind:shown_subtags="shown_subtags"></subtags>
+      <subtags v-bind:shown_subtags="shown_subtags"
+               @selection_change="update_selected_subtags"></subtags>
     </div>
   `,
   created: function() {
@@ -30,6 +31,7 @@ Vue.component('selection', {
       this.selected_topics = selected_topics;
       // --> update content (send to api)
       this.update_shown_subtags();
+      // --> update subtag selection
     },
     update_shown_subtags: function() {
       this.shown_subtags = [];
@@ -38,13 +40,18 @@ Vue.component('selection', {
           this.shown_subtags = this.shown_subtags.concat(this.subtags[subtag]);
         }
       }
+    },
+    update_selected_subtags: function(selected_subtags) {
+      this.selected_subtags = selected_subtags;
+      // --> update content (send to api)
     }
   },
   data() { return {
     topics: [],
     subtags: [],
     selected_topics: [],
-    shown_subtags: []
+    shown_subtags: [],
+    selected_subtags: []
   }}
 })
 
@@ -78,15 +85,13 @@ Vue.component('topics', {
       }
       this.selected_topics.sort();
       this.$emit('selection_change', this.selected_topics);
-      //alert(topic);
     }
   },
   data() { return {
-    //topics: [],
     selected_topics: []
   } }
 })
-//v-if="subtag in selected_topics"
+
 Vue.component('subtags', {
   props: [ "shown_subtags" ],
   template: `<nav id="subtags">
@@ -96,14 +101,29 @@ Vue.component('subtags', {
           <a href="#" v-on:click="toggle_select(subtag)">{{ subtag }}</a>
         </li>
       </ul>
+      Selected subtags: {{ selected_subtags }}
     </nav>
   `,
   created: function () {
-    //this.subtags.push("a");
+  },
+  methods: {
+    toggle_select: function(subtag) {
+      var li_el = document.getElementById(subtag);
+      var sel_class = "selected";
+      if (this.selected_subtags.indexOf(subtag) === -1) {
+        this.selected_subtags.push(subtag);
+        li_el.classList.add(sel_class)
+      } else {
+        let r = this.selected_subtags.indexOf(subtag);
+        this.selected_subtags.splice(r, 1);
+        li_el.classList.remove(sel_class)
+      }
+      this.selected_subtags.sort();
+      this.$emit('selection_change', this.selected_subtags);
+    }
   },
   data() { return {
-    //subtags: [],
-    //selected_subtags: []
+    selected_subtags: []
   } }
 })
 
