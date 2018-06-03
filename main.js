@@ -2,8 +2,10 @@ const get_sel_data_url = "http://hplaptop:5010/api/get_selection_data";
 
 Vue.component('selection', {
   template: `<div id="selection">
-      <topics v-bind:selection_data="selection_data"></topics>
-      <subtags></subtags>
+      <topics v-bind:selection_data="selection_data"
+              v-on:selection_change="selection_changed"></topics>
+      <subtags v-bind:selection_data="selection_data"
+               v-on:selection_change="selection_changed"></subtags>
       <br>
       <br>
       <strong>Data:</strong> <pre>{{ selection_data }}</pre>
@@ -18,40 +20,18 @@ Vue.component('selection', {
       axios.get(get_sel_data_url)
         .then( function (response) {
           vm.selection_data = response.data;
-          //vm.topics = response.data.topics;
-          //vm.subtags = response.data.subtags;
           console.log(response);
         })
         .catch( function (error) {
           console.log(error);
         });
     },
-    /*update_selected_topics: function(selected_topics) {
-      this.selected_topics = selected_topics;
-      this.update_shown_subtags();
-      // --> update subtag selection
-      // --> update content (send to api)
-    },
-    update_shown_subtags: function() {
-      this.shown_subtags = [];
-      for (let subtag in this.subtags) {
-        if (this.selected_topics.includes(subtag)) {
-          this.shown_subtags = this.shown_subtags.concat(this.subtags[subtag]);
-        }
-      }
-    },
-    update_selected_subtags: function(selected_subtags) {
-      this.selected_subtags = selected_subtags;
-      // --> update content (send to api)
-    }*/
+    selection_changed: function() {
+      // --> update content acc. to new selection
+    }
   },
   data() { return {
     selection_data: []
-    /*topics: [],
-    subtags: [],
-    selected_topics: [],
-    shown_subtags: [],
-    selected_subtags: []*/
   }}
 })
 
@@ -73,24 +53,15 @@ Vue.component('topics', {
     toggle_select: function(item) {
       if (item.active) {
         item.active = false;
+        // deselect subtags
+        for (subtag of item.subtags) {
+          subtag.active = false;
+        }
       } else {
       item.active = true;
       }
+      this.$emit('selection_change');
     }
-    /*toggle_select: function(topic) {
-      var li_el = document.getElementById(topic);
-      var sel_class = "selected";
-      if (this.selected_topics.indexOf(topic) === -1) {
-        this.selected_topics.push(topic);
-        li_el.classList.add(sel_class);
-      } else {
-        let r = this.selected_topics.indexOf(topic);
-        this.selected_topics.splice(r, 1);
-        li_el.classList.remove(sel_class);
-      }
-      this.selected_topics.sort();
-      //this.$emit('selection_change', this.selected_topics);
-    }*/
   },
   data() { return {
     //selected_topics: []
@@ -100,16 +71,24 @@ Vue.component('topics', {
 Vue.component('subtags', {
   props: [ "selection_data" ],
   template: `<nav id="subtags">
-      <ul>
-        <li v-for="topic in selection_data"
-            :id="subtag">
-          <a href="#" v-on:click="toggle_select(subtag)">{{ subtag }}</a>
+      <ul v-for="item in selection_data"
+          v-if="item.active">
+        <li v-for="subtag in item.subtags"
+            v-bind:class="{ 'selected': subtag.active }">
+          <a href="#" v-on:click="toggle_select(subtag)">{{ subtag.label }}</a>
         </li>
       </ul>
     </nav>
   `,
   methods: {
-    toggle_select: function(subtag) {}
+    toggle_select: function(subtag) {
+      if (subtag.active) {
+        subtag.active = false;
+      } else {
+      subtag.active = true;
+      }
+      this.$emit('selection_change');
+    }
   },
   data() { return {
     //selected_subtags: [],
