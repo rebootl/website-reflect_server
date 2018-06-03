@@ -8,6 +8,8 @@ Vue.component('selection', {
                v-on:selection_change="selection_changed"></subtags>
       <br>
       <br>
+      <br>
+      <br>
       <strong>Data:</strong> <pre>{{ selection_data }}</pre>
     </div>
   `,
@@ -71,6 +73,7 @@ Vue.component('topics', {
 Vue.component('subtags', {
   props: [ "selection_data" ],
   template: `<nav id="subtags">
+      <h2>Tags</h2>
       <ul v-for="item in selection_data"
           v-if="item.active">
         <li v-for="subtag in item.subtags"
