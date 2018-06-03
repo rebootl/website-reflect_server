@@ -16,13 +16,46 @@ def api_hello():
 @app.route('/api/get_selection_data')
 @cross_origin()
 def api_get_selection_data():
-    data = {
-        'topics': [ "Astro", "Chess", "Comp.", "Gaming" ],
-        'subtags': {
-            "Astro": [ "apod", "planets", "observation" ],
-            "Chess": [ "opening", "tutorials", "theory" ],
-            "Comp": [ "javascript", "python", "ai" ],
-            "Gaming": [ "WoW", "league", "game theory" ]
-        }
-    }
+    data = [
+        { 'ref': "astro",
+            'label': "Astro",
+            'active': False,
+            'subtags': [ { 'ref': "apod",
+                           'label': "apod",
+                           'active': False },
+                         { 'ref': "planets",
+                           'label': "planets",
+                           'active': False },
+                         { 'ref': "observation",
+                           'label': "observation",
+                           'active': False } ]
+          },
+          { 'ref': "chess",
+            'label': "Chess",
+            'active': False,
+            'subtags': [ { 'ref': "openings",
+                           'label': "openings",
+                           'active': False },
+                         { 'ref': "theory",
+                           'label': "theory",
+                           'active': False },
+                         { 'ref': "tutorials",
+                           'label': "tutorials",
+                           'active': False } ]
+          },
+          { 'ref': "comp",
+            'label': "Comp.",
+            'active': False,
+            'subtags': [ { 'ref': "javascript",
+                           'label': "javascript",
+                           'active': False },
+                         { 'ref': "python",
+                           'label': "python",
+                           'active': False},
+                         { 'ref': "ai",
+                           'label': "ai",
+                           'active': False } ]
+            }
+        ]
+
     return jsonify(data)

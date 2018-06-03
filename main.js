@@ -2,13 +2,11 @@ const get_sel_data_url = "http://hplaptop:5010/api/get_selection_data";
 
 Vue.component('selection', {
   template: `<div id="selection">
-      <topics v-bind:topics="topics"
-              @selection_change="update_selected_topics"></topics>
-      <!-- display selected list here -->
-      Selected topics: {{ selected_topics }}<br />
-      Shown subtags: {{ shown_subtags }}
-      <subtags v-bind:shown_subtags="shown_subtags"
-               @selection_change="update_selected_subtags"></subtags>
+      <topics v-bind:selection_data="selection_data"></topics>
+      <subtags></subtags>
+      <br>
+      <br>
+      <strong>Data:</strong> <pre>{{ selection_data }}</pre>
     </div>
   `,
   created: function() {
@@ -19,19 +17,20 @@ Vue.component('selection', {
       var vm = this
       axios.get(get_sel_data_url)
         .then( function (response) {
-          vm.topics = response.data.topics;
-          vm.subtags = response.data.subtags;
+          vm.selection_data = response.data;
+          //vm.topics = response.data.topics;
+          //vm.subtags = response.data.subtags;
           console.log(response);
         })
         .catch( function (error) {
           console.log(error);
         });
     },
-    update_selected_topics: function(selected_topics) {
+    /*update_selected_topics: function(selected_topics) {
       this.selected_topics = selected_topics;
-      // --> update content (send to api)
       this.update_shown_subtags();
       // --> update subtag selection
+      // --> update content (send to api)
     },
     update_shown_subtags: function() {
       this.shown_subtags = [];
@@ -44,86 +43,76 @@ Vue.component('selection', {
     update_selected_subtags: function(selected_subtags) {
       this.selected_subtags = selected_subtags;
       // --> update content (send to api)
-    }
+    }*/
   },
   data() { return {
-    topics: [],
+    selection_data: []
+    /*topics: [],
     subtags: [],
     selected_topics: [],
     shown_subtags: [],
-    selected_subtags: []
+    selected_subtags: []*/
   }}
 })
 
 Vue.component('topics', {
-  props: [ "topics" ],
+  props: [ "selection_data" ],
   template: `<nav id="topics">
       <h2>Topics</h2>
       <ul>
-        <li v-for="topic in topics" :id="topic">
-          <a href="#" v-on:click="toggle_select(topic)">{{ topic }}</a>
+        <li v-for="item in selection_data" :id="item.ref"
+            v-bind:class="{ 'selected': item.active }">
+          <a href="#" v-on:click="toggle_select(item)">{{ item.label }}</a>
         </li>
       </ul>
     </nav>
   `,
   created: function () {
-    //this.update_text();
-    //this.text= "Now some other text :]";
-    //this.get_topics();
   },
   methods: {
-    toggle_select: function(topic) {
+    toggle_select: function(item) {
+      if (item.active) {
+        item.active = false;
+      } else {
+      item.active = true;
+      }
+    }
+    /*toggle_select: function(topic) {
       var li_el = document.getElementById(topic);
       var sel_class = "selected";
       if (this.selected_topics.indexOf(topic) === -1) {
         this.selected_topics.push(topic);
-        li_el.classList.add(sel_class)
+        li_el.classList.add(sel_class);
       } else {
         let r = this.selected_topics.indexOf(topic);
         this.selected_topics.splice(r, 1);
-        li_el.classList.remove(sel_class)
+        li_el.classList.remove(sel_class);
       }
       this.selected_topics.sort();
-      this.$emit('selection_change', this.selected_topics);
-    }
+      //this.$emit('selection_change', this.selected_topics);
+    }*/
   },
   data() { return {
-    selected_topics: []
+    //selected_topics: []
   } }
 })
 
 Vue.component('subtags', {
-  props: [ "shown_subtags" ],
+  props: [ "selection_data" ],
   template: `<nav id="subtags">
       <ul>
-        <li v-for="subtag in shown_subtags"
+        <li v-for="topic in selection_data"
             :id="subtag">
           <a href="#" v-on:click="toggle_select(subtag)">{{ subtag }}</a>
         </li>
       </ul>
-      Selected subtags: {{ selected_subtags }}
     </nav>
   `,
-  created: function () {
-  },
   methods: {
-    toggle_select: function(subtag) {
-      var li_el = document.getElementById(subtag);
-      var sel_class = "selected";
-      if (this.selected_subtags.indexOf(subtag) === -1) {
-        this.selected_subtags.push(subtag);
-        li_el.classList.add(sel_class)
-      } else {
-        let r = this.selected_subtags.indexOf(subtag);
-        this.selected_subtags.splice(r, 1);
-        li_el.classList.remove(sel_class)
-      }
-      this.selected_subtags.sort();
-      this.$emit('selection_change', this.selected_subtags);
-    }
+    toggle_select: function(subtag) {}
   },
   data() { return {
-    selected_subtags: []
+    //selected_subtags: [],
   } }
 })
 
