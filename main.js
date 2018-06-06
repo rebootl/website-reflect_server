@@ -1,16 +1,39 @@
 const get_sel_data_url = "http://hplaptop:5010/api/get_selection_data";
 
-Vue.component('main-content', {
-  template: `<div id="main">
-    <selection></selection>
-    <article>text</article>
+Vue.component('site-container', {
+  template: `<div id="site-container">
+    <selection @selection_update="update_content"></selection>
+    <main-content v-bind:request_data="request_data">text</main-content>
   </div>`,
+  methods: {
+    update_content: function(request_data) {
+      this.request_data = request_data;
+      //alert(request_data.tags);
+    }
+  },
   data() { return {
-    //selected_subtags: [],
-  } }
+    request_data: {},
+  }}
+})
+
+Vue.component('main-content', {
+  props: [ "request_data" ],
+  template: `<main id="main-content">
+    text, blablabla
+  </main>`,
+  watch: {
+    request_data: function() {
+      alert(this.request_data);
+    }
+  },
+  methods: {
+  },
+  data() { return {
+  }}
 })
 
 Vue.component('selection', {
+  //props: [ "selection_data" ],
   template: `<div id="selection">
       <topics v-bind:selection_data="selection_data"
               v-on:selection_change="selection_changed"></topics>
@@ -40,6 +63,7 @@ Vue.component('selection', {
     },
     selection_changed: function() {
       // --> update content acc. to new selection
+      // --> move this vvv into main-content component
       let topics = [];
       let tags = [];
       for (let topic of this.selection_data) {
@@ -52,6 +76,12 @@ Vue.component('selection', {
           }
         }
       }
+      let request_data = {
+        'topics': topics,
+        'tags': tags
+      }
+      //this.$emit('selection-update', request_data);
+      this.$emit('selection_update', request_data);
     }
   },
   data() { return {
@@ -127,4 +157,4 @@ Vue.component('subtags', {
   } }
 })
 
-new Vue({ el: '#main-content' })
+new Vue({ el: '#site-container' })
