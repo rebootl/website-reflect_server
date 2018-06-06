@@ -1,5 +1,15 @@
 const get_sel_data_url = "http://hplaptop:5010/api/get_selection_data";
 
+Vue.component('main-content', {
+  template: `<div id="main">
+    <selection></selection>
+    <article>text</article>
+  </div>`,
+  data() { return {
+    //selected_subtags: [],
+  } }
+})
+
 Vue.component('selection', {
   template: `<div id="selection">
       <topics v-bind:selection_data="selection_data"
@@ -18,7 +28,7 @@ Vue.component('selection', {
   },
   methods: {
     get_selection_data: function() {
-      var vm = this
+      let vm = this
       axios.get(get_sel_data_url)
         .then( function (response) {
           vm.selection_data = response.data;
@@ -30,6 +40,18 @@ Vue.component('selection', {
     },
     selection_changed: function() {
       // --> update content acc. to new selection
+      let topics = [];
+      let tags = [];
+      for (let topic of this.selection_data) {
+        if (topic.active) {
+          topics.push(topic.ref);
+        }
+        for (let subtag of topic.subtags) {
+          if (subtag.active) {
+            tags.push(subtag.ref)
+          }
+        }
+      }
     }
   },
   data() { return {
@@ -56,11 +78,18 @@ Vue.component('topics', {
       if (item.active) {
         item.active = false;
         // deselect subtags
-        for (subtag of item.subtags) {
+        for (let subtag of item.subtags) {
           subtag.active = false;
         }
       } else {
-      item.active = true;
+        // first deselect everything
+        for (let item of this.selection_data) {
+          for (let subtag of item.subtags) {
+            subtag.active = false;
+          }
+          item.active = false;
+        }
+        item.active = true;
       }
       this.$emit('selection_change');
     }
@@ -98,4 +127,4 @@ Vue.component('subtags', {
   } }
 })
 
-new Vue({ el: '#selection' })
+new Vue({ el: '#main-content' })

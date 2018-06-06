@@ -13,6 +13,11 @@ def api_hello():
     data = { 'text': "Hello flask API :D" }
     return jsonify(data)
 
+@app.route('/api/get_content')
+@cross_origin()
+def api_get_content():
+    pass
+
 @app.route('/api/get_selection_data')
 @cross_origin()
 def api_get_selection_data():
