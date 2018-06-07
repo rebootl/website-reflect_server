@@ -2,38 +2,61 @@ const get_sel_data_url = "http://hplaptop:5010/api/get_selection_data";
 
 Vue.component('site-container', {
   template: `<div id="site-container">
-    <selection @selection_update="update_content"></selection>
-    <main-content v-bind:request_data="request_data">text</main-content>
+    <selection @selection_update="update_selection"></selection>
+    <main-content v-bind:selection_data="selection_data">text</main-content>
   </div>`,
   methods: {
-    update_content: function(request_data) {
-      this.request_data = request_data;
-      //alert(request_data.tags);
+    update_selection: function(selection_data) {
+      this.selection_data = selection_data;
+      //alert(this.selection_data);
     }
   },
   data() { return {
-    request_data: {},
+    selection_data: [],
   }}
 })
 
 Vue.component('main-content', {
-  props: [ "request_data" ],
+  props: [ "selection_data" ],
   template: `<main id="main-content">
     text, blablabla
   </main>`,
   watch: {
-    request_data: function() {
-      alert(this.request_data);
+    selection_data: {
+      handler: function() {
+        this.selection_changed();
+      },
+      deep: true
     }
   },
   methods: {
+    selection_changed: function() {
+      // construct variables for GET request
+      let topics = [];
+      let tags = [];
+      for (let topic of this.selection_data) {
+        if (topic.active) {
+          topics.push(topic.ref);
+        }
+        for (let subtag of topic.subtags) {
+          if (subtag.active) {
+            tags.push(subtag.ref)
+          }
+        }
+      }
+      this.request_data = {
+        'topics': topics,
+        'tags': tags
+      }
+      //alert(this.request_data.tags);
+    }
   },
   data() { return {
+    request_data: {}
   }}
 })
 
 Vue.component('selection', {
-  //props: [ "selection_data" ],
   template: `<div id="selection">
       <topics v-bind:selection_data="selection_data"
               v-on:selection_change="selection_changed"></topics>
@@ -62,26 +85,8 @@ Vue.component('selection', {
         });
     },
     selection_changed: function() {
-      // --> update content acc. to new selection
-      // --> move this vvv into main-content component
-      let topics = [];
-      let tags = [];
-      for (let topic of this.selection_data) {
-        if (topic.active) {
-          topics.push(topic.ref);
-        }
-        for (let subtag of topic.subtags) {
-          if (subtag.active) {
-            tags.push(subtag.ref)
-          }
-        }
-      }
-      let request_data = {
-        'topics': topics,
-        'tags': tags
-      }
-      //this.$emit('selection-update', request_data);
-      this.$emit('selection_update', request_data);
+      // update content acc. to new selection
+      this.$emit('selection_update', this.selection_data);
     }
   },
   data() { return {
