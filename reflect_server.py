@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_cors import cross_origin
 
 app = Flask(__name__)
@@ -13,10 +13,11 @@ def api_hello():
     data = { 'text': "Hello flask API :D" }
     return jsonify(data)
 
-@app.route('/api/get_content')
+@app.route('/api/get_content_data')
 @cross_origin()
-def api_get_content():
-    pass
+def api_get_content_data():
+    data = { 'query_str': str(request.query_string) }
+    return jsonify(data)
 
 @app.route('/api/get_selection_data')
 @cross_origin()

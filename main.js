@@ -1,4 +1,5 @@
 const get_sel_data_url = "http://hplaptop:5010/api/get_selection_data";
+const get_content_data_url = "http://hplaptop:5010/api/get_content_data";
 
 Vue.component('site-container', {
   template: `<div id="site-container">
@@ -19,7 +20,7 @@ Vue.component('site-container', {
 Vue.component('main-content', {
   props: [ "selection_data" ],
   template: `<main id="main-content">
-    text, blablabla
+    text, blablabla {{ this.content_data.query_str }}
   </main>`,
   watch: {
     selection_data: {
@@ -49,10 +50,26 @@ Vue.component('main-content', {
         'tags': tags
       }
       //alert(this.request_data.tags);
+      // update content
+      this.get_content();
+    },
+    get_content: function() {
+      let vm = this
+      axios.get(get_content_data_url, {
+          params: vm.request_data
+        })
+        .then( function (response) {
+          vm.content_data = response.data;
+          console.log(response);
+        })
+        .catch( function (error) {
+          console.log(error);
+        });
     }
   },
   data() { return {
-    request_data: {}
+    request_data: {},
+    content_data: {}
   }}
 })
 
