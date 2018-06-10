@@ -1,7 +1,20 @@
 from flask import Flask, jsonify, request
 from flask_cors import cross_origin
 
+from Model import database
+
 app = Flask(__name__)
+
+@app.before_request
+def before_request():
+    database.connect()
+
+@app.after_request
+def after_request(response):
+    database.close()
+    return response
+
+### routes
 
 @app.route('/')
 def hello_world():
