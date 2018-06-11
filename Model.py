@@ -11,13 +11,13 @@ class Topic(BaseModel):
     ref = CharField(unique = True)
     label = CharField()
     description = CharField(default = "")
-    active = BooleanField(default = False)
+    #active = BooleanField(default = False)
 
 class Tag(BaseModel):
-    topic = ForeignKeyField(Topic)
+    topic = ForeignKeyField(Topic, backref='tags')
     ref = CharField(unique = True)
     label = CharField()
-    active = BooleanField(default = False)
+    #active = BooleanField(default = False)
 
 
 
@@ -48,3 +48,12 @@ def create_testdata():
     tag7 = Tag.create(topic=top3, ref="javascript", label="javascript")
     tag8 = Tag.create(topic=top3, ref="python", label="python")
     tag9 = Tag.create(topic=top3, ref="ai", label="ai")
+# create additional data for performance test
+#    for n in range(10):
+#        ref = "ref" + str(n)
+#        print(ref)
+#        t = Topic.create(ref=ref, label="labbi")
+#        for m in range(200):
+#            uref = "mref" + str(n) + "_" + str(m)
+#            print(uref)
+#            u = Tag.create(topic=t, ref=uref, label="labber")
