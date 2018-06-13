@@ -6,6 +6,10 @@ from Model import database, Topic, Tag
 
 app = Flask(__name__)
 
+### users
+
+
+
 ### db setup
 
 @app.before_request
