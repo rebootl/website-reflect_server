@@ -2,7 +2,7 @@ from flask import Flask, jsonify, request
 from flask_cors import cross_origin
 #from playhouse.shortcuts import model_to_dict
 
-from Model import database, Topic, Tag
+from reflect_server.Model import database, Topic, Tag
 
 app = Flask(__name__)
 

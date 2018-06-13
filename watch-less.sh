@@ -1,8 +1,8 @@
 #!/bin/bash
 #
 #
-LESS_FILE="style.less"
-CSS_FILE="style.css"
+LESS_FILE="reflect_client/style.less"
+CSS_FILE="reflect_client/style.css"
 
 inotifywait -m -e modify "$LESS_FILE" |
 while read -r filename ev; do
