@@ -6,11 +6,25 @@
 
 ## Development
 
-### Technologies
+### Frontend
 
-Frontend: Vue.js, axios
+Technologies: Vue.js, axios
 
-Backend: flask, sqlite, peewee
+- first steps going through the vue.js tutorial
+- using "classical" imports for vue.js
+- developing menu structure and some component  
+  communication
+
+- restructured into client/server folders
+- going through Single File Components vue.js docs.  
+  esp. npm and Learn ES2015 guides
+
+- installed vue and vue-cli from AUR
+--> using webpack-simple
+
+### Backend
+
+Technologies: flask, sqlite, peewee
 
 - really glad I found peewee, didn't like sqlalchemy when I checked it out last time, that was some time ago tho
 
