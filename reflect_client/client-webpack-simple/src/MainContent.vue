@@ -64,6 +64,11 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="less">
+@import (reference) "./globals.less";
+main {
+  background-color: @main-content-bg;
+  margin-left: 210px;
+  //margin-right: 20px;
+}
 </style>

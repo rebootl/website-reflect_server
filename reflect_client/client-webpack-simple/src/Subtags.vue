@@ -32,6 +32,31 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="less">
+@import (reference) "./globals.less";
+nav#subtags {
+  margin-left: 15px;
+  margin-right: 15px;
+  li {
+    display: inline-flex;
+    border: 1px solid #303030;
+    border: 1px solid @sidebar-tag-border;
+    border-radius: 9px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+  }
+  li:hover {
+    background-color: @item-hover-bg;
+    //border: 1px solid @sidebar-tag-border;
+  }
+  li.selected {
+    background-color: @item-selected-bg;
+  }
+  a {
+    color: @item-link-color;
+    padding: 9px 12px 9px 12px;
+    display: inline-block;
+    height: 100%;
+  }
+}
 </style>

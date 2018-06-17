@@ -30,17 +30,30 @@ export default {
 </script>
 
 <style lang="less">
-@base-color-bg: #060606;
-@base-color-box: #1b1b1b;
-@border-line-color: #464646;
-
+@import "./globals.less";
+/* general stuff, also from index.html */
 body {
   margin: 0;
-  background-color: @base-color-bg;
-  color: #aaa;
+  background-color: @floor-color;
+  color: @base-text-color;
+  position: relative;
 }
 header {
-  border-bottom: 1px solid @border-line-color;
-  padding-left: 10px;
+  background-color: @header-bg;
+  border-bottom: 1px solid @header-line;
+  height: 42px;
+  h1 {
+    margin: 0;
+    padding: 2px 0 0 17px;
+    color: @header-text-color;
+    letter-spacing: 2px;
+    font-weight: normal;
+    #header-title-special {
+      font-size: 0.7em;
+    }
+  }
+}
+h1, h2, h3, h4, h5, h6 {
+  font-family: serif;
 }
 </style>

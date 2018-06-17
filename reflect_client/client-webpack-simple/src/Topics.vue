@@ -42,6 +42,28 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="less">
+@import (reference) "./globals.less";
+#topics {
+  ul {
+    border-top: 1px solid @sidebar-item-border;
+  }
+  li {
+    border-bottom: 1px solid @sidebar-item-border;
+  }
+  li:hover {
+    background-color: @item-hover-bg;
+  }
+  li.selected {
+    background-color: @item-selected-bg;
+  }
+  a {
+    padding: 10px 5px 10px 20px;
+    display: block;
+    height: 100%;
+    font-size: 20px;
+    font-weight: bold;
+    color: @item-link-color;
+  }
+}
 </style>

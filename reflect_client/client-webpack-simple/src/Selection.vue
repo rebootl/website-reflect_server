@@ -52,6 +52,33 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="less">
+@import (reference) "./globals.less";
+#selection {
+  position: absolute;
+  padding-top: 15px;
+  background-color: @sidebar-box-bg;
+  border-right: 1px solid @sidebar-vert-line;
+  max-width: 210px;
+  h2 {
+    text-align: center;
+    margin: 0;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 14px;
+    font-weight: normal;
+    color: @sidebar-headers-color;
+  }
+  ul {
+    list-style-type: none;
+    margin-top: 0;
+    padding: 0;
+  }
+  a {
+    text-decoration: none;
+  }
+  .selected {
+    background-color: item-selected-bg;
+  }
+}
 </style>
