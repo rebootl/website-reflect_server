@@ -70,5 +70,10 @@ main {
   background-color: @main-content-bg;
   margin-left: 210px;
   //margin-right: 20px;
+  max-width: 670px;
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-top: 3px;
+  min-height: 200px;
 }
 </style>

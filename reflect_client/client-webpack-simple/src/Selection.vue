@@ -4,11 +4,11 @@
             v-on:selection_change="selection_changed"></topics>
     <subtags v-bind:selection_data="selection_data"
              v-on:selection_change="selection_changed"></subtags>
+    <!--<br>
     <br>
     <br>
     <br>
-    <br>
-    <strong>Data:</strong> <pre>{{ selection_data }}</pre>
+    <strong>Data:</strong> <pre>{{ selection_data }}</pre>-->
   </div>
 </template>
 
@@ -59,7 +59,8 @@ export default {
   padding-top: 15px;
   background-color: @sidebar-box-bg;
   border-right: 1px solid @sidebar-vert-line;
-  max-width: 210px;
+  width: 210px;
+  height: 100%;
   h2 {
     text-align: center;
     margin: 0;
@@ -79,6 +80,7 @@ export default {
   }
   .selected {
     background-color: item-selected-bg;
+    border-left: 1px solid #4fab8c;
   }
 }
 </style>
