@@ -1,12 +1,12 @@
 <template>
   <div id="site-container">
-    <selection @selection_update="update_selection"></selection>
+    <main-menu @selection_update="update_selection"></main-menu>
     <main-content v-bind:selection_data="selection_data">text</main-content>
   </div>
 </template>
 
 <script>
-import Selection from './Selection.vue'
+import MainMenu from './MainMenu.vue'
 import MainContent from './MainContent.vue'
 
 export default {
@@ -23,7 +23,7 @@ export default {
     }
   },
   components: {
-    Selection,
+    MainMenu,
     MainContent
   }
 }
@@ -51,6 +51,18 @@ header {
     #header-title-special {
       font-size: 0.7em;
     }
+  }
+  #logo-box {
+    width: 210px;
+    height: 100%;
+    //border-right: 1px solid #000;
+  }
+  #logo {
+    display: block;
+    position: absolute;
+    left: 63px;
+    z-index: 1000;
+    height: 65px;
   }
 }
 h1, h2, h3, h4, h5, h6 {

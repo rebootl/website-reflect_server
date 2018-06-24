@@ -56,7 +56,8 @@ export default {
 @import (reference) "./globals.less";
 #selection {
   position: absolute;
-  padding-top: 15px;
+  //top: 100px;
+  padding-top: 28px;
   background-color: @sidebar-box-bg;
   border-right: 1px solid @sidebar-vert-line;
   width: 210px;
