@@ -67,13 +67,13 @@ export default {
 <style lang="less">
 @import (reference) "./globals.less";
 main {
-  background-color: @main-content-bg;
   margin-left: 210px;
-  //margin-right: 20px;
+  margin-top: 43px;
   max-width: 670px;
+  min-height: 300px;
   padding-left: 30px;
   padding-right: 30px;
   padding-top: 3px;
-  min-height: 200px;
+  background-color: @main-content-bg;
 }
 </style>

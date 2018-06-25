@@ -1,5 +1,5 @@
 <template>
-  <div id="selection">
+  <div id="main-menu">
     <topics v-bind:selection_data="selection_data"
             v-on:selection_change="selection_changed"></topics>
     <subtags v-bind:selection_data="selection_data"
@@ -19,7 +19,7 @@ import Subtags from './Subtags.vue'
 const get_sel_data_url = "http://hplaptop:5010/api/get_selection_data";
 
 export default {
-  name: 'selection',
+  name: 'main-menu',
   created: function() {
     this.get_selection_data();
   },
@@ -54,27 +54,27 @@ export default {
 
 <style lang="less">
 @import (reference) "./globals.less";
-#selection {
-  position: absolute;
-  //top: 100px;
-  padding-top: 28px;
-  background-color: @sidebar-box-bg;
-  border-right: 1px solid @sidebar-vert-line;
+#main-menu {
+  position: fixed;
+  top: 43px;
   width: 210px;
   height: 100%;
+  background-color: @sidebar-box-bg;
+  border-right: 1px solid @sidebar-vert-line;
+  overflow-y: auto;
   h2 {
     text-align: center;
     margin: 0;
-    padding-top: 10px;
+    padding-top: 38px;
     padding-bottom: 10px;
     font-size: 14px;
     font-weight: normal;
     color: @sidebar-headers-color;
   }
   ul {
-    list-style-type: none;
     margin-top: 0;
     padding: 0;
+    list-style-type: none;
   }
   a {
     text-decoration: none;

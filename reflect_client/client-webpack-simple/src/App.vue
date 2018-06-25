@@ -36,12 +36,14 @@ body {
   margin: 0;
   background-color: @floor-color;
   color: @base-text-color;
-  position: relative;
 }
 header {
+  position: fixed;
+  top: 0;
+  height: 42px;
+  width: 100%;
   background-color: @header-bg;
   border-bottom: 1px solid @header-line;
-  height: 42px;
   h1 {
     margin: 0;
     padding: 2px 0 0 17px;
@@ -53,15 +55,17 @@ header {
     }
   }
   #logo-box {
+    /*position: fixed;
+    top: 0;
+    left: 0;*/
     width: 210px;
     height: 100%;
-    //border-right: 1px solid #000;
   }
   #logo {
     display: block;
-    position: absolute;
-    left: 63px;
-    z-index: 1000;
+    margin-left: auto;
+    margin-right: auto;
+    //z-index: 1000;
     height: 65px;
   }
 }
