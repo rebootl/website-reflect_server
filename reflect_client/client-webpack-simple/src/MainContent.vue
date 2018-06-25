@@ -69,7 +69,7 @@ export default {
 main {
   margin-left: 210px;
   margin-top: 43px;
-  max-width: 670px;
+  max-width: 550px;
   min-height: 300px;
   padding-left: 30px;
   padding-right: 30px;

@@ -59,13 +59,14 @@ export default {
   top: 43px;
   width: 210px;
   height: 100%;
+  padding-top: 20px;
   background-color: @sidebar-box-bg;
   border-right: 1px solid @sidebar-vert-line;
   overflow-y: auto;
   h2 {
     text-align: center;
     margin: 0;
-    padding-top: 38px;
+    padding-top: 10px;
     padding-bottom: 10px;
     font-size: 14px;
     font-weight: normal;
@@ -81,7 +82,7 @@ export default {
   }
   .selected {
     background-color: item-selected-bg;
-    border-left: 1px solid #4fab8c;
+    border-left: 2px solid @sidebar-item-sel-border;
   }
 }
 </style>

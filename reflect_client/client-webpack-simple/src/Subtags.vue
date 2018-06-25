@@ -51,6 +51,10 @@ nav#subtags {
   }
   li.selected {
     background-color: @item-selected-bg;
+    border: 2px solid @sidebar-item-sel-border;
+    a {
+      color: @tag-selected-link;
+    }
   }
   a {
     color: @item-link-color;
