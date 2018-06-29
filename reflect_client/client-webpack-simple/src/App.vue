@@ -34,20 +34,20 @@ export default {
 /* general stuff, also from index.html */
 body {
   margin: 0;
-  background-color: @floor-color;
-  color: @base-text-color;
+  background-color: @col-body-bg;
+  color: @col-base-text;
 }
 header {
   position: fixed;
   top: 0;
   height: 42px;
   width: 100%;
-  background-color: @header-bg;
-  border-bottom: 1px solid @header-line;
+  background-color: @col-header-bg;
+  border-bottom: 1px solid @col-header-line;
   h1 {
     margin: 0;
     padding: 2px 0 0 17px;
-    color: @header-text-color;
+    color: @col-header-text;
     letter-spacing: 2px;
     font-weight: normal;
     #header-title-special {

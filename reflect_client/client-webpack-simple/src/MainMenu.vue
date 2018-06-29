@@ -60,8 +60,8 @@ export default {
   width: 210px;
   height: 100%;
   padding-top: 20px;
-  background-color: @sidebar-box-bg;
-  border-right: 1px solid @sidebar-vert-line;
+  background-color: @col-abox-bg;
+  border-right: 1px solid @col-abox-sep-line;
   overflow-y: auto;
   h2 {
     text-align: center;
@@ -70,19 +70,33 @@ export default {
     padding-bottom: 10px;
     font-size: 14px;
     font-weight: normal;
-    color: @sidebar-headers-color;
+    color: @col-abox-header-text;
+  }
+  a {
+    text-decoration: none;
   }
   ul {
     margin-top: 0;
     padding: 0;
     list-style-type: none;
-  }
-  a {
-    text-decoration: none;
-  }
-  .selected {
-    background-color: item-selected-bg;
-    border-left: 2px solid @sidebar-item-sel-border;
+    li {
+      a {
+        height: 100%;
+      }
+    }
+    li:hover {
+      background-color: @col-abox-item-bg-hover;
+      a {
+        color: @col-abox-item-text-hover;
+      }
+    }
+    li.selected {
+      background-color: @col-abox-item-bg-selected;
+      border-left: 2px solid @col-abox-item-border-selected;
+      a {
+        color: @col-abox-item-text-selected;
+      }
+    }
   }
 }
 </style>

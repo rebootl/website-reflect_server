@@ -39,28 +39,18 @@ nav#subtags {
   margin-right: 15px;
   li {
     display: inline-flex;
-    border: 1px solid #303030;
-    border: 1px solid @sidebar-tag-border;
+    border: 1px solid @col-abox-tag-border;
     border-radius: 9px;
     margin-right: 5px;
     margin-bottom: 5px;
-  }
-  li:hover {
-    background-color: @item-hover-bg;
-    //border: 1px solid @sidebar-tag-border;
-  }
-  li.selected {
-    background-color: @item-selected-bg;
-    border: 2px solid @sidebar-item-sel-border;
     a {
-      color: @tag-selected-link;
+      color: @col-abox-tag-text;
+      padding: 9px 12px 9px 12px;
+      display: inline-block;
     }
   }
-  a {
-    color: @item-link-color;
-    padding: 9px 12px 9px 12px;
-    display: inline-block;
-    height: 100%;
+  li.selected {
+    border: 2px solid @col-abox-item-border-selected;
   }
 }
 </style>

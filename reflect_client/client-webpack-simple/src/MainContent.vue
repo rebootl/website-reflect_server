@@ -113,6 +113,6 @@ main {
   padding-left: 30px;
   padding-right: 30px;
   padding-top: 20px;
-  background-color: @main-content-bg;
+  background-color: @col-main-content-bg;
 }
 </style>

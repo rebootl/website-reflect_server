@@ -46,24 +46,17 @@ export default {
 @import (reference) "./globals.less";
 #topics {
   ul {
-    border-top: 1px solid @sidebar-item-border;
+    border-top: 1px solid @col-abox-item-border;
   }
   li {
-    border-bottom: 1px solid @sidebar-item-border;
-  }
-  li:hover {
-    background-color: @item-hover-bg;
-  }
-  li.selected {
-    background-color: @item-selected-bg;
-  }
-  a {
-    padding: 10px 5px 10px 20px;
-    display: block;
-    height: 100%;
-    font-size: 20px;
-    font-weight: bold;
-    color: @item-link-color;
+    border-bottom: 1px solid @col-abox-item-border;
+    a {
+      padding: 10px 5px 10px 20px;
+      display: block;
+      font-size: 20px;
+      font-weight: bold;
+      color: @col-abox-item-text;
+    }
   }
 }
 </style>
