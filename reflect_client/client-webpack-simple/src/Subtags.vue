@@ -49,8 +49,15 @@ nav#subtags {
       display: inline-block;
     }
   }
+  li:hover {
+    // (unclear if needed)
+    color: @col-abox-item-text-hover;
+  }
   li.selected {
     border: 2px solid @col-abox-item-border-selected;
+    a {
+      color: @col-abox-item-text-selected;
+    }
   }
 }
 </style>

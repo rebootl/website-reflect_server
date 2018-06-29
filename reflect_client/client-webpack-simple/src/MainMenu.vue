@@ -1,5 +1,5 @@
 <template>
-  <div id="main-menu">
+  <div id="main-menu" class="abox-skin">
     <topics v-bind:selection_data="selection_data"
             v-on:selection_change="selection_changed"></topics>
     <subtags v-bind:selection_data="selection_data"
@@ -60,7 +60,7 @@ export default {
   width: 210px;
   height: 100%;
   padding-top: 20px;
-  background-color: @col-abox-bg;
+  //background-color: @col-abox-bg;
   border-right: 1px solid @col-abox-sep-line;
   overflow-y: auto;
   h2 {
@@ -72,31 +72,9 @@ export default {
     font-weight: normal;
     color: @col-abox-header-text;
   }
-  a {
-    text-decoration: none;
-  }
   ul {
     margin-top: 0;
     padding: 0;
-    list-style-type: none;
-    li {
-      a {
-        height: 100%;
-      }
-    }
-    li:hover {
-      background-color: @col-abox-item-bg-hover;
-      a {
-        color: @col-abox-item-text-hover;
-      }
-    }
-    li.selected {
-      background-color: @col-abox-item-bg-selected;
-      border-left: 2px solid @col-abox-item-border-selected;
-      a {
-        color: @col-abox-item-text-selected;
-      }
-    }
   }
 }
 </style>

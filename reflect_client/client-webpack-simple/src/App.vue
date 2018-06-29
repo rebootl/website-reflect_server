@@ -72,4 +72,34 @@ header {
 h1, h2, h3, h4, h5, h6 {
   font-family: serif;
 }
+.abox-skin {
+  list-style-type: none;
+  background-color: @col-abox-bg;
+  color: @col-abox-item-text;
+  a {
+    text-decoration: none;
+  }
+  li {
+    display: block;
+    a {
+      display: block;
+      height: 100%;
+      color: @col-abox-item-text;
+    }
+  }
+  li:hover {
+    background-color: @col-abox-item-bg-hover;
+    color: @col-abox-item-text-hover;
+    a {
+      color: @col-abox-item-text-hover;
+    }
+  }
+  li.selected {
+    background-color: @col-abox-item-bg-selected;
+    color: @col-abox-item-text-selected;
+    a {
+      color: @col-abox-item-text-selected;
+    }
+  }
+}
 </style>

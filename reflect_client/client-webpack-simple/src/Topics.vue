@@ -52,11 +52,12 @@ export default {
     border-bottom: 1px solid @col-abox-item-border;
     a {
       padding: 10px 5px 10px 20px;
-      display: block;
       font-size: 20px;
       font-weight: bold;
-      color: @col-abox-item-text;
     }
+  }
+  li.selected {
+    border-left: 2px solid @col-abox-item-border-selected;
   }
 }
 </style>
