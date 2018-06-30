@@ -36,7 +36,9 @@ def api_hello():
 @app.route('/api/get_content_data')
 @cross_origin()
 def api_get_content_data():
-    data = { 'query_str': str(request.query_string) }
+    data = {
+        'query_str': str(request.query_string)
+    }
     return jsonify(data)
 
 @app.route('/api/get_selection_data')

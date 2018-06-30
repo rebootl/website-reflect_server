@@ -2,10 +2,17 @@
   <div id="main-content-container">
     <nav id="content-tabs" class="abox-skin">
       <ul>
-        <li >All <span class="types-num">10</span></li>
+        <li v-for="tab in tabs" :id="tab.ref"
+            v-bind:class="{ 'selected': tab.active }">
+            <a href="#" v-on:click="select_tab(tab)">
+              {{ tab.label }}
+              <span class="types-num">{{ tab.count }}</span>
+            </a>
+        </li>
+        <!--<li>All <span class="types-num">10</span></li>
         <li class="selected">Notes <span class="types-num">3</span></li>
         <li>Links <span class="types-num">5</span></li>
-        <li>Images <span class="types-num">2</span></li>
+        <li>Images <span class="types-num">2</span></li>-->
       </ul>
     </nav>
     <main id="main-content">
@@ -63,12 +70,48 @@ export default {
         .catch( function (error) {
           console.log(error);
         });
+    },
+    select_tab: function(tab) {
+      for (let t of this.tabs) {
+        if (tab === t) {
+          t.active = true;
+        }
+        else {
+          t.active = false;
+        }
+      }
     }
   },
   data () {
     return {
       request_data: {},
-      content_data: {}
+      content_data: {},
+      tabs: [
+        {
+            label: "All",
+            ref: "tab-all",
+            active: true,
+            count: 0
+        },
+        {
+            label: "Notes",
+            ref: "tab-notes",
+            active: false,
+            count: 0
+        },
+        {
+            label: "Links",
+            ref: "tab-links",
+            active: false,
+            count: 0
+        },
+        {
+            label: "Images",
+            ref: "tab-images",
+            active: false,
+            count: 0
+        }
+      ]
     }
   }
 }
@@ -89,13 +132,10 @@ export default {
     //border: 2px dashed yellow;
     li {
       position: relative;
-      padding-left: 10px;
-      padding-top: 10px;
       box-sizing: border-box;
       width: calc(100% / 4);
-      height: 35px;
+      height: 100%;
       float: left;
-      //border-right: 1px solid @col-abox-sep-line;
       border-left: 1px solid @col-abox-sep-line;
       border-bottom: 1px solid @col-abox-sep-line;
       .types-num {
@@ -105,13 +145,20 @@ export default {
         font-weight: bold;
         font-size: 1.2em;
       }
+      a {
+        padding-left: 10px;
+        padding-top: 10px;
+        height: 25px;
+      }
     }
     li.selected {
-      padding-top: 8px;
       border-top: 2px solid green;
       border-bottom: 1px solid @col-abox-item-border;
       .types-num {
         top: 5px;
+      }
+      a {
+        padding-top: 8px;
       }
     }
   }
