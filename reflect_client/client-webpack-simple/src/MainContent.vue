@@ -2,8 +2,8 @@
   <div id="main-content-container">
     <nav id="content-tabs" class="abox-skin">
       <ul>
-        <li class="selected">All <span class="types-num">10</span></li>
-        <li>Notes <span class="types-num">3</span></li>
+        <li >All <span class="types-num">10</span></li>
+        <li class="selected">Notes <span class="types-num">3</span></li>
         <li>Links <span class="types-num">5</span></li>
         <li>Images <span class="types-num">2</span></li>
       </ul>
@@ -90,19 +90,28 @@ export default {
     li {
       position: relative;
       padding-left: 10px;
+      padding-top: 10px;
       box-sizing: border-box;
-      padding-top: 7px;
       width: calc(100% / 4);
       height: 35px;
       float: left;
-      border-right: 1px solid @col-abox-sep-line;
+      //border-right: 1px solid @col-abox-sep-line;
+      border-left: 1px solid @col-abox-sep-line;
       border-bottom: 1px solid @col-abox-sep-line;
       .types-num {
         position: absolute;
         right: 5px;
-        top: 4px;
+        top: 7px;
         font-weight: bold;
         font-size: 1.2em;
+      }
+    }
+    li.selected {
+      padding-top: 8px;
+      border-top: 2px solid green;
+      border-bottom: 1px solid @col-abox-item-border;
+      .types-num {
+        top: 5px;
       }
     }
   }
