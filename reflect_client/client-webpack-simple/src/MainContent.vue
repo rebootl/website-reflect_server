@@ -161,6 +161,18 @@ export default {
         padding-top: 8px;
       }
     }
+    #tab-all.selected {
+      border-top: 2px solid @col-types-hi-all;
+    }
+    #tab-notes.selected {
+      border-top: 2px solid @col-types-hi-notes;
+    }
+    #tab-links.selected {
+      border-top: 2px solid @col-types-hi-links;
+    }
+    #tab-images.selected {
+      border-top: 2px solid @col-types-hi-images;
+    }
   }
 }
 main {
