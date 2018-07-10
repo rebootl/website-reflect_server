@@ -7,17 +7,28 @@ export default {
   },
 
   login(context) {
-    //let vm = context;
+    let vm = this;
     axios.post(login_url, {
-      username: context.username,
-      password: context.password
+      username: context.login.username,
+      password: context.login.password
     }).then(function (response) {
       console.log(response);
       // -> store JWT
-      // -> set logged_it = true
+      localStorage.setItem('access_token', response.data.access_token);
+      // -> set logged_in = true
+      vm.user.name = context.login.username;
+      vm.user.logged_in = true;
+      context.cancel();
     }).catch(function (error) {
-      console.log("that was an error");
-      context.err_login = true;
+      console.log(error);
+      if (error.response) {
+        context.err_msg = error.response.data.msg;
+        context.err_login = true;
+      }
+      else {
+        context.err_msg = "An unknown error occured...";
+        context.err_login = true;
+      }
     });
   },
 

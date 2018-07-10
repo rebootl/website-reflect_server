@@ -1,6 +1,8 @@
 from flask import Flask, jsonify, request
 from flask_cors import cross_origin
 #from playhouse.shortcuts import model_to_dict
+from flask_jwt_extended import JWTManager, create_access_token
+from werkzeug.security import check_password_hash
 
 from reflect_server.Model import database, Topic, Tag
 
@@ -8,7 +10,14 @@ app = Flask(__name__)
 
 ### users
 
+# -> make a user list here
+app.config['USER'] = 'cem'
+# (pw: 'tutut')
+app.config['PW_SEC_HASH'] = 'pbkdf2:sha256:50000$yxnrweL8$db95937f8fc8dc4caebf8e6e2cf650b896105fd7d71fe0d42ac22bd7806297cb'
 
+# Setup the Flask-JWT-Extended extension
+app.config['JWT_SECRET_KEY'] = 'super-secret'  # Change this!
+jwt = JWTManager(app)
 
 ### db setup
 
@@ -32,6 +41,28 @@ def hello_world():
 def api_hello():
     data = { 'text': "Hello flask API :D" }
     return jsonify(data)
+
+@app.route('/api/login', methods=['POST'])
+@cross_origin()
+def login():
+    # mostly from jwt-ext. docs
+    if not request.is_json:
+        return jsonify({"msg": "Missing JSON in request"}), 400
+
+    username = request.json.get('username', None)
+    password = request.json.get('password', None)
+    if not username:
+        return jsonify({"msg": "Missing username parameter"}), 400
+    if not password:
+        return jsonify({"msg": "Missing password parameter"}), 400
+
+    if username != app.config['USER'] \
+    or not check_password_hash(app.config['PW_SEC_HASH'], password):
+        return jsonify({"msg": "Bad username or password"}), 401
+
+    # Identity can be any data that is json serializable
+    access_token = create_access_token(identity = username)
+    return jsonify(access_token = access_token), 200
 
 @app.route('/api/get_content_data')
 @cross_origin()

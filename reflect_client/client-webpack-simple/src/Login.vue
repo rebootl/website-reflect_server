@@ -1,7 +1,7 @@
 <template>
       <div id="login-box">
         <h2>Login</h2>
-        <p v-if="err_login">Error at login... :(</p>
+        <em class="flash" v-if="err_login">Error: {{ err_msg }}</em>
         <input type="text"
                placeholder="Username"
                v-model="login.username"><br>
@@ -33,7 +33,8 @@ export default {
         username: '',
         password: ''
       },
-      err_login: false
+      err_login: false,
+      err_msg: ''
     }
   }
 }
@@ -56,5 +57,8 @@ export default {
     margin-top: 20px;
 //    margin-bottom: 10px;
   }
+}
+.flash {
+  color: yellow;
 }
 </style>

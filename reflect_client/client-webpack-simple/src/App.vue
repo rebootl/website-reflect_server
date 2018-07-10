@@ -4,6 +4,7 @@
       <div id="logo-box">
         <img id="logo" src="reflect-lotos_110.png">
       </div>
+      <!--<p class="logged-in" v-if="">logged in</p>-->
       <button id="login-toggle" @click="show_login()">Login</button>
     </header>
     <div id="overlay" v-bind:class="{ 'shown' : login_shown }">
@@ -18,7 +19,7 @@
 import Login from './Login.vue'
 import MainMenu from './MainMenu.vue'
 import MainContent from './MainContent.vue'
-
+import auth from "./auth.js";
 export default {
   name: 'app',
   methods: {
