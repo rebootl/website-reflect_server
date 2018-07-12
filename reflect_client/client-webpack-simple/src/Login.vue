@@ -23,6 +23,8 @@ export default {
     },
     cancel() {
       // --> reset form here !!
+      this.login.username = '';
+      this.login.password = '';
       this.err_login = false;
       this.$emit("cancel_login");
     }

@@ -15,6 +15,7 @@ export default {
       console.log(response);
       // -> store JWT
       localStorage.setItem('access_token', response.data.access_token);
+      localStorage.setItem('username', context.login.username);
       // -> set logged_in = true
       vm.user.name = context.login.username;
       vm.user.logged_in = true;
@@ -33,9 +34,21 @@ export default {
   },
 
   logout() {
-    // -> remove JWT
-    // -> set logged_in = false
-    // -> clear user.name
+    localStorage.removeItem('username');
+    localStorage.removeItem('access_token');
+    this.user.name = '';
+    this.user.logged_in = false;
+  },
+
+  update_login_status() {
+    var username = localStorage.getItem('username');
+    if (username) {
+      this.user.name = username;
+      this.user.logged_in = true;
+    }
+    else {
+      this.user.logged_in = false;
+    }
   },
 
   get_auth_header() {

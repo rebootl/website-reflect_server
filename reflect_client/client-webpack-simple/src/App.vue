@@ -4,8 +4,11 @@
       <div id="logo-box">
         <img id="logo" src="reflect-lotos_110.png">
       </div>
-      <!--<p class="logged-in" v-if="">logged in</p>-->
-      <button id="login-toggle" @click="show_login()">Login</button>
+      <em id="logged-in-tag" v-if="user.logged_in">{{ user.name }}</em>
+      <button id="login-toggle-button" v-if="!user.logged_in"
+              @click="show_login()">Login</button>
+      <button id="login-toggle-button" v-else
+              @click="logout()">Logout</button>
     </header>
     <div id="overlay" v-bind:class="{ 'shown' : login_shown }">
       <login @cancel_login="hide_login"></login>
@@ -22,12 +25,18 @@ import MainContent from './MainContent.vue'
 import auth from "./auth.js";
 export default {
   name: 'app',
+  created() {
+    auth.update_login_status();
+  },
   methods: {
     show_login() {
       this.login_shown = true;
     },
     hide_login() {
       this.login_shown = false;
+    },
+    logout() {
+      auth.logout();
     },
     update_selection(selection_data) {
       this.selection_data = selection_data;
@@ -38,7 +47,7 @@ export default {
     return {
       selection_data: [],
       login_shown: false,
-      logged_in: false,
+      user: auth.user
     }
   },
   components: {
@@ -112,13 +121,19 @@ input {
   margin: 5px;
   padding: 5px;
 }
-#login-toggle {
+#login-toggle-button {
   float: right;
   margin-top: 5px;
   margin-right: 5px;
   height: 32px;
   border: 3px solid @col-abox-item-border;
   border: 1px solid #000;
+}
+#logged-in-tag {
+  position: absolute;
+  right: 80px;
+  top: 11px;
+  color: @col-abox-header-text;
 }
 #overlay {
   position: fixed;
