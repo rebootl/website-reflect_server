@@ -1,11 +1,11 @@
 <template>
       <div id="login-box">
         <h2>Login</h2>
-        <em class="flash" v-if="err_login">Error: {{ err_msg }}</em>
+        <p><em class="flash" v-if="err_login">Error: {{ err_msg }}</em></p>
         <input type="text"
                placeholder="Username"
                v-model="login.username"><br>
-        <input type="text"
+        <input type="password"
                placeholder="Password"
                v-model="login.password"><br>
         <button id="login-submit" @click="submit">Login</button>

@@ -3,7 +3,11 @@ import App from './App.vue'
 
 export const global_state = {
 
-    selection_data: []
+    selection_data: [],
+    user: {
+      logged_in: false,
+      name: ''
+    }
 
 }
 

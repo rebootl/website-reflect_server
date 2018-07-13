@@ -4,14 +4,17 @@
       <div id="logo-box">
         <img id="logo" src="reflect-lotos_110.png">
       </div>
-      <em id="logged-in-tag" v-if="user.logged_in">{{ user.name }}</em>
-      <button id="login-toggle-button" v-if="!user.logged_in"
+      <em id="logged-in-tag"
+          v-if="global_state.user.logged_in">{{ global_state.user.name }}</em>
+      <button id="login-toggle-button"
+              v-if="!global_state.user.logged_in"
               @click="show_login()">Login</button>
       <button id="login-toggle-button" v-else
               @click="logout()">Logout</button>
     </header>
     <div id="overlay" v-bind:class="{ 'shown' : login_shown }">
-      <login @cancel_login="hide_login"></login>
+      <login v-if="!global_state.user.logged_in"
+             @cancel_login="hide_login"></login>
     </div>
     <main-menu></main-menu>
     <main-content v-bind:selection_data="global_state.selection_data">text</main-content>
