@@ -7,6 +7,11 @@ export const global_state = {
     user: {
       logged_in: false,
       name: ''
+    },
+    overlay: {
+      shown: false,
+      login: false,
+      add_topic: false,
     }
 
 }

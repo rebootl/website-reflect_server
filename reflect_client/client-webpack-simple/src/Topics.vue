@@ -6,6 +6,8 @@
           v-bind:class="{ 'selected': item.active }">
         <a href="#" v-on:click="toggle_select(item)">{{ item.label }}</a>
       </li>
+      <li v-if="global_state.user.logged_in"
+          @click="show_add_topic()"><a href="#">+</a></li>
     </ul>
   </nav>
 </template>
@@ -15,6 +17,10 @@ import { global_state } from './main.js';
 export default {
   name: 'topics',
   methods: {
+    show_add_topic() {
+      this.global_state.overlay.shown = true;
+      this.global_state.overlay.add_topic = true;
+    },
     toggle_select: function(item) {
       if (item.active) {
         item.active = false;

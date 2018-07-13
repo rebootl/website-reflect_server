@@ -12,9 +12,10 @@
       <button id="login-toggle-button" v-else
               @click="logout()">Logout</button>
     </header>
-    <div id="overlay" v-bind:class="{ 'shown' : login_shown }">
-      <login v-if="!global_state.user.logged_in"
+    <div id="overlay" v-bind:class="{ 'shown' : global_state.overlay.shown }">
+      <login v-if="global_state.overlay.login"
              @cancel_login="hide_login"></login>
+      <add-topic v-else-if="global_state.overlay.add_topic"></add-topic>
     </div>
     <main-menu></main-menu>
     <main-content v-bind:selection_data="global_state.selection_data">text</main-content>
@@ -22,9 +23,10 @@
 </template>
 
 <script>
-import Login from './Login.vue'
-import MainMenu from './MainMenu.vue'
-import MainContent from './MainContent.vue'
+import Login from './Login.vue';
+import MainMenu from './MainMenu.vue';
+import MainContent from './MainContent.vue';
+import AddTopic from './AddTopic.vue';
 import { global_state } from './main.js';
 import auth from "./auth.js";
 export default {
@@ -34,10 +36,12 @@ export default {
   },
   methods: {
     show_login() {
-      this.login_shown = true;
+      this.global_state.overlay.shown = true;
+      this.global_state.overlay.login = true;
     },
     hide_login() {
-      this.login_shown = false;
+      this.global_state.overlay.shown = false;
+      this.global_state.overlay.login = false;
     },
     logout() {
       auth.logout();
@@ -47,13 +51,14 @@ export default {
     return {
       global_state: global_state,
       login_shown: false,
-      user: auth.user
+      //user: auth.user
     }
   },
   components: {
     Login,
     MainMenu,
-    MainContent
+    MainContent,
+    AddTopic
   }
 }
 </script>
@@ -149,6 +154,19 @@ input {
 }
 #overlay.shown {
   display: block;
+}
+.overlay-box {
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: @col-main-content-bg;
+  padding: 10px 20px 20px 20px;
+  .overlay-submit {
+    margin-top: 20px;
+  }
+}
+.flash {
+  color: yellow;
 }
 .abox-skin {
   list-style-type: none;
