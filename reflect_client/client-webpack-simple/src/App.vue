@@ -13,8 +13,8 @@
     <div id="overlay" v-bind:class="{ 'shown' : login_shown }">
       <login @cancel_login="hide_login"></login>
     </div>
-    <main-menu @selection_update="update_selection"></main-menu>
-    <main-content v-bind:selection_data="selection_data">text</main-content>
+    <main-menu></main-menu>
+    <main-content v-bind:selection_data="global_state.selection_data">text</main-content>
   </div>
 </template>
 
@@ -22,6 +22,7 @@
 import Login from './Login.vue'
 import MainMenu from './MainMenu.vue'
 import MainContent from './MainContent.vue'
+import { global_state } from './main.js';
 import auth from "./auth.js";
 export default {
   name: 'app',
@@ -37,15 +38,11 @@ export default {
     },
     logout() {
       auth.logout();
-    },
-    update_selection(selection_data) {
-      this.selection_data = selection_data;
-      //alert(this.selection_data);
     }
   },
   data () {
     return {
-      selection_data: [],
+      global_state: global_state,
       login_shown: false,
       user: auth.user
     }

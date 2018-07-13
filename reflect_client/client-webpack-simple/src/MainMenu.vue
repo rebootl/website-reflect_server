@@ -1,20 +1,14 @@
 <template>
   <div id="main-menu" class="abox-skin">
-    <topics v-bind:selection_data="selection_data"
-            v-on:selection_change="selection_changed"></topics>
-    <subtags v-bind:selection_data="selection_data"
-             v-on:selection_change="selection_changed"></subtags>
-    <!--<br>
-    <br>
-    <br>
-    <br>
-    <strong>Data:</strong> <pre>{{ selection_data }}</pre>-->
+    <topics></topics>
+    <subtags></subtags>
   </div>
 </template>
 
 <script>
-import Topics from './Topics.vue'
-import Subtags from './Subtags.vue'
+import Topics from './Topics.vue';
+import Subtags from './Subtags.vue';
+import { global_state } from './main.js';
 
 const get_sel_data_url = "http://hplaptop:5010/api/get_selection_data";
 
@@ -28,21 +22,17 @@ export default {
       let vm = this
       axios.get(get_sel_data_url)
         .then( function (response) {
-          vm.selection_data = response.data;
+          vm.global_state.selection_data = response.data;
           console.log(response);
         })
         .catch( function (error) {
           console.log(error);
         });
-    },
-    selection_changed: function() {
-      // update content acc. to new selection
-      this.$emit('selection_update', this.selection_data);
     }
   },
   data () {
     return {
-      selection_data: [],
+      global_state: global_state
     }
   },
   components: {

@@ -1,7 +1,7 @@
 <template>
   <nav id="subtags">
     <h2>Tags</h2>
-    <ul v-for="item in selection_data"
+    <ul v-for="item in global_state.selection_data"
         v-if="item.active">
       <li v-for="subtag in item.subtags"
           v-bind:class="{ 'selected': subtag.active }">
@@ -12,9 +12,9 @@
 </template>
 
 <script>
+import { global_state } from './main.js';
 export default {
   name: 'subtags',
-  props: [ "selection_data" ],
   methods: {
     toggle_select: function(subtag) {
       if (subtag.active) {
@@ -22,11 +22,11 @@ export default {
       } else {
       subtag.active = true;
       }
-      this.$emit('selection_change');
     }
   },
   data () {
     return {
+      global_state: global_state
     }
   }
 }

@@ -9,10 +9,6 @@
               <span class="types-num">{{ tab.count }}</span>
             </a>
         </li>
-        <!--<li>All <span class="types-num">10</span></li>
-        <li class="selected">Notes <span class="types-num">3</span></li>
-        <li>Links <span class="types-num">5</span></li>
-        <li>Images <span class="types-num">2</span></li>-->
       </ul>
     </nav>
     <main id="main-content">
@@ -22,10 +18,12 @@
 </template>
 
 <script>
+import { global_state } from './main.js';
 const get_content_data_url = "http://hplaptop:5010/api/get_content_data";
-
 export default {
   name: 'MainContent',
+  // (property needed for watcher here)
+  // --> better way ?
   props: [ "selection_data" ],
   watch: {
     selection_data: {
@@ -54,7 +52,6 @@ export default {
         'topics': topics,
         'tags': tags
       }
-      //alert(this.request_data.tags);
       // update content
       this.get_content();
     },
@@ -84,6 +81,7 @@ export default {
   },
   data () {
     return {
+      global_state: global_state,
       request_data: {},
       content_data: {},
       tabs: [

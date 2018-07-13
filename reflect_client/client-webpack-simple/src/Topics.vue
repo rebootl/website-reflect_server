@@ -2,7 +2,7 @@
   <nav id="topics">
     <h2>Topics</h2>
     <ul>
-      <li v-for="item in selection_data" :id="item.ref"
+      <li v-for="item in global_state.selection_data" :id="item.ref"
           v-bind:class="{ 'selected': item.active }">
         <a href="#" v-on:click="toggle_select(item)">{{ item.label }}</a>
       </li>
@@ -11,9 +11,9 @@
 </template>
 
 <script>
+import { global_state } from './main.js';
 export default {
   name: 'topics',
-  props: [ "selection_data" ],
   methods: {
     toggle_select: function(item) {
       if (item.active) {
@@ -24,7 +24,7 @@ export default {
         }
       } else {
         // first deselect everything
-        for (let item of this.selection_data) {
+        for (let item of this.global_state.selection_data) {
           for (let subtag of item.subtags) {
             subtag.active = false;
           }
@@ -32,11 +32,11 @@ export default {
         }
         item.active = true;
       }
-      this.$emit('selection_change');
     }
   },
   data () {
     return {
+      global_state: global_state
     }
   }
 }
