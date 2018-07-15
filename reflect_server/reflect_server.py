@@ -4,8 +4,10 @@ from flask_cors import cross_origin, CORS
 from flask_jwt_extended import JWTManager, create_access_token, \
     jwt_required
 from werkzeug.security import check_password_hash
+from peewee import IntegrityError
 
 from reflect_server.Model import database, Topic, Tag
+from reflect_server.helpers import create_ref
 
 app = Flask(__name__)
 CORS(app)
@@ -74,7 +76,23 @@ def login_post():
 @app.route('/api/topics', methods = ['POST'])
 @jwt_required
 def api_topics_post():
-    return "FOOOB"
+    # get data
+    label = request.json.get('label', None)
+    descr = request.json.get('description', None)
+    if not label: return jsonify({"msg": "Missing label parameter"}), 400
+    # create ref
+    ref = create_ref(label)
+    # store to db
+    try:
+        with database.atomic():
+            t = Topic.create(
+                ref = ref,
+                label = label,
+                description = descr
+            )
+        return jsonify(ref)
+    except IntegrityError:
+        return jsonify({"msg": "Name already in use."}), 400
 
 ### public routes
 
