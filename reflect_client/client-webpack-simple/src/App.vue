@@ -51,7 +51,6 @@ export default {
     return {
       global_state: global_state,
       login_shown: false,
-      //user: auth.user
     }
   },
   components: {
@@ -151,6 +150,7 @@ input {
   bottom: 0;
   background-color: #000b;
   z-index: 100;
+  overflow: auto;
 }
 #overlay.shown {
   display: block;

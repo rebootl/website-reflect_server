@@ -1,12 +1,14 @@
 from flask import Flask, jsonify, request
-from flask_cors import cross_origin
+from flask_cors import cross_origin, CORS
 #from playhouse.shortcuts import model_to_dict
-from flask_jwt_extended import JWTManager, create_access_token
+from flask_jwt_extended import JWTManager, create_access_token, \
+    jwt_required
 from werkzeug.security import check_password_hash
 
 from reflect_server.Model import database, Topic, Tag
 
 app = Flask(__name__)
+CORS(app)
 
 ### users
 
@@ -37,14 +39,14 @@ def hello_world():
     return 'Hello, World!'
 
 @app.route('/api/hello')
-@cross_origin()
 def api_hello():
     data = { 'text': "Hello flask API :D" }
     return jsonify(data)
 
+### login
+
 @app.route('/api/login', methods=['POST'])
-@cross_origin()
-def login():
+def login_post():
     # mostly from jwt-ext. docs
     if not request.is_json:
         return jsonify({"msg": "Missing JSON in request"}), 400
@@ -61,11 +63,22 @@ def login():
         return jsonify({"msg": "Bad username or password"}), 401
 
     # Identity can be any data that is json serializable
-    access_token = create_access_token(identity = username)
+    access_token = create_access_token(
+        identity = username,
+        expires_delta = False
+    )
     return jsonify(access_token = access_token), 200
 
+### protected routes
+
+@app.route('/api/topics', methods = ['POST'])
+@jwt_required
+def api_topics_post():
+    return "FOOOB"
+
+### public routes
+
 @app.route('/api/get_content_data')
-@cross_origin()
 def api_get_content_data():
     data = {
         'query_str': str(request.query_string)
@@ -73,7 +86,6 @@ def api_get_content_data():
     return jsonify(data)
 
 @app.route('/api/get_selection_data')
-@cross_origin()
 def api_get_selection_data():
 
     # get selection from db

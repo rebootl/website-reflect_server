@@ -50,7 +50,7 @@ export default {
 
   get_auth_header() {
     return {
-      'Authorization':  'Bearer ' + localStorage.getItem(access_token)
+      'Authorization':  'Bearer ' + localStorage.getItem('access_token')
     }
   }
 
