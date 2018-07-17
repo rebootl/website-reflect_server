@@ -1,12 +1,11 @@
 <template>
-  <div id="add-topic-box" class="overlay-box">
-    <h2>Add Topic</h2>
+  <div id="edit-topic-box" class="overlay-box">
+    <h2>Edit Topic</h2>
+    <h3>ref: {{ global_state.edit_topic_item.ref }}</h3>
     <p><em class="flash" v-if="flash">{{ flash_msg }}</em></p>
-    <input type="text"
-           placeholder="Label"
+    Label: <input type="text"
            v-model="topic.label"><br>
-    <input type="text"
-           placeholder="Description"
+    Description: <input type="text"
            v-model="topic.description"><br>
     <button id="add-topic-submit" class="overlay-submit"
             @click="submit">Store</button>
@@ -15,11 +14,11 @@
 </template>
 
 <script>
-const topics_url = "http://hplaptop:5010/api/topics"
+const topics_url = "http://hplaptop:5010/api/topics/"
 import { global_state } from './main.js';
 import auth from "./auth.js";
 export default {
-  name: 'add-topic',
+  name: 'edit-topic',
   methods: {
     submit() {
       if (this.topic.label === '') {
@@ -27,8 +26,9 @@ export default {
         this.flash = true;
         return
       }
+      let topic_url = topics_url + this.global_state.edit_topic_item.ref;
       let vm = this;
-      axios.post(topics_url, {
+      axios.put(topic_url, {
         label: this.topic.label,
         description: this.topic.description
       },
@@ -56,16 +56,17 @@ export default {
     },
     cancel() {
       // (reset form here)
+      this.global_state.edit_topic_item = {};
       this.global_state.overlay.shown = false;
-      this.global_state.overlay.add_topic = false;
+      this.global_state.overlay.edit_topic = false;
     }
   },
   data() {
     return {
       global_state: global_state,
       topic: {
-        label: '',
-        description: ''
+        label: global_state.edit_topic_item.label,
+        description: global_state.edit_topic_item.description
       },
       flash: false,
       flash_msg: ''

@@ -5,6 +5,9 @@
       <li v-for="item in global_state.selection_data" :id="item.ref"
           v-bind:class="{ 'selected': item.active }">
         <a href="#" v-on:click="toggle_select(item)">{{ item.label }}</a>
+        <button v-if="global_state.user.logged_in"
+                class="edit-topic-button"
+                @click="show_edit_topic(item)">Edit</button>
       </li>
       <li v-if="global_state.user.logged_in"
           @click="show_add_topic()"><a href="#">+</a></li>
@@ -20,6 +23,11 @@ export default {
     show_add_topic() {
       this.global_state.overlay.shown = true;
       this.global_state.overlay.add_topic = true;
+    },
+    show_edit_topic(topic) {
+      this.global_state.edit_topic_item = topic;
+      this.global_state.overlay.shown = true;
+      this.global_state.overlay.edit_topic = true;
     },
     toggle_select: function(item) {
       if (item.active) {
@@ -55,11 +63,20 @@ export default {
     border-top: 1px solid @col-abox-item-border;
   }
   li {
+    position: relative;
     border-bottom: 1px solid @col-abox-item-border;
     a {
       padding: 10px 5px 10px 20px;
       font-size: 20px;
       font-weight: bold;
+    }
+    .edit-topic-button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+      border: 0;
+      border-left: 1px solid #222;
     }
   }
   li.selected {

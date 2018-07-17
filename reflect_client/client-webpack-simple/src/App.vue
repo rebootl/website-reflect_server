@@ -15,9 +15,12 @@
     <div id="overlay" v-bind:class="{ 'shown' : global_state.overlay.shown }">
       <login v-if="global_state.overlay.login"
              @cancel_login="hide_login"></login>
-      <add-topic v-else-if="global_state.overlay.add_topic"></add-topic>
+      <add-topic v-else-if="global_state.overlay.add_topic"
+                 @refresh_menu="refresh_menu"></add-topic>
+      <edit-topic v-else-if="global_state.overlay.edit_topic"
+                 @refresh_menu="refresh_menu"></edit-topic>
     </div>
-    <main-menu></main-menu>
+    <main-menu ref="main_menu"></main-menu>
     <main-content v-bind:selection_data="global_state.selection_data">text</main-content>
   </div>
 </template>
@@ -27,6 +30,7 @@ import Login from './Login.vue';
 import MainMenu from './MainMenu.vue';
 import MainContent from './MainContent.vue';
 import AddTopic from './AddTopic.vue';
+import EditTopic from './EditTopic.vue';
 import { global_state } from './main.js';
 import auth from "./auth.js";
 export default {
@@ -45,6 +49,9 @@ export default {
     },
     logout() {
       auth.logout();
+    },
+    refresh_menu() {
+      this.$refs.main_menu.get_selection_data();
     }
   },
   data () {
@@ -57,7 +64,8 @@ export default {
     Login,
     MainMenu,
     MainContent,
-    AddTopic
+    AddTopic,
+    EditTopic
   }
 }
 </script>

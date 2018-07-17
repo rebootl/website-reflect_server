@@ -76,9 +76,10 @@ def login_post():
 @app.route('/api/topics', methods = ['POST'])
 @jwt_required
 def api_topics_post():
+    '''add a new topic'''
     # get data
     label = request.json.get('label', None)
-    descr = request.json.get('description', None)
+    descr = request.json.get('description', "")
     if not label: return jsonify({"msg": "Missing label parameter"}), 400
     # create ref
     ref = create_ref(label)
@@ -91,6 +92,31 @@ def api_topics_post():
                 description = descr
             )
         return jsonify(ref)
+    except IntegrityError:
+        return jsonify({"msg": "Name already in use."}), 400
+
+@app.route('/api/topics/<ref>', methods = ['PUT'])
+@jwt_required
+def api_topic_put(ref):
+    '''edit existing topic'''
+    # get data
+    label = request.json.get('label', None)
+    descr = request.json.get('description', "")
+    print(label)
+    print(descr)
+    if not label: return jsonify({"msg": "Missing label parameter"}), 400
+    # update ref
+    new_ref = create_ref(label)
+    # get instance from db
+    topic = Topic.get(Topic.ref == ref)
+    # update instance and save to db
+    topic.ref = new_ref
+    topic.label = label
+    topic.description = descr
+    try:
+        with database.atomic():
+            topic.save()
+            return jsonify(new_ref)
     except IntegrityError:
         return jsonify({"msg": "Name already in use."}), 400
 
@@ -136,6 +162,7 @@ def api_get_selection_data():
         topic_dataset = {
             'ref': topic.ref,
             'label': topic.label,
+            'description': topic.description,
             'active': False,
             'subtags': tags
         }
