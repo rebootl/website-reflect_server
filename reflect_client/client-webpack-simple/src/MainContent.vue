@@ -160,16 +160,16 @@ export default {
       }
     }
     #tab-all.selected {
-      border-top: 2px solid @col-types-hi-all;
+      border-top: 1px solid @col-types-hi-all;
     }
     #tab-notes.selected {
-      border-top: 2px solid @col-types-hi-notes;
+      border-top: 1px solid @col-types-hi-notes;
     }
     #tab-links.selected {
-      border-top: 2px solid @col-types-hi-links;
+      border-top: 1px solid @col-types-hi-links;
     }
     #tab-images.selected {
-      border-top: 2px solid @col-types-hi-images;
+      border-top: 1px solid @col-types-hi-images;
     }
   }
 }

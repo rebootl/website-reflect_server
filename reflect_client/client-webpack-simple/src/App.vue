@@ -2,7 +2,7 @@
   <div id="app-container">
     <header>
       <div id="logo-box">
-        <img id="logo" src="reflect-lotos_110.png">
+        <img id="logo" src="">
       </div>
       <em id="logged-in-tag"
           v-if="global_state.user.logged_in">{{ global_state.user.name }}</em>
@@ -54,7 +54,9 @@ export default {
       auth.logout();
     },
     refresh_menu() {
+      // -> store selection
       this.$refs.main_menu.get_selection_data();
+      // -> restore selection
     }
   },
   data () {
