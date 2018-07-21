@@ -7,6 +7,8 @@
           v-bind:class="{ 'selected': subtag.active }">
         <a href="#" v-on:click="toggle_select(subtag)">{{ subtag.label }}</a>
       </li>
+      <li v-if="global_state.user.logged_in"
+          @click="show_add_subtag()"><a href="#">+</a></li>
     </ul>
   </nav>
 </template>
@@ -16,6 +18,10 @@ import { global_state } from './main.js';
 export default {
   name: 'subtags',
   methods: {
+    show_add_subtag() {
+      this.global_state.overlay.shown = true;
+      this.global_state.overlay.add_subtag = true;
+    },
     toggle_select: function(subtag) {
       if (subtag.active) {
         subtag.active = false;

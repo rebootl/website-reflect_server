@@ -19,6 +19,8 @@
                  @refresh_menu="refresh_menu"></add-topic>
       <edit-topic v-else-if="global_state.overlay.edit_topic"
                  @refresh_menu="refresh_menu"></edit-topic>
+      <add-subtag v-else-if="global_state.overlay.add_subtag"
+                 @refresh_menu="refresh_menu"></add-subtag>
     </div>
     <main-menu ref="main_menu"></main-menu>
     <main-content v-bind:selection_data="global_state.selection_data">text</main-content>
@@ -31,6 +33,7 @@ import MainMenu from './MainMenu.vue';
 import MainContent from './MainContent.vue';
 import AddTopic from './AddTopic.vue';
 import EditTopic from './EditTopic.vue';
+import AddSubtag from './AddSubtag.vue';
 import { global_state } from './main.js';
 import auth from "./auth.js";
 export default {
@@ -65,7 +68,8 @@ export default {
     MainMenu,
     MainContent,
     AddTopic,
-    EditTopic
+    EditTopic,
+    AddSubtag
   }
 }
 </script>

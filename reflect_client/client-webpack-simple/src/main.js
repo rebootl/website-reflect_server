@@ -12,6 +12,7 @@ export const global_state = {
       shown: false,
       login: false,
       add_topic: false,
+      add_subtag: false,
     },
     edit_topic_item: {}
 
