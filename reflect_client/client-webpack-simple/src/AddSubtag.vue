@@ -1,7 +1,7 @@
 <template>
   <div id="add-subtag-box" class="overlay-box">
     <h2>Add Subtag</h2>
-    <small>Topic refs: {{ selected_topics }}</small>
+    <small>Topic id: {{ selected_topics }}</small>
     <p><em class="flash" v-if="flash">{{ flash_msg }}</em></p>
     <input type="text"
            placeholder="Label"
@@ -22,9 +22,11 @@ import auth from "./auth.js";
 export default {
   name: 'add-subtag',
   created: function() {
+    // -> maybe use a filter here ?
     for (let topic of global_state.selection_data) {
       if (topic.active) {
-        this.selected_topics.push(topic.ref);
+        this.selected_topics.push(topic.id);
+        break;
       }
     }
   },
@@ -36,9 +38,10 @@ export default {
         return
       }
       let vm = this;
-      axios.post(topics_url, {
+      axios.post(subtags_url, {
         label: this.subtag.label,
-        description: this.subtag.description
+        description: this.subtag.description,
+        topic_id: this.selected_topics[0]
       },
       {
         headers: auth.get_auth_header()

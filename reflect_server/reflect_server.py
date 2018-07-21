@@ -120,6 +120,31 @@ def api_topic_put(ref):
     except IntegrityError:
         return jsonify({"msg": "Name already in use."}), 400
 
+@app.route('/api/subtags', methods = ['POST'])
+@jwt_required
+def api_subtags_post():
+    '''add a new subtag'''
+    # get data
+    label = request.json.get('label', None)
+    descr = request.json.get('description', "")
+    topic_id = request.json.get('topic_id', None)
+    if not label: return jsonify({"msg": "Missing label parameter"}), 400
+    if not topic_id: return jsonify({"msg": "Missing topic id parameter"}), 400
+    # create ref
+    ref = create_ref(label)
+    # store to db
+    try:
+        with database.atomic():
+            t = Tag.create(
+                topic_id = topic_id,
+                ref = ref,
+                label = label,
+                description = descr
+            )
+        return jsonify(ref)
+    except IntegrityError:
+        return jsonify({"msg": "Name already in use."}), 400
+
 ### public routes
 
 @app.route('/api/get_content_data')
@@ -160,6 +185,7 @@ def api_get_selection_data():
             }
             tags.append(tag_dataset)
         topic_dataset = {
+            'id': topic.id,
             'ref': topic.ref,
             'label': topic.label,
             'description': topic.description,
