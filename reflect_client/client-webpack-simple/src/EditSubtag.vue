@@ -5,8 +5,6 @@
     <p><em class="flash" v-if="flash">{{ flash_msg }}</em></p>
     Label: <input type="text"
            v-model="subtag.label"><br>
-    <!--Description: <input type="text"
-           v-model="subtag.description"><br>-->
     <button id="edit-subtag-submit" class="overlay-submit"
             @click="submit">Store</button>
     <button id="edit-subtag-cancel" @click="cancel">Cancel</button>
@@ -30,7 +28,6 @@ export default {
       let vm = this;
       axios.put(subtag_url, {
         label: this.subtag.label,
-        //description: this.subtag.description
       },
       {
         headers: auth.get_auth_header()
@@ -66,7 +63,6 @@ export default {
       global_state: global_state,
       subtag: {
         label: global_state.edit_subtag_item.label,
-        //description: global_state.edit_subtag_item.description
       },
       flash: false,
       flash_msg: ''
