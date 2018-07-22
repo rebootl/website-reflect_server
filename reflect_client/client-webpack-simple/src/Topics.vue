@@ -6,8 +6,10 @@
           v-bind:class="{ 'selected': item.active }">
         <a href="#" v-on:click="toggle_select(item)">{{ item.label }}</a>
         <button v-if="global_state.user.logged_in"
-                class="edit-topic-button"
-                @click="show_edit_topic(item)"><img class="edit-img" src="edit_128.png"></button>
+                class="edit-item-button edit-topic-button"
+                @click="show_edit_topic(item)">
+          <img class="edit-img" src="edit_128.png">
+        </button>
       </li>
       <li v-if="global_state.user.logged_in"
           @click="show_add_topic()"><a href="#">+</a></li>
@@ -71,38 +73,13 @@ export default {
       font-weight: bold;
     }
     .edit-topic-button {
-      padding: 0;
       position: absolute;
       top: 4px;
       right: 0;
-      //height: 100%;
-      border: 0;
-      //border: 1px dashed yellow;
-      //border-left: 1px solid #222;
-      .edit-img {
-        height: 20px;
-        opacity: 0.3;
-      }
-      .edit-img:hover {
-        opacity: 0.75;
-      }
     }
   }
   li.selected {
     border-left: 2px solid @col-abox-item-border-selected;
-    .edit-topic-button {
-      background-color: @col-abox-item-bg-selected;
-    }
-  }
-  li:hover {
-    .edit-topic-button {
-      background-color: @col-abox-item-bg-hover;
-    }
-  }
-  li.selected:hover {
-    .edit-topic-button {
-      background-color: @col-abox-item-bg-selected;
-    }
   }
 }
 </style>

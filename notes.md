@@ -3,6 +3,8 @@
 "manage notes, links, images aso. w/ a modern looking webapplication"
 
 
+## Tasks / Issues
+
 
 ## Development
 
@@ -20,7 +22,7 @@ Technologies: Vue.js, axios
   esp. npm and Learn ES2015 guides
 
 - installed vue and vue-cli from AUR
---> using webpack-simple
+- using webpack-simple
 
 ### Backend
 

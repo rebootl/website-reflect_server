@@ -5,7 +5,13 @@
         v-if="item.active">
       <li v-for="subtag in item.subtags"
           v-bind:class="{ 'selected': subtag.active }">
-        <a href="#" v-on:click="toggle_select(subtag)">{{ subtag.label }}</a>
+        <a href="#" v-on:click="toggle_select(subtag)"
+           :class="{ 'edit': global_state.user.logged_in }">{{ subtag.label }}</a>
+        <button v-if="global_state.user.logged_in"
+                class="edit-item-button edit-subtag-button"
+                @click="show_edit_subtag(subtag)">
+          <img class="edit-img" src="edit_128.png">
+        </button>
       </li>
       <li v-if="global_state.user.logged_in"
           @click="show_add_subtag()"><a href="#">+</a></li>
@@ -21,6 +27,11 @@ export default {
     show_add_subtag() {
       this.global_state.overlay.shown = true;
       this.global_state.overlay.add_subtag = true;
+    },
+    show_edit_subtag(item) {
+      this.global_state.edit_subtag_item = item;
+      this.global_state.overlay.shown = true;
+      this.global_state.overlay.edit_subtag = true;
     },
     toggle_select: function(subtag) {
       if (subtag.active) {
@@ -49,10 +60,19 @@ nav#subtags {
     border-radius: 9px;
     margin-right: 5px;
     margin-bottom: 5px;
+    position: relative;
     a {
       color: @col-abox-tag-text;
       padding: 9px 12px 9px 12px;
       display: inline-block;
+    }
+    a.edit {
+      padding-right: 23px;
+    }
+    .edit-subtag-button {
+      position: absolute;
+      right: 0;
+      top: 7px;
     }
   }
   li:hover {

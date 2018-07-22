@@ -18,9 +18,11 @@
       <add-topic v-else-if="global_state.overlay.add_topic"
                  @refresh_menu="refresh_menu"></add-topic>
       <edit-topic v-else-if="global_state.overlay.edit_topic"
-                 @refresh_menu="refresh_menu"></edit-topic>
+                  @refresh_menu="refresh_menu"></edit-topic>
       <add-subtag v-else-if="global_state.overlay.add_subtag"
-                 @refresh_menu="refresh_menu"></add-subtag>
+                  @refresh_menu="refresh_menu"></add-subtag>
+      <edit-subtag v-else-if="global_state.overlay.edit_subtag"
+                   @refresh_menu="refresh_menu"></edit-subtag>
     </div>
     <main-menu ref="main_menu"></main-menu>
     <main-content v-bind:selection_data="global_state.selection_data">text</main-content>
@@ -34,6 +36,7 @@ import MainContent from './MainContent.vue';
 import AddTopic from './AddTopic.vue';
 import EditTopic from './EditTopic.vue';
 import AddSubtag from './AddSubtag.vue';
+import EditSubtag from './EditSubtag.vue';
 import { global_state } from './main.js';
 import auth from "./auth.js";
 export default {
@@ -71,7 +74,8 @@ export default {
     MainContent,
     AddTopic,
     EditTopic,
-    AddSubtag
+    AddSubtag,
+    EditSubtag
   }
 }
 </script>
@@ -203,6 +207,9 @@ input {
     a {
       color: @col-abox-item-text-hover;
     }
+    .edit-item-button {
+      background-color: @col-abox-item-bg-hover;
+    }
   }
   li.selected {
     background-color: @col-abox-item-bg-selected;
@@ -210,6 +217,21 @@ input {
     a {
       color: @col-abox-item-text-selected;
     }
+    .edit-item-button {
+      background-color: @col-abox-item-bg-selected;
+    }
   }
+}
+.edit-item-button {
+  height: 20px;
+  padding: 0;
+  border: 0;
+}
+.edit-img {
+  height: 100%;
+  opacity: 0.3;
+}
+.edit-img:hover {
+  opacity: 0.75;
 }
 </style>
