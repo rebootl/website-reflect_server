@@ -6,9 +6,9 @@
     <input type="text"
            placeholder="Label"
            v-model="subtag.label"><br>
-    <input type="text"
+    <!--<input type="text"
            placeholder="Description"
-           v-model="subtag.description"><br>
+           v-model="subtag.description"><br>-->
     <button id="add-subtag-submit" class="overlay-submit"
             @click="submit">Store</button>
     <button id="add-subtag-cancel" @click="cancel">Cancel</button>
@@ -40,7 +40,7 @@ export default {
       let vm = this;
       axios.post(subtags_url, {
         label: this.subtag.label,
-        description: this.subtag.description,
+        //description: this.subtag.description,
         topic_id: this.selected_topics[0]
       },
       {
@@ -77,7 +77,7 @@ export default {
       selected_topics: [],
       subtag: {
         label: '',
-        description: ''
+        //description: ''
       },
       flash: false,
       flash_msg: ''

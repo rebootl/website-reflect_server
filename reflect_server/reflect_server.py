@@ -102,8 +102,6 @@ def api_topic_put(ref):
     # get data
     label = request.json.get('label', None)
     descr = request.json.get('description', "")
-    print(label)
-    print(descr)
     if not label: return jsonify({"msg": "Missing label parameter"}), 400
     # update ref
     new_ref = create_ref(label)
@@ -126,7 +124,7 @@ def api_subtags_post():
     '''add a new subtag'''
     # get data
     label = request.json.get('label', None)
-    descr = request.json.get('description', "")
+    #descr = request.json.get('description', "")
     topic_id = request.json.get('topic_id', None)
     if not label: return jsonify({"msg": "Missing label parameter"}), 400
     if not topic_id: return jsonify({"msg": "Missing topic id parameter"}), 400
@@ -139,9 +137,32 @@ def api_subtags_post():
                 topic_id = topic_id,
                 ref = ref,
                 label = label,
-                description = descr
             )
         return jsonify(ref)
+    except IntegrityError:
+        return jsonify({"msg": "Name already in use."}), 400
+
+@app.route('/api/subtags/<ref>', methods = ['PUT'])
+@jwt_required
+def api_subtag_put(ref):
+    '''edit existing subtag'''
+    # get data
+    label = request.json.get('label', None)
+    descr = request.json.get('description', "")
+    print(descr)
+    if not label: return jsonify({"msg": "Missing label parameter"}), 400
+    # update ref
+    new_ref = create_ref(label)
+    # get instance from db
+    subtag = Tag.get(Tag.ref == ref)
+    # update instance and save to db
+    subtag.ref = new_ref
+    subtag.label = label
+    subtag.description = descr
+    try:
+        with database.atomic():
+            subtag.save()
+            return jsonify(new_ref)
     except IntegrityError:
         return jsonify({"msg": "Name already in use."}), 400
 
