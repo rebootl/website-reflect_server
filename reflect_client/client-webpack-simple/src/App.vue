@@ -208,6 +208,7 @@ input {
       color: @col-abox-item-text-hover;
     }
     .edit-item-button {
+      display: block;
       background-color: @col-abox-item-bg-hover;
     }
   }
@@ -223,6 +224,7 @@ input {
   }
 }
 .edit-item-button {
+  display: none;
   height: 20px;
   padding: 0;
   border: 0;

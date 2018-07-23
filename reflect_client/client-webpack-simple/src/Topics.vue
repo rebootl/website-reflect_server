@@ -74,7 +74,7 @@ export default {
     }
     .edit-topic-button {
       position: absolute;
-      top: 4px;
+      top: 11px;
       right: 0;
     }
   }

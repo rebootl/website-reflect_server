@@ -66,18 +66,11 @@ nav#subtags {
       padding: 9px 12px 9px 12px;
       display: inline-block;
     }
-    a.edit {
-      padding-right: 23px;
-    }
     .edit-subtag-button {
       position: absolute;
-      right: 0;
+      right: 0px;
       top: 7px;
     }
-  }
-  li:hover {
-    // (unclear if needed)
-    color: @col-abox-item-text-hover;
   }
   li.selected {
     border: 2px solid @col-abox-item-border-selected;
