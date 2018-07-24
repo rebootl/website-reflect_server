@@ -46,18 +46,12 @@ export default {
 @import (reference) "./globals.less";
 #login-box {
   max-width: 400px;
-  //width: 50px; // tmp.
-  //height: 50px; // tmp.
   margin-left: auto;
   margin-right: auto;
   background-color: @col-main-content-bg;
   padding: 10px 20px 20px 20px;
-  h2 {
-    //margin: 0;
-  }
   #login-submit {
     margin-top: 20px;
-//    margin-bottom: 10px;
   }
 }
 .flash {

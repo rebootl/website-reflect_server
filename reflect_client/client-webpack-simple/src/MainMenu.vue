@@ -45,15 +45,12 @@ export default {
 <style lang="less">
 @import (reference) "./globals.less";
 #main-menu {
-  //position: fixed;
   position: absolute;
   top: 43px;
   width: 210px;
-  //height: 100%;
   padding-top: 20px;
-  //background-color: @col-abox-bg;
   border-right: 1px solid @col-abox-sep-line;
-  //overflow-y: auto;
+  border-bottom: 1px solid @col-header-line;
   h2 {
     text-align: center;
     margin: 0;
