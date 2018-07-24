@@ -79,7 +79,9 @@ export default {
     }
   }
   li.selected {
-    border-left: 2px solid @col-abox-item-border-selected;
+    //border-bottom: 1px solid @col-abox-item-border-selected;
+    //border-top: 1px solid @col-abox-item-border-selected;
+    //border-left: 2px solid @col-abox-item-border-selected;
   }
 }
 </style>

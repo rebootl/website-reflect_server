@@ -73,7 +73,7 @@ nav#subtags {
     }
   }
   li.selected {
-    border: 2px solid @col-abox-item-border-selected;
+    border: 1px solid @col-abox-item-border-selected;
     a {
       color: @col-abox-item-text-selected;
     }

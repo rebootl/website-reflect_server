@@ -2,7 +2,7 @@
   <div id="app-container">
     <header>
       <div id="logo-box">
-        <img id="logo" src="">
+        <img id="logo" src="reflect-logo_text.png">
       </div>
       <em id="logged-in-tag"
           v-if="global_state.user.logged_in">{{ global_state.user.name }}</em>
@@ -106,19 +106,13 @@ header {
     }
   }
   #logo-box {
-    /*position: fixed;
+    position: absolute;
+    left: 0;
     top: 0;
-    left: 0;*/
-    float: left;
-    width: 210px;
     height: 100%;
   }
   #logo {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    //z-index: 1000;
-    height: 65px;
+    height: 100%;
   }
 }
 h1, h2, h3, h4, h5, h6 {
