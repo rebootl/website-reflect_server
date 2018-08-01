@@ -171,7 +171,7 @@ input {
   max-width: 400px;
   margin-left: auto;
   margin-right: auto;
-  background-color: @col-main-content-bg;
+  background-color: @col-overlay-box-bg;
   padding: 10px 20px 20px 20px;
   .overlay-submit {
     margin-top: 20px;
