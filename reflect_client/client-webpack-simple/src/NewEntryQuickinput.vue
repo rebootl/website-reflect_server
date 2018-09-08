@@ -1,0 +1,112 @@
+<template>
+      <div id="new-entry-quickinput">
+        <mini-select-view :selection_data="global_state.selection_data"
+                          :edit="true">
+        </mini-select-view>
+        <input type="text" :disabled=locked
+               placeholder="New Entry..."
+               v-model="new_entry_text">
+        <button @click="submit_new_entry">Submit</button><br>
+        <small class="type-detect">Entry Type:
+          <span v-if="detect_result == 'detecting'">detecting...</span>
+          <span v-else-if="detect_result == 'autodetect'">Autodetect</span>
+          <span v-else-if="detect_result == 'link'" class="col-link">Link</span>
+          <span v-else-if="detect_result == 'note'" class="col-note">Note</span>
+          <span v-else>could not detect...:(</span>
+        </small>
+      </div>
+</template>
+
+<script>
+import { global_state } from './main.js';
+import MiniSelectView from './MiniSelectView.vue';
+export default {
+  name: 'NewEntryQuickinput',
+  components: { MiniSelectView },
+  // (property needed for watcher here)
+  // --> better way ?
+  props: [ "selection_data" ],
+  created: function () {
+    // not sure why I have to use function() here, but it doesn't work orherwise...
+    this.deb_detect_input = _.debounce(function() { this.detect_input(); }, 500);
+  },
+  watch: {
+    new_entry_text: function() {
+      this.detect_result = "detecting";
+      // use debounce here
+      // (tried to write my own debounce function but its kinda tricky...
+      // so using lodash)
+      this.deb_detect_input();
+    },
+    selection_data: {
+      handler: function() {
+        let topics = [];
+        for (let topic of this.selection_data) {
+          if (topic.active) {
+            topics.push(topic);
+          }
+          if (topics.length == 0) {
+            this.locked = true;
+          } else {
+            this.locked = false;
+          }
+        }
+      },
+      deep: true
+    }
+  },
+  methods: {
+    detect_input() {
+      if (this.new_entry_text.startsWith("http")) {
+        this.detect_result = "link";
+      } else if (this.new_entry_text == "") {
+        this.detect_result = "autodetect";
+      } else {
+        this.detect_result = "note";
+      }
+    },
+    submit_new_entry() {
+    }
+  },
+  data () {
+    return {
+      global_state: global_state,
+      locked: true,
+      new_entry_text: "",
+      detect_result: "autodetect",
+    }
+  }
+}
+</script>
+
+<style lang="less">
+@import (reference) "./globals.less";
+#new-entry-quickinput {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  border-top: 1px solid #3a3a3a;
+  padding-left: 15px;
+  //padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: @col-main-content-bg;
+  input {
+    background-color: #2b2b2b;
+    border: 1px solid #3a3a3a;
+  }
+  button {
+    background-color: #2b2b2b;
+    border: 0;
+  }
+  small.type-detect {
+    color: #555;
+    padding-left: 7px;
+    .col-link {
+      color: @col-types-hi-links;
+    }
+    .col-note {
+      color: @col-types-hi-notes;
+    }
+  }
+}
+</style>

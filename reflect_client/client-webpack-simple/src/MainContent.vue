@@ -12,13 +12,25 @@
       </ul>
     </nav>
     <main id="main-content">
+      <mini-select-view :selection_data="global_state.selection_data">
+      </mini-select-view>
       text, blablabla {{ this.content_data.query_str }}
+      <ul>
+        <!--<li v-for="entry in entries" :id="entry.ref">
+          <div class="entry-info">{{ entry.ref }} {{ entry.datetime }}</div>
+          <div class="entry-content">{{ entry.content.html }}</div>
+        </li>-->
+      </ul>
+      <new-entry-quickinput :selection_data="selection_data" v-if="global_state.user.logged_in">
+      </new-entry-quickinput>
     </main>
   </div>
 </template>
 
 <script>
 import { global_state } from './main.js';
+import MiniSelectView from './MiniSelectView.vue';
+import NewEntryQuickinput from './NewEntryQuickinput.vue';
 const get_content_data_url = "http://hplaptop:5010/api/get_content_data";
 export default {
   name: 'MainContent',
@@ -34,6 +46,8 @@ export default {
     }
   },
   methods: {
+    submit_new_entry() {
+    },
     selection_changed: function() {
       // construct variables for GET request
       let topics = [];
@@ -82,6 +96,9 @@ export default {
   data () {
     return {
       global_state: global_state,
+      new_entry: {
+        input: ""
+      },
       request_data: {},
       content_data: {},
       tabs: [
@@ -111,6 +128,10 @@ export default {
         }
       ]
     }
+  },
+  components: {
+    NewEntryQuickinput,
+    MiniSelectView
   }
 }
 </script>
@@ -174,10 +195,10 @@ export default {
   }
 }
 main {
-  min-height: 300px;
-  padding-left: 30px;
-  padding-right: 30px;
-  padding-top: 20px;
+  min-height: calc(100vh - 94px);
+  //padding-left: 30px;
+  //padding-right: 30px;
+  //padding-top: 20px;
   background-color: @col-main-content-bg;
 }
 </style>
