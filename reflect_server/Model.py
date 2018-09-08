@@ -11,22 +11,34 @@ class Topic(BaseModel):
     ref = CharField(unique = True)
     label = CharField()
     description = CharField(default = "")
-    #active = BooleanField(default = False)
 
 class Tag(BaseModel):
     topic = ForeignKeyField(Topic, backref='tags')
     ref = CharField(unique = True)
     label = CharField()
-    #active = BooleanField(default = False)
+    # -> descr. evtl.
 
+class Entry(BaseModel):
+    type = CharField()
+    datetime = DateTimeField()
+    ref = CharField(unique = True)
+    content = CharField(default = "")
+    author = CharField()
+    pinned = BooleanField(default = False)
+    public = BooleanField(default = True)
 
+class TopicToEntry(BaseModel):
+    topic = ForeignKeyField(Topic)
+    entry = ForeignKeyField(Entry)
 
-
+class TagToEntry(BaseModel):
+    tag = ForeignKeyField(Tag)
+    entry = ForeignKeyField(Entry)
 
 ### create db helper
 def create_tables():
     with database:
-        database.create_tables([Topic, Tag])
+        database.create_tables([Topic, Tag, Entry])
 
 ### from the docs
 # Open a python shell in the directory alongside the example app
