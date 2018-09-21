@@ -20,8 +20,9 @@ class Tag(BaseModel):
 
 class Entry(BaseModel):
     type = CharField()
-    datetime = DateTimeField()
     ref = CharField(unique = True)
+    datetime = DateTimeField()
+    mod_datetime = DateTimeField()
     content = CharField(default = "")
     author = CharField()
     pinned = BooleanField(default = False)

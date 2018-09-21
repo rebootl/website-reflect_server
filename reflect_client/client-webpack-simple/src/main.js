@@ -15,7 +15,8 @@ export const global_state = {
       add_subtag: false,
     },
     edit_topic_item: {},
-    edit_subtag_item: {}
+    edit_subtag_item: {},
+    flash_msg: ""
 
 }
 

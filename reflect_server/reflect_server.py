@@ -12,11 +12,16 @@ from reflect_server.helpers import create_ref
 app = Flask(__name__)
 CORS(app)
 
+### config
+
+entry_types = [ 'note', 'link' ]
+
 ### users
 
 # -> make a user list here
 app.config['USER'] = 'cem'
 # (pw: 'tutut')
+# -> how did I create this hash ?
 app.config['PW_SEC_HASH'] = 'pbkdf2:sha256:50000$yxnrweL8$db95937f8fc8dc4caebf8e6e2cf650b896105fd7d71fe0d42ac22bd7806297cb'
 
 # Setup the Flask-JWT-Extended extension
@@ -72,6 +77,21 @@ def login_post():
     return jsonify(access_token = access_token), 200
 
 ### protected routes
+
+@app.route('/api/entries', methods=['POST'])
+@jwt_required
+def api_entries_post():
+    '''add a new entry'''
+    text = request.json.get('text', None)
+    det_type = request.json.get('det_type', None)
+    sel_data = request.json.get('sel_data', None)
+    if not text: return jsonify({"msg": "Text cannot be empty..."}), 400
+    if not det_type == "note" or not det_type == "link":
+        # -> re-detect type here
+        return jsonify({"msg": "Could not determine entry type:(..."}), 400
+        #det_type = "unknown"
+    if not sel_data: return jsonify({"msg": "Sel. Data missing..."}), 400
+
 
 @app.route('/api/topics', methods = ['POST'])
 @jwt_required

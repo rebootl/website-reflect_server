@@ -18,7 +18,9 @@
 </template>
 
 <script>
+const entry_url = "http://hplaptop:5010/api/entry"
 import { global_state } from './main.js';
+import auth from "./auth.js";
 import MiniSelectView from './MiniSelectView.vue';
 export default {
   name: 'NewEntryQuickinput',
@@ -66,6 +68,37 @@ export default {
       }
     },
     submit_new_entry() {
+      if (this.new_entry_text === '') {
+        flash_msg = "Input field empty... returning.";
+        return
+      }
+      let vm = this;
+      axios.post(entry_url, {
+        text: this.new_entry_text,
+        det_type: this.detect_result,
+        sel_data: this.global_state.selection_data
+      },
+      {
+        headers: auth.get_auth_header()
+      }
+      ).then(function (response) {
+        console.log(response);
+        // -> output success
+        vm.global_state.flash_msg = "Success! :)";
+        //vm.flash = true;
+        //vm.$emit('refresh_menu');
+        //vm.cancel();
+      }).catch(function (error) {
+        console.log(error);
+        if (error.response) {
+          vm.flash_msg = error.response.data.msg;
+          //vm.flash = true;
+        }
+        else {
+          vm.flash_msg = "An unknown error occured... :(";
+          //vm.flash = true;
+        }
+      });
     }
   },
   data () {

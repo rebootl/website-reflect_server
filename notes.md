@@ -5,6 +5,7 @@
 
 ## Tasks / Issues
 
+- make topics/tag more rest-like
 
 ## Development
 
