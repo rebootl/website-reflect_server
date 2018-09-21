@@ -8,7 +8,6 @@ class BaseModel(Model):
         database = database
 
 class Topic(BaseModel):
-    ref = CharField(unique = True)
     label = CharField()
     description = CharField(default = "")
 

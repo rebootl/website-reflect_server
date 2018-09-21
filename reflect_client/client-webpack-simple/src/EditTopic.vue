@@ -1,7 +1,7 @@
 <template>
   <div id="edit-topic-box" class="overlay-box">
     <h2>Edit Topic</h2>
-    <h3>ref: {{ global_state.edit_topic_item.ref }}</h3>
+    <h3>id: {{ global_state.edit_topic_item.id }}</h3>
     <p><em class="flash" v-if="flash">{{ flash_msg }}</em></p>
     Label: <input type="text"
            v-model="topic.label"><br>
@@ -26,7 +26,7 @@ export default {
         this.flash = true;
         return
       }
-      let topic_url = topics_url + this.global_state.edit_topic_item.ref;
+      let topic_url = topics_url + this.global_state.edit_topic_item.id;
       let vm = this;
       axios.put(topic_url, {
         label: this.topic.label,

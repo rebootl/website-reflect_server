@@ -115,28 +115,25 @@ def api_topics_post():
     except IntegrityError:
         return jsonify({"msg": "Name already in use."}), 400
 
-@app.route('/api/topics/<ref>', methods = ['PUT'])
+@app.route('/api/topics/<id>', methods = ['PUT'])
 @jwt_required
-def api_topic_put(ref):
+def api_topic_put(id):
     '''edit existing topic'''
     # get data
     label = request.json.get('label', None)
     descr = request.json.get('description', "")
     if not label: return jsonify({"msg": "Missing label parameter"}), 400
-    # update ref
-    new_ref = create_ref(label)
     # get instance from db
-    topic = Topic.get(Topic.ref == ref)
+    topic = Topic.get(Topic.id == id)
     # update instance and save to db
-    topic.ref = new_ref
     topic.label = label
     topic.description = descr
     try:
         with database.atomic():
             topic.save()
-            return jsonify(new_ref)
+            return jsonify(id)
     except IntegrityError:
-        return jsonify({"msg": "Name already in use."}), 400
+        return jsonify({"msg": "Integrity Error. :("}), 400
 
 @app.route('/api/subtags', methods = ['POST'])
 @jwt_required
@@ -227,7 +224,6 @@ def api_get_selection_data():
             tags.append(tag_dataset)
         topic_dataset = {
             'id': topic.id,
-            'ref': topic.ref,
             'label': topic.label,
             'description': topic.description,
             'active': False,

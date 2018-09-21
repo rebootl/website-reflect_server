@@ -2,8 +2,9 @@
   <nav id="topics">
     <h2>Topics</h2>
     <ul>
-      <li v-for="item in global_state.selection_data" :id="item.ref"
-          v-bind:class="{ 'selected': item.active }">
+      <li v-for="item in global_state.selection_data"
+          :id="'topic-id-' + item.id"
+          :class="{ 'selected': item.active }">
         <a href="#" v-on:click="toggle_select(item)">{{ item.label }}</a>
         <button v-if="global_state.user.logged_in"
                 class="edit-item-button edit-topic-button"
