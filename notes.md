@@ -6,6 +6,8 @@
 ## Tasks / Issues
 
 - make topics/tag more rest-like
+- DB Model not null constr. ?
+- keep selection after tag creation if possible
 
 ## Development
 
