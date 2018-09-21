@@ -101,19 +101,18 @@ def api_topics_post():
     label = request.json.get('label', None)
     descr = request.json.get('description', "")
     if not label: return jsonify({"msg": "Missing label parameter"}), 400
-    # create ref
-    ref = create_ref(label)
     # store to db
     try:
         with database.atomic():
             t = Topic.create(
-                ref = ref,
+                #ref = ref,
                 label = label,
                 description = descr
             )
-        return jsonify(ref)
     except IntegrityError:
-        return jsonify({"msg": "Name already in use."}), 400
+        return jsonify({"msg": "Integrity Error. :("}), 400
+    else:
+        return jsonify({ "id": t.id })
 
 @app.route('/api/topics/<id>', methods = ['PUT'])
 @jwt_required
@@ -131,7 +130,7 @@ def api_topic_put(id):
     try:
         with database.atomic():
             topic.save()
-            return jsonify(id)
+            return jsonify({ "id": id })
     except IntegrityError:
         return jsonify({"msg": "Integrity Error. :("}), 400
 
@@ -141,47 +140,43 @@ def api_subtags_post():
     '''add a new subtag'''
     # get data
     label = request.json.get('label', None)
-    #descr = request.json.get('description', "")
+    descr = request.json.get('description', "")
     topic_id = request.json.get('topic_id', None)
     if not label: return jsonify({"msg": "Missing label parameter"}), 400
     if not topic_id: return jsonify({"msg": "Missing topic id parameter"}), 400
-    # create ref
-    ref = create_ref(label)
     # store to db
     try:
         with database.atomic():
             t = Tag.create(
                 topic_id = topic_id,
-                ref = ref,
+                description = descr,
                 label = label,
             )
-        return jsonify(ref)
     except IntegrityError:
-        return jsonify({"msg": "Name already in use."}), 400
+        return jsonify({"msg": "Integrity Error. :("}), 400
+    else:
+        return jsonify({ "id": t.id })
 
-@app.route('/api/subtags/<ref>', methods = ['PUT'])
+@app.route('/api/subtags/<id>', methods = ['PUT'])
 @jwt_required
-def api_subtag_put(ref):
+def api_subtag_put(id):
     '''edit existing subtag'''
     # get data
     label = request.json.get('label', None)
     descr = request.json.get('description', "")
-    print(descr)
     if not label: return jsonify({"msg": "Missing label parameter"}), 400
-    # update ref
-    new_ref = create_ref(label)
     # get instance from db
-    subtag = Tag.get(Tag.ref == ref)
+    subtag = Tag.get(Tag.id == id)
     # update instance and save to db
-    subtag.ref = new_ref
     subtag.label = label
     subtag.description = descr
     try:
         with database.atomic():
             subtag.save()
-            return jsonify(new_ref)
     except IntegrityError:
         return jsonify({"msg": "Name already in use."}), 400
+    else:
+        return jsonify({ "id": id })
 
 ### public routes
 
@@ -217,7 +212,7 @@ def api_get_selection_data():
         tags = []
         for tag in topic.tags:
             tag_dataset = {
-                'ref': tag.ref,
+                'id': tag.id,
                 'label': tag.label,
                 'active': False
             }

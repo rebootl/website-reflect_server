@@ -1,7 +1,7 @@
 <template>
   <div id="edit-subtag-box" class="overlay-box">
     <h2>Edit Subtag</h2>
-    <h3>ref: {{ global_state.edit_subtag_item.ref }}</h3>
+    <h3>id: {{ global_state.edit_subtag_item.id }}</h3>
     <p><em class="flash" v-if="flash">{{ flash_msg }}</em></p>
     Label: <input type="text"
            v-model="subtag.label"><br>
@@ -24,7 +24,7 @@ export default {
         this.flash = true;
         return
       }
-      let subtag_url = subtags_url + this.global_state.edit_subtag_item.ref;
+      let subtag_url = subtags_url + this.global_state.edit_subtag_item.id;
       let vm = this;
       axios.put(subtag_url, {
         label: this.subtag.label,

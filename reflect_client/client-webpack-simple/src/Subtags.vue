@@ -4,7 +4,8 @@
     <ul v-for="item in global_state.selection_data"
         v-if="item.active">
       <li v-for="subtag in item.subtags"
-          v-bind:class="{ 'selected': subtag.active }">
+          :id="'subtag-id-' + subtag.id"
+          :class="{ 'selected': subtag.active }">
         <a href="#" v-on:click="toggle_select(subtag)"
            :class="{ 'edit': global_state.user.logged_in }">{{ subtag.label }}</a>
         <button v-if="global_state.user.logged_in"

@@ -8,14 +8,14 @@ class BaseModel(Model):
         database = database
 
 class Topic(BaseModel):
-    label = CharField()
+    label = CharField()     # -> not null ?
     description = CharField(default = "")
 
 class Tag(BaseModel):
     topic = ForeignKeyField(Topic, backref='tags')
-    ref = CharField(unique = True)
-    label = CharField()
-    # -> descr. evtl.
+    label = CharField()     # -> not null ?
+    description = CharField(default = "")
+    #ref = CharField(unique = True)
 
 class Entry(BaseModel):
     type = CharField()
