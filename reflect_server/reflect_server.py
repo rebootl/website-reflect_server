@@ -6,8 +6,12 @@ from flask_jwt_extended import JWTManager, create_access_token, \
 from werkzeug.security import check_password_hash
 from peewee import IntegrityError
 
-from reflect_server.Model import database, Topic, Tag
-from reflect_server.helpers import create_ref
+import markdown
+import json
+
+from reflect_server.Model import database, Topic, Tag, Entry, \
+    TopicToEntry, TagToEntry
+from reflect_server.helpers import create_ref, get_topic_tags
 
 app = Flask(__name__)
 CORS(app)
@@ -82,16 +86,55 @@ def login_post():
 @jwt_required
 def api_entries_post():
     '''add a new entry'''
-    text = request.json.get('text', None)
     det_type = request.json.get('det_type', None)
+    text = request.json.get('text', None)
+    author = request.json.get('author', None)
     sel_data = request.json.get('sel_data', None)
-    if not text: return jsonify({"msg": "Text cannot be empty..."}), 400
-    if not det_type == "note" or not det_type == "link":
-        # -> re-detect type here
-        return jsonify({"msg": "Could not determine entry type:(..."}), 400
-        #det_type = "unknown"
+    if not text: return jsonify({"msg": "text cannot be empty..."}), 400
+    if not author: return jsonify({"msg": "author cannot be empty..."}), 400
     if not sel_data: return jsonify({"msg": "Sel. Data missing..."}), 400
-
+    if det_type == "note":
+        ### -> create note entry here
+        # -> process markdown into html (python-markdown)
+        text_html = markdown.markdown(text)
+        # -> make rich urls (python-micawber)
+        #
+        content = {
+            "text": text,
+            "text_html": text_html
+        }
+    elif det_type == "link":
+        ### -> create link entry here
+        # -> evtl make rich url
+        return jsonify({"msg": "Not yet implemented :(..."}), 400
+    else:
+        # -> try to re-detect type here
+        return jsonify({"msg": "Could not determine entry type :(..."}), 400
+    # store to db
+    #try:
+    with database.atomic():
+        e = Entry.create(
+                type = det_type,
+                author = author,
+                content = json.dumps(content),
+            )
+    #except IntegrityError:
+    #    return jsonify({"msg": "Integrity Error. :("}), 400
+    ### -> process selection data
+    topics, subtags = get_topic_tags(sel_data)
+    for topic in topics:
+        with database.atomic():
+            t = TopicToEntry.create(
+                topic = topic['id'],
+                entry = e.id
+            )
+    for subtag in subtags:
+        with database.atomic():
+            t = TagToEntry.create(
+                tag = subtag['id'],
+                entry = e.id
+            )
+    return jsonify({ "id": e.id })
 
 @app.route('/api/topics', methods = ['POST'])
 @jwt_required
@@ -105,7 +148,6 @@ def api_topics_post():
     try:
         with database.atomic():
             t = Topic.create(
-                #ref = ref,
                 label = label,
                 description = descr
             )

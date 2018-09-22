@@ -1,5 +1,8 @@
+import datetime
+
 from peewee import Model, SqliteDatabase
-from peewee import CharField, BooleanField, DateTimeField, ForeignKeyField
+from peewee import (TextField, CharField, BooleanField, DateTimeField,
+                    ForeignKeyField)
 
 database = SqliteDatabase('reflect.db')
 
@@ -13,15 +16,14 @@ class Topic(BaseModel):
 
 class Tag(BaseModel):
     topic = ForeignKeyField(Topic, backref='tags')
-    label = CharField()     # -> not null ?
+    label = CharField()     # -> not null ? unique ?
     description = CharField(default = "")
 
 class Entry(BaseModel):
     type = CharField()
-    ref = CharField(unique = True)
-    datetime = DateTimeField()
-    mod_datetime = DateTimeField()
-    content = CharField(default = "")
+    timestamp = DateTimeField(default = datetime.datetime.now)
+    mod_timestamp = DateTimeField(default = datetime.datetime.now)
+    content = TextField()
     author = CharField()
     pinned = BooleanField(default = False)
     public = BooleanField(default = True)
@@ -37,7 +39,13 @@ class TagToEntry(BaseModel):
 ### create db helper
 def create_tables():
     with database:
-        database.create_tables([Topic, Tag, Entry])
+        database.create_tables([
+            Topic,
+            Tag,
+            Entry,
+            TopicToEntry,
+            TagToEntry
+        ])
 
 ### from the docs
 # Open a python shell in the directory alongside the example app

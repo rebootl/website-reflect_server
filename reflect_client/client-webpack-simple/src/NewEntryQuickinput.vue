@@ -18,7 +18,7 @@
 </template>
 
 <script>
-const entry_url = "http://hplaptop:5010/api/entry"
+const entry_url = "http://hplaptop:5010/api/entries"
 import { global_state } from './main.js';
 import auth from "./auth.js";
 import MiniSelectView from './MiniSelectView.vue';
@@ -74,8 +74,9 @@ export default {
       }
       let vm = this;
       axios.post(entry_url, {
-        text: this.new_entry_text,
         det_type: this.detect_result,
+        text: this.new_entry_text,
+        author: this.global_state.user.name,
         sel_data: this.global_state.selection_data
       },
       {
@@ -89,8 +90,8 @@ export default {
         //vm.$emit('refresh_menu');
         //vm.cancel();
       }).catch(function (error) {
-        console.log(error);
         if (error.response) {
+          console.log(error.response.data.msg);
           vm.flash_msg = error.response.data.msg;
           //vm.flash = true;
         }
