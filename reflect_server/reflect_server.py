@@ -123,12 +123,14 @@ def api_entries_post():
     ### -> process selection data
     topics, subtags = get_topic_tags(sel_data)
     for topic in topics:
+        # -> try except
         with database.atomic():
             t = TopicToEntry.create(
                 topic = topic['id'],
                 entry = e.id
             )
     for subtag in subtags:
+        # -> try except
         with database.atomic():
             t = TagToEntry.create(
                 tag = subtag['id'],
