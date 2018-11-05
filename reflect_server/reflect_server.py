@@ -11,7 +11,7 @@ import json
 
 from reflect_server.Model import database, Topic, Tag, Entry, \
     TopicToEntry, TagToEntry
-from reflect_server.helpers import create_ref, get_topic_tags
+from reflect_server.helpers import create_ref, get_active_topic_tags
 
 app = Flask(__name__)
 CORS(app)
@@ -121,7 +121,7 @@ def api_entries_post():
     #except IntegrityError:
     #    return jsonify({"msg": "Integrity Error. :("}), 400
     ### -> process selection data
-    topics, subtags = get_topic_tags(sel_data)
+    topics, subtags = get_active_topic_tags(sel_data)
     for topic in topics:
         # -> try except
         with database.atomic():
@@ -224,6 +224,7 @@ def api_subtag_put(id):
 
 ### public routes
 
+# -> make this route /api/entries (GET)
 @app.route('/api/get_content_data')
 def api_get_content_data():
     data = {
@@ -231,6 +232,8 @@ def api_get_content_data():
     }
     return jsonify(data)
 
+# -> make this route /api/topics (GET)
+# (topics include subtags)
 @app.route('/api/get_selection_data')
 def api_get_selection_data():
 

@@ -8,7 +8,7 @@ lowercase'''
     alnum_dashed = re.sub(r'[^a-zA-Z0-9-]', '-', s)
     return alnum_dashed.lower()
 
-def get_topic_tags(sel_data):
+def get_active_topic_tags(sel_data):
     topics = []
     subtags=[]
     for topic in sel_data:

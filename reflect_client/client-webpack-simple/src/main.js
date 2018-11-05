@@ -16,7 +16,11 @@ export const global_state = {
     },
     edit_topic_item: {},
     edit_subtag_item: {},
-    flash_msg: ""
+    flash_msg: "",
+    flash: {
+      type: "",
+      msg: ""
+    }
 
 }
 
