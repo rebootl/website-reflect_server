@@ -2,6 +2,10 @@
 
 - finish the server
 
+- rework the client
+  - make submodule for type sel.
+  - rework sel. CSS
+
 - create a flash message system
 
 - subtags are part of topics
