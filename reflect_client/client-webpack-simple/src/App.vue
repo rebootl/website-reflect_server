@@ -12,6 +12,7 @@
       <button id="login-toggle-button" v-else
               @click="logout()">Logout</button>
     </header>
+    <flashbar v-if="global_state.flash.shown"></flashbar>
     <div id="overlay" v-bind:class="{ 'shown' : global_state.overlay.shown }">
       <login v-if="global_state.overlay.login"
              @cancel_login="hide_login"></login>
@@ -30,6 +31,7 @@
 </template>
 
 <script>
+import Flashbar from './Flashbar';
 import Login from './Login.vue';
 import MainMenu from './MainMenu.vue';
 import MainContent from './MainContent.vue';
@@ -69,6 +71,7 @@ export default {
     }
   },
   components: {
+    Flashbar,
     Login,
     MainMenu,
     MainContent,

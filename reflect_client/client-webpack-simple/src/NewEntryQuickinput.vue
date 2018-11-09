@@ -3,10 +3,10 @@
         <mini-select-view :selection_data="global_state.selection_data"
                           :edit="true">
         </mini-select-view>
-        <input type="text" :disabled=locked
-               placeholder="New Entry..."
+        <input type="text"
+               placeholder="Start a new Entry..."
                v-model="new_entry_text">
-        <button @click="submit_new_entry">Submit</button><br>
+        <button @click="submit_new_entry">Create</button><br>
         <small class="type-detect">Entry Type:
           <span v-if="detect_result == 'detecting'">detecting...</span>
           <span v-else-if="detect_result == 'autodetect'">Autodetect</span>
@@ -25,9 +25,6 @@ import MiniSelectView from './MiniSelectView.vue';
 export default {
   name: 'NewEntryQuickinput',
   components: { MiniSelectView },
-  // (property needed for watcher here)
-  // --> better way ?
-  props: [ "selection_data" ],
   created: function () {
     // not sure why I have to use function() here, but it doesn't work orherwise...
     this.deb_detect_input = _.debounce(function() { this.detect_input(); }, 500);
@@ -40,26 +37,11 @@ export default {
       // so using lodash)
       this.deb_detect_input();
     },
-    selection_data: {
-      handler: function() {
-        let topics = [];
-        for (let topic of this.selection_data) {
-          if (topic.active) {
-            topics.push(topic);
-          }
-          if (topics.length == 0) {
-            this.locked = true;
-          } else {
-            this.locked = false;
-          }
-        }
-      },
-      deep: true
-    }
   },
   methods: {
     detect_input() {
-      if (this.new_entry_text.startsWith("http")) {
+      if (this.new_entry_text.startsWith("http://") ||
+          this.new_entry_text.startsWith("https://")) {
         this.detect_result = "link";
       } else if (this.new_entry_text == "") {
         this.detect_result = "autodetect";
@@ -67,9 +49,28 @@ export default {
         this.detect_result = "note";
       }
     },
+    check_selection() {
+      let topics = [];
+      for (let topic of this.global_state.selection_data) {
+        if (topic.active) {
+          topics.push(topic);
+        }
+      }
+      if (topics.length == 0) {
+        return false;
+      } else {
+        return true;
+      }
+    },
     submit_new_entry() {
       if (this.new_entry_text === '') {
-        flash_msg = "Input field empty... returning.";
+        // (return silently)
+        return
+      }
+      if (!this.check_selection()) {
+        global_state.flash.type_msg = "Warning:";
+        global_state.flash.msg = "You must select a topic and optionally tags, returning...";
+        global_state.flash.shown = true;
         return
       }
       let vm = this;
@@ -84,20 +85,23 @@ export default {
       }
       ).then(function (response) {
         console.log(response);
-        // -> output success
-        vm.global_state.flash_msg = "Success! :)";
-        //vm.flash = true;
-        //vm.$emit('refresh_menu');
-        //vm.cancel();
+        vm.global_state.flash.type_msg = "Success! :)";
+        vm.global_state.flash.msg = "New entry created. ID = " +
+          response.data.id;
+        vm.global_state.flash.shown = true;
+        vm.$emit('refresh_menu');
+        vm.new_entry_text = "";
       }).catch(function (error) {
         if (error.response) {
           console.log(error.response.data.msg);
-          vm.flash_msg = error.response.data.msg;
-          //vm.flash = true;
+          vm.global_state.flash.type_msg = "Error! :(";
+          vm.global_state.flash.msg = error.response.data.msg;
+          vm.global_state.flash.shown = true;
         }
         else {
-          vm.flash_msg = "An unknown error occured... :(";
-          //vm.flash = true;
+          vm.global_state.flash.type_msg = "Error! :(";
+          vm.global_state.flash_msg = "An unknown error occured...";
+          vm.global_state.flash.shown = true;
         }
       });
     }
@@ -105,7 +109,6 @@ export default {
   data () {
     return {
       global_state: global_state,
-      locked: true,
       new_entry_text: "",
       detect_result: "autodetect",
     }
@@ -121,7 +124,6 @@ export default {
   width: 100%;
   border-top: 1px solid #3a3a3a;
   padding-left: 15px;
-  //padding-top: 10px;
   padding-bottom: 10px;
   background-color: @col-main-content-bg;
   input {

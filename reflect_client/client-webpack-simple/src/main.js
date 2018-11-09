@@ -18,7 +18,8 @@ export const global_state = {
     edit_subtag_item: {},
     flash_msg: "",
     flash: {
-      type: "",
+      shown: false,
+      type_msg: "",
       msg: ""
     }
 
