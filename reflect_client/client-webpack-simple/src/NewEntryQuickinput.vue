@@ -1,7 +1,6 @@
 <template>
       <div id="new-entry-quickinput">
-        <mini-select-view :selection_data="global_state.selection_data"
-                          :edit="true">
+        <mini-select-view :selection_data="global_state.selection_data">
         </mini-select-view>
         <input type="text"
                placeholder="Start a new Entry..."

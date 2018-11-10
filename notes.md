@@ -2,7 +2,6 @@
 
 - create a flash message system ==> WIP
   - make a flash helper
-  - cleanup mini-select-view
 
 - rework the client
   - make submodule for type sel.

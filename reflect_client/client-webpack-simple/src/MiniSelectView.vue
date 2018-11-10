@@ -16,7 +16,7 @@
 <script>
 export default {
   name: 'MiniSelectView',
-  props: [ "selection_data", "edit" ],
+  props: [ "selection_data" ],
   watch: {
     selection_data: {
       handler: function() {
@@ -37,9 +37,6 @@ export default {
             this.tags.push(subtag);
           }
         }
-      }
-      if (this.topics.length == 0 && this.edit == true) {
-        this.topics.push({ label: "Select a Topic and opt. Tags..." });
       }
     }
   },
