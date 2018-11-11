@@ -16,12 +16,13 @@ export const global_state = {
     },
     edit_topic_item: {},
     edit_subtag_item: {},
-    flash_msg: "",
     flash: {
       shown: false,
       type_msg: "",
       msg: ""
-    }
+    },
+    // (keep for temporary backw. compat)
+    flash_msg: "",
 
 }
 

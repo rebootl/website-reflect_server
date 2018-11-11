@@ -18,9 +18,11 @@
 
 <script>
 const entry_url = "http://hplaptop:5010/api/entries"
-import { global_state } from './main.js';
-import auth from "./auth.js";
 import MiniSelectView from './MiniSelectView.vue';
+import { global_state } from './main.js';
+import auth from './auth.js';
+import { flash } from './flash_helper.js';
+
 export default {
   name: 'NewEntryQuickinput',
   components: { MiniSelectView },
@@ -67,9 +69,8 @@ export default {
         return
       }
       if (!this.check_selection()) {
-        global_state.flash.type_msg = "Warning:";
-        global_state.flash.msg = "You must select a topic and optionally tags, returning...";
-        global_state.flash.shown = true;
+        flash("warn",
+              "You must select a topic and optionally tags, returning...")
         return
       }
       let vm = this;
@@ -84,23 +85,16 @@ export default {
       }
       ).then(function (response) {
         console.log(response);
-        vm.global_state.flash.type_msg = "Success! :)";
-        vm.global_state.flash.msg = "New entry created. ID = " +
-          response.data.id;
-        vm.global_state.flash.shown = true;
+        flash("succ", "New entry created. ID = " + response.data.id);
         vm.$emit('refresh_menu');
         vm.new_entry_text = "";
       }).catch(function (error) {
         if (error.response) {
           console.log(error.response.data.msg);
-          vm.global_state.flash.type_msg = "Error! :(";
-          vm.global_state.flash.msg = error.response.data.msg;
-          vm.global_state.flash.shown = true;
+          flash("erro", error.response.data.msg);
         }
         else {
-          vm.global_state.flash.type_msg = "Error! :(";
-          vm.global_state.flash_msg = "An unknown error occured...";
-          vm.global_state.flash.shown = true;
+          flash("erro", "An unknown error occured...");
         }
       });
     }
