@@ -5,10 +5,10 @@
 - create a flash message system ==> WIP
   - make a flash helper ==> DONE
   - use helper in all sub-components
-    - add topic
-    - edit topic
+    - add topic   ==> DONE
+    - edit topic  ==> DONE
     - add subtag  ==> DONE
-    - edit subtag
+    - edit subtag ==> DONE
 
 - rework the client
   - make submodule for type sel.

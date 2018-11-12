@@ -16,8 +16,9 @@
 
 <script>
 const topics_url = "http://hplaptop:5010/api/topics"
-import { global_state } from './main.js';
 import auth from "./auth.js";
+import { global_state } from './main.js';
+import { flash } from './flash_helper.js';
 export default {
   name: 'add-topic',
   methods: {
@@ -37,20 +38,16 @@ export default {
       }
       ).then(function (response) {
         console.log(response);
-        // -> output success
-        vm.flash_msg = "Success! :)";
-        vm.flash = true;
+        flash("succ", "New subtag created. ID = " + response.data.id);
         vm.$emit('refresh_menu');
         vm.cancel();
       }).catch(function (error) {
         console.log(error);
         if (error.response) {
-          vm.flash_msg = error.response.data.msg;
-          vm.flash = true;
+          flash("erro", error.response.data.msg);
         }
         else {
-          vm.flash_msg = "An unknown error occured... :(";
-          vm.flash = true;
+          flash("erro", "An unknown error occured...");
         }
       });
     },

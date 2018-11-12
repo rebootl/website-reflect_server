@@ -46,7 +46,7 @@ export default {
       }
       ).then(function (response) {
         console.log(response);
-        flash("succ", "New topic created. ID = " + response.data.id);
+        flash("succ", "New subtag created. ID = " + response.data.id);
         vm.$emit('refresh_menu');
         vm.cancel();
       }).catch(function (error) {
