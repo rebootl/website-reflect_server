@@ -69,8 +69,7 @@ export default {
         return
       }
       if (!this.check_selection()) {
-        flash("warn",
-              "You must select a topic and optionally tags, returning...")
+        flash("warn", "You must select a topic and optionally tags.")
         return
       }
       let vm = this;
@@ -89,8 +88,8 @@ export default {
         vm.$emit('refresh_menu');
         vm.new_entry_text = "";
       }).catch(function (error) {
+        console.log(error);
         if (error.response) {
-          console.log(error.response.data.msg);
           flash("erro", error.response.data.msg);
         }
         else {
