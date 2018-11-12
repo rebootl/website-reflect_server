@@ -2,13 +2,7 @@
 
 - move types into menu ?
 
-- create a flash message system ==> WIP
-  - make a flash helper ==> DONE
-  - use helper in all sub-components
-    - add topic   ==> DONE
-    - edit topic  ==> DONE
-    - add subtag  ==> DONE
-    - edit subtag ==> DONE
+- improve response err. message
 
 - rework the client
   - make submodule for type sel.
@@ -23,3 +17,9 @@
 - DB Model not null constr. (?)
 
 - keep selection after tag creation if possible
+
+### Done
+
+- create a flash message system ==> DONE
+  - make a flash helper ==> DONE
+  - use helper in all sub-components ==> DONE
