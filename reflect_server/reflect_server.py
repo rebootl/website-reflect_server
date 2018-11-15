@@ -225,6 +225,7 @@ def api_subtag_put(id):
 ### public routes
 
 # -> make this route /api/entries (GET)
+# ==> obsolete, replacing by below
 @app.route('/api/get_content_data')
 def api_get_content_data():
     data = {
@@ -232,13 +233,45 @@ def api_get_content_data():
     }
     return jsonify(data)
 
-# -> make this route /api/topics (GET)
-# (topics include subtags)
-@app.route('/api/get_selection_data')
-def api_get_selection_data():
+@app.route('/api/entries')
+def api_entries():
+    '''entries'''
+    # get selection from request query
+    # (debug prints)
+    #print(request.args.getlist('topics[]'))
+    #print(request.args.getlist('tags[]'))
+    topic_ids = request.args.getlist('topics[]')
+    subtag_ids = request.args.getlist('tags[]')
 
-    # get selection from db
-    sel_data = Topic.select().order_by(Topic.label).prefetch(Tag)
+    # get corresponding entries from db
+    if topic_ids == [] and subtag_ids == []:
+        entries = Entry.select().order_by(Entry.mod_timestamp).limit(10).dicts()
+    else:
+        entries = []
+
+    # convert datetime obj.
+    DATE_FMT = "%c"
+    entries_clean = []
+    for entry in entries:
+        entry['timestamp'] = entry['timestamp'].strftime(DATE_FMT)
+        entry['mod_timestamp'] = entry['mod_timestamp'].strftime(DATE_FMT)
+        # (alt synt.)
+        #entry.update({ 'timestamp': 1 })
+        #entry.update({ 'mod_timestamp': 1 })
+        entries_clean.append(entry)
+
+    data = {
+        'query_str': str(request.query_string),
+        'entries': entries_clean
+    }
+    return jsonify(data)
+
+@app.route('/api/topics')
+def api_topics():
+    '''topics (include subtags)'''
+
+    # get data from db
+    topics = Topic.select().order_by(Topic.label).prefetch(Tag)
 
 # model_to_dict function is provided but including 'active' on tags
 # is not possible using this
@@ -254,8 +287,9 @@ def api_get_selection_data():
 #        )
 #        data.append(topic_dataset)
 
+    # preformat (add active keys)
     data = []
-    for topic in sel_data:
+    for topic in topics:
         tags = []
         for tag in topic.tags:
             tag_dataset = {
