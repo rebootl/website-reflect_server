@@ -1,12 +1,8 @@
 ## Tasks / Issues
 
-- move types into menu ?
-
 - improve response err. message
 
-- rework the client
-  - make submodule for type sel.
-  - rework sel. CSS
+- rework sel. CSS
 
 - finish the server
 
@@ -17,6 +13,12 @@
 - DB Model not null constr. (?)
 
 - keep selection after tag creation if possible
+
+### Postponed
+
+- move types into menu ?
+  --> removed for now
+  - make submodule for type sel.
 
 ### Done
 
