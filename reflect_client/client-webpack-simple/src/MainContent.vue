@@ -1,7 +1,7 @@
 <template>
   <div id="main-content-container">
     <main id="main-content">
-      <mini-select-view :selection_data="global_state.selection_data">
+      <mini-select-view :selection_data="selection_data">
       </mini-select-view>
       text, blablabla {{ this.content_data.query_str }}
       <ul>
@@ -10,7 +10,8 @@
           <div class="entry-content">{{ entry.content.html }}</div>
         </li>-->
       </ul>
-      <new-entry-quickinput :selection_data="selection_data" v-if="global_state.user.logged_in">
+      <new-entry-quickinput v-if="global_state.user.logged_in"
+                            :selection_data="selection_data">
       </new-entry-quickinput>
     </main>
   </div>
@@ -20,7 +21,7 @@
 import { global_state } from './main.js';
 import MiniSelectView from './MiniSelectView.vue';
 import NewEntryQuickinput from './NewEntryQuickinput.vue';
-const get_content_data_url = "http://hplaptop:5010/api/get_content_data";
+const get_content_data_url = "http://hplaptop:5010/api/entries";
 export default {
   name: 'MainContent',
   // (property needed for watcher here)
@@ -43,11 +44,11 @@ export default {
       let tags = [];
       for (let topic of this.selection_data) {
         if (topic.active) {
-          topics.push(topic.ref);
+          topics.push(topic.id);
         }
         for (let subtag of topic.subtags) {
           if (subtag.active) {
-            tags.push(subtag.ref)
+            tags.push(subtag.id)
           }
         }
       }
@@ -59,7 +60,7 @@ export default {
       this.get_content();
     },
     get_content: function() {
-      let vm = this
+      let vm = this;
       axios.get(get_content_data_url, {
           params: vm.request_data
         })
