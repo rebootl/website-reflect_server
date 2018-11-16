@@ -2,7 +2,7 @@ from flask import Flask, jsonify, request
 from flask_cors import cross_origin, CORS
 #from playhouse.shortcuts import model_to_dict
 from flask_jwt_extended import JWTManager, create_access_token, \
-    jwt_required
+    jwt_required, get_jwt_identity
 from werkzeug.security import check_password_hash
 from peewee import IntegrityError
 
@@ -42,6 +42,31 @@ def before_request():
 def after_request(response):
     database.close()
     return response
+
+### helpers
+
+def get_pub_entries(topic_ids, subtag_ids):
+    # get corresponding entries from db
+    if topic_ids == [] and subtag_ids == []:
+        return Entry.get_public_batch()
+    elif len(topic_ids) == 1 and subtag_ids == []:
+        return Entry.get_public_batch_by_topic(topic_ids[0])
+    elif len(topic_ids) == 1 and len(subtag_ids) > 0:
+        return Entry.get_public_batch_by_tags(subtag_ids)
+    else:
+        return []
+
+def get_priv_entries(topic_ids, subtag_ids):
+    print("PRIVATE")
+    # get corresponding entries from db
+    if topic_ids == [] and subtag_ids == []:
+        return Entry.get_batch()
+    elif len(topic_ids) == 1 and subtag_ids == []:
+        return Entry.get_batch_by_topic(topic_ids[0])
+    elif len(topic_ids) == 1 and len(subtag_ids) > 0:
+        return Entry.get_batch_by_tags(subtag_ids)
+    else:
+        return []
 
 ### routes
 
@@ -222,16 +247,7 @@ def api_subtag_put(id):
     else:
         return jsonify({ "id": id })
 
-### public routes
-
-# -> make this route /api/entries (GET)
-# ==> obsolete, replacing by below
-@app.route('/api/get_content_data')
-def api_get_content_data():
-    data = {
-        'query_str': str(request.query_string)
-    }
-    return jsonify(data)
+### partially protected routes
 
 @app.route('/api/entries')
 def api_entries():
@@ -243,11 +259,13 @@ def api_entries():
     topic_ids = request.args.getlist('topics[]')
     subtag_ids = request.args.getlist('tags[]')
 
-    # get corresponding entries from db
-    if topic_ids == [] and subtag_ids == []:
-        entries = Entry.select().order_by(Entry.mod_timestamp).limit(10).dicts()
+    curr_user = get_jwt_identity()
+    print(curr_user)
+    # get public entries
+    if curr_user == None:
+        entries = get_pub_entries(topic_ids, subtag_ids)
     else:
-        entries = []
+        entries = get_priv_entries(topic_ids, subtag_ids)
 
     # convert datetime obj.
     DATE_FMT = "%c"
@@ -263,6 +281,17 @@ def api_entries():
     data = {
         'query_str': str(request.query_string),
         'entries': entries_clean
+    }
+    return jsonify(data)
+
+### public routes
+
+# -> make this route /api/entries (GET)
+# ==> obsolete, replacing by below
+@app.route('/api/get_content_data')
+def api_get_content_data():
+    data = {
+        'query_str': str(request.query_string)
     }
     return jsonify(data)
 
