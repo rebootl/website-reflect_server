@@ -31,7 +31,7 @@ class Entry(BaseModel):
     @classmethod
     def get_batch(cls, limit = 10, offset = None):
         return (Entry.select()
-                     .order_by(Entry.mod_timestamp)
+                     .order_by(Entry.mod_timestamp.desc())
                      .limit(limit)
                      .offset(offset)
                      .dicts())
@@ -40,7 +40,7 @@ class Entry(BaseModel):
     def get_public_batch(cls, limit = 10, offset = None):
         return (Entry.select()
                      .where(Entry.public == True)
-                     .order_by(Entry.mod_timestamp)
+                     .order_by(Entry.mod_timestamp.desc())
                      .limit(limit)
                      .offset(offset)
                      .dicts())
@@ -50,7 +50,7 @@ class Entry(BaseModel):
         return (Entry.select()
                      .join(TopicToEntry)
                      .where(TopicToEntry.topic == topic_id)
-                     .order_by(Entry.mod_timestamp)
+                     .order_by(Entry.mod_timestamp.desc())
                      .limit(limit)
                      .offset(offset)
                      .dicts())
@@ -65,7 +65,7 @@ class Entry(BaseModel):
                      .where(
                         (TopicToEntry.topic == topic_id) &
                         (Entry.public == True))
-                     .order_by(Entry.mod_timestamp)
+                     .order_by(Entry.mod_timestamp.desc())
                      .limit(limit)
                      .offset(offset)
                      .dicts())
@@ -78,7 +78,7 @@ class Entry(BaseModel):
         return (Entry.select()
                      .join(TagToEntry)
                      .where(TagToEntry.tag << tag_ids)
-                     .order_by(Entry.mod_timestamp)
+                     .order_by(Entry.mod_timestamp.desc())
                      .limit(limit)
                      .offset(offset)
                      .dicts())
@@ -93,7 +93,7 @@ class Entry(BaseModel):
                      .where(
                         (TagToEntry.tag << tag_ids) &
                         (Entry.public == True))
-                     .order_by(Entry.mod_timestamp)
+                     .order_by(Entry.mod_timestamp.desc())
                      .limit(limit)
                      .offset(offset)
                      .dicts())

@@ -267,15 +267,18 @@ def api_entries():
     else:
         entries = get_priv_entries(topic_ids, subtag_ids)
 
-    # convert datetime obj.
+    # preprocess data
     DATE_FMT = "%c"
     entries_clean = []
     for entry in entries:
+        # convert datetime obj.
         entry['timestamp'] = entry['timestamp'].strftime(DATE_FMT)
         entry['mod_timestamp'] = entry['mod_timestamp'].strftime(DATE_FMT)
         # (alt synt.)
         #entry.update({ 'timestamp': 1 })
         #entry.update({ 'mod_timestamp': 1 })
+        # decode json
+        entry['content'] = json.loads(entry['content'])
         entries_clean.append(entry)
 
     data = {

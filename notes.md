@@ -1,5 +1,7 @@
 ## Tasks / Issues
 
+- entries in client
+
 - improve response err. message
 
 - rework sel. CSS
@@ -7,6 +9,8 @@
 - finish the server
 
 - subtags are part of topics
+
+- catch type detect. on submit
 
 - cleanup naming of "tags" -> "subtags"
 

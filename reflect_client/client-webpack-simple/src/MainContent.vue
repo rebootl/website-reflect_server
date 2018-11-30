@@ -3,12 +3,13 @@
     <main id="main-content">
       <mini-select-view :selection_data="selection_data">
       </mini-select-view>
-      text, blablabla {{ this.content_data.query_str }}
-      <ul>
-        <!--<li v-for="entry in entries" :id="entry.ref">
-          <div class="entry-info">{{ entry.ref }} {{ entry.datetime }}</div>
-          <div class="entry-content">{{ entry.content.html }}</div>
-        </li>-->
+      <!--<small><pre>Request str:{{ this.content_data.query_str }}</pre></small>-->
+      <ul class="entries-list">
+        <li class="entry" :id="'entry-' + entry.id"
+            v-for="entry in content_data.entries">
+          <div class="entry-info"><small>{{ entry.timestamp }}</small></div>
+          <div class="entry-content" v-html="entry.content.text_html"></div>
+        </li>
       </ul>
       <new-entry-quickinput v-if="global_state.user.logged_in"
                             :selection_data="selection_data">
@@ -21,7 +22,7 @@
 import { global_state } from './main.js';
 import MiniSelectView from './MiniSelectView.vue';
 import NewEntryQuickinput from './NewEntryQuickinput.vue';
-const get_content_data_url = "http://hplaptop:5010/api/entries";
+const get_entries_url = "http://hplaptop:5010/api/entries";
 export default {
   name: 'MainContent',
   // (property needed for watcher here)
@@ -57,11 +58,11 @@ export default {
         'tags': tags
       }
       // update content
-      this.get_content();
+      this.get_entries();
     },
-    get_content: function() {
+    get_entries: function() {
       let vm = this;
-      axios.get(get_content_data_url, {
+      axios.get(get_entries_url, {
           params: vm.request_data
         })
         .then( function (response) {
@@ -103,5 +104,25 @@ main {
   //padding-right: 30px;
   //padding-top: 20px;
   background-color: @col-main-content-bg;
+  .entries-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    .entry {
+      border-left: 5px solid grey;
+      padding-left: 15px;
+      padding-bottom: 1px;
+      border-top: 1px solid #303030;
+      //height: 100%;
+      .entry-info {
+        padding-top: 5px;
+        font-size: 0.8em;
+        color: #5c5c5c;
+      }
+      .entry-content {
+        padding-left: 0px;
+      }
+    }
+  }
 }
 </style>
