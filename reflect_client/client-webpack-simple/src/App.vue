@@ -84,6 +84,7 @@ export default {
 </script>
 
 <style lang="less">
+@import "~normalize.css";
 @import "./globals.less";
 /* general stuff, also from index.html */
 body {
