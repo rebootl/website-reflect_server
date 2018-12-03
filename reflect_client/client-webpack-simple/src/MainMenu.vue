@@ -1,5 +1,5 @@
 <template>
-  <div id="main-menu" class="abox-skin">
+  <div id="main-menu" class="sec-skin">
     <topics></topics>
     <subtags></subtags>
   </div>
@@ -43,26 +43,27 @@ export default {
 </script>
 
 <style lang="less">
+@import (reference) "./style.less";
 @import (reference) "./globals.less";
 #main-menu {
-  position: absolute;
-  top: 43px;
-  width: 210px;
-  padding-top: 20px;
-  border-right: 1px solid @col-abox-sep-line;
-  border-bottom: 1px solid @col-header-line;
-  h2 {
-    text-align: center;
-    margin: 0;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    font-size: 14px;
-    font-weight: normal;
-    color: @col-abox-header-text;
-  }
   ul {
     margin-top: 0;
+    margin-bottom: 0;
+    list-style-type: none;
     padding: 0;
+    li:hover {
+      background-color: @col_sec_bg_hover;
+      color: @col_sec_text_hover;
+    }
+    li.selected {
+      background-color: @col_sec_bg_selected;
+      color: @col_sec_text_selected;
+    }
+  }
+  a {
+    display: block;
+    text-decoration: none;
+    color: @col_sec_text;
   }
 }
 </style>

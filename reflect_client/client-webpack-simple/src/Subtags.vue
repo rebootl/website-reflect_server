@@ -1,6 +1,6 @@
 <template>
   <nav id="subtags">
-    <h2>Tags</h2>
+    <!--<h2>Tags</h2>-->
     <ul v-for="item in global_state.selection_data"
         v-if="item.active">
       <li v-for="subtag in item.subtags"
@@ -51,19 +51,21 @@ export default {
 </script>
 
 <style lang="less">
+@import (reference) "./style.less";
 @import (reference) "./globals.less";
-nav#subtags {
-  margin-left: 15px;
-  margin-right: 15px;
+#subtags {
+  margin: 15px;
   li {
     display: inline-flex;
-    border: 1px solid @col-abox-tag-border;
+    border: 1px solid #333;
     border-radius: 9px;
     margin-right: 5px;
     margin-bottom: 5px;
     position: relative;
     a {
-      color: @col-abox-tag-text;
+      color: @col_sec_text;
+      font-weight: lighter;
+      font-size: 1em;
       padding: 9px 12px 9px 12px;
       display: inline-block;
     }

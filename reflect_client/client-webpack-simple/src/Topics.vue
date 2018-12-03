@@ -1,6 +1,6 @@
 <template>
   <nav id="topics">
-    <h2>Topics</h2>
+    <!--<h2>Topics</h2>-->
     <ul>
       <li v-for="item in global_state.selection_data"
           :id="'topic-id-' + item.id"
@@ -60,15 +60,24 @@ export default {
 </script>
 
 <style lang="less">
+@import (reference) "./style.less";
 @import (reference) "./globals.less";
 #topics {
+  border-bottom: 1px solid @col_header_line;
   ul {
-    border-top: 1px solid @col-abox-item-border;
+    //border-top: 1px solid #151515;
   }
   li {
-    position: relative;
-    border-bottom: 1px solid @col-abox-item-border;
+    //border: 1px dashed red;
+    //height: 45px;
     a {
+      padding: 12px 5px 12px 18px;
+      font-size: 1.1em;
+      font-weight: lighter;
+    }
+    //position: relative;
+    //border-bottom: 1px solid @col-abox-item-border;
+    /*a {
       padding: 10px 5px 10px 20px;
       font-size: 20px;
       font-weight: bold;
@@ -77,7 +86,7 @@ export default {
       position: absolute;
       top: 11px;
       right: 0;
-    }
+    }*/
   }
 }
 </style>

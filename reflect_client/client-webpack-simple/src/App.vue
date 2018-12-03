@@ -2,31 +2,44 @@
   <div id="app-container">
     <header>
       <div id="logo-box">
-        <img id="logo" src="reflect-logo_text.png">
+        <img id="logo" src="logo.png">
       </div>
-      <em id="logged-in-tag"
-          v-if="global_state.user.logged_in">{{ global_state.user.name }}</em>
-      <button id="login-toggle-button"
-              v-if="!global_state.user.logged_in"
-              @click="show_login()">Login</button>
-      <button id="login-toggle-button" v-else
-              @click="logout()">Logout</button>
+      <div id="title-box">
+        <h1><span>reflect</span> - a simple content manager</h1>
+      </div>
+      <div id="login-box" class="sec-skin">
+        <em id="logged-in-tag"
+            v-if="global_state.user.logged_in">{{ global_state.user.name }}</em>
+        <button id="login-toggle-button"
+                v-if="!global_state.user.logged_in"
+                @click="show_login()">Login</button>
+        <button id="login-toggle-button"
+                v-else
+                @click="logout()">Logout</button>
+      </div>
     </header>
-    <flashbar v-if="global_state.flash.shown"></flashbar>
-    <div id="overlay" v-bind:class="{ 'shown' : global_state.overlay.shown }">
-      <login v-if="global_state.overlay.login"
-             @cancel_login="hide_login"></login>
-      <add-topic v-else-if="global_state.overlay.add_topic"
-                 @refresh_menu="refresh_menu"></add-topic>
-      <edit-topic v-else-if="global_state.overlay.edit_topic"
-                  @refresh_menu="refresh_menu"></edit-topic>
-      <add-subtag v-else-if="global_state.overlay.add_subtag"
-                  @refresh_menu="refresh_menu"></add-subtag>
-      <edit-subtag v-else-if="global_state.overlay.edit_subtag"
-                   @refresh_menu="refresh_menu"></edit-subtag>
+    <div id="x-margin-wrapper-container">
+      <flashbar v-if="global_state.flash.shown"></flashbar>
+      <div id="overlay" v-bind:class="{ 'shown' : global_state.overlay.shown }">
+        <login v-if="global_state.overlay.login"
+               @cancel_login="hide_login"></login>
+        <add-topic v-else-if="global_state.overlay.add_topic"
+                   @refresh_menu="refresh_menu"></add-topic>
+        <edit-topic v-else-if="global_state.overlay.edit_topic"
+                    @refresh_menu="refresh_menu"></edit-topic>
+        <add-subtag v-else-if="global_state.overlay.add_subtag"
+                    @refresh_menu="refresh_menu"></add-subtag>
+        <edit-subtag v-else-if="global_state.overlay.edit_subtag"
+                     @refresh_menu="refresh_menu"></edit-subtag>
+      </div>
+      <div id="main-menu-container">
+        <main-menu ref="main_menu"></main-menu>
+      </div>
+      <div id="main-content-container">
+        <main-content v-bind:selection_data="global_state.selection_data">text</main-content>
+      </div>
+      <div id="side-dummy-container"></div>
     </div>
-    <main-menu ref="main_menu"></main-menu>
-    <main-content v-bind:selection_data="global_state.selection_data">text</main-content>
   </div>
 </template>
 
@@ -85,8 +98,81 @@ export default {
 
 <style lang="less">
 @import "~normalize.css";
+@import "./style.less";
 @import "./globals.less";
-/* general stuff, also from index.html */
+header {
+  height: @header_height;
+  background-color: @col_header_bg;
+  border-bottom: 1px solid @col_header_line;
+  display: flex; // use the new shit! :D
+  align-items: center; // (align vert.)
+  color: @col_sec_text;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  #title-box {
+    margin-left: 5px;
+    h1 {
+      font-weight: normal;
+      font-family: serif;
+      font-size: 1em;
+      font-style: italic;
+      span {
+        color: @col_prim_key;
+      }
+    }
+  }
+  #logo-box {
+    height: 100%;
+    img {
+      height: 100%;
+    }
+  }
+  #login-box {
+    margin-left: auto;
+    margin-right: 10px;
+    /* override sec-skin bg */
+    background-color: @col_header_bg;
+  }
+}
+#x-margin-wrapper-container {
+  margin-top: @header_height;
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+#main-content-container {
+  width: 550px;
+}
+#main-menu-container {
+  width: 210px;
+}
+#side-dummy-container {
+  /* dummy container for the flex-layout,
+     to distribute items */
+  width: 210px;
+}
+
+@media all and (max-width: 990px) {
+  #x-margin-wrapper-container {
+    justify-content: flex-start;
+  }
+}
+@media all and (max-width: 780px) {
+  #main-content-container {
+    width: 550px;
+    min-width: 300px;
+    flex: 1;
+  }
+  #side-dummy-container {
+    /* (must be increased here
+        or it will be fit-in above)
+        --> can this be calculated ? */
+    min-width: 410px;
+  }
+}
+/*
 body {
   margin: 0;
   background-color: @col-body-bg;
@@ -233,5 +319,5 @@ input {
 }
 .edit-img:hover {
   opacity: 0.75;
-}
+}*/
 </style>

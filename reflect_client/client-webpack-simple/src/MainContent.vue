@@ -1,5 +1,5 @@
 <template>
-  <div id="main-content-container">
+  <!--<div id="main-content-container">-->
     <main id="main-content">
       <mini-select-view :selection_data="selection_data">
       </mini-select-view>
@@ -15,7 +15,7 @@
                             :selection_data="selection_data">
       </new-entry-quickinput>
     </main>
-  </div>
+  <!--</div>-->
 </template>
 
 <script>
@@ -92,14 +92,10 @@ export default {
 </script>
 
 <style lang="less">
+@import (reference) "./style.less";
 @import (reference) "./globals.less";
-#main-content-container {
-  margin-left: 210px;
-  margin-top: 43px;
-  max-width: 550px;
-}
 main {
-  min-height: calc(100vh - 94px);
+  //min-height: calc(100vh - 94px);
   //padding-left: 30px;
   //padding-right: 30px;
   //padding-top: 20px;
