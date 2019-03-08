@@ -2,7 +2,7 @@ from flask import Flask, jsonify, request
 from flask_cors import cross_origin, CORS
 #from playhouse.shortcuts import model_to_dict
 from flask_jwt_extended import JWTManager, create_access_token, \
-    jwt_required, get_jwt_identity
+    jwt_required, get_jwt_identity, jwt_optional
 from werkzeug.security import check_password_hash
 from peewee import IntegrityError
 
@@ -56,8 +56,8 @@ def get_pub_entries(topic_ids, subtag_ids):
     else:
         return []
 
-def get_priv_entries(topic_ids, subtag_ids):
-    print("PRIVATE")
+def get_all_entries(topic_ids, subtag_ids):
+    print("PRIVATE & PUBLIC")
     # get corresponding entries from db
     if topic_ids == [] and subtag_ids == []:
         return Entry.get_batch()
@@ -250,6 +250,7 @@ def api_subtag_put(id):
 ### partially protected routes
 
 @app.route('/api/entries')
+@jwt_optional
 def api_entries():
     '''entries'''
     # get selection from request query
@@ -265,7 +266,7 @@ def api_entries():
     if curr_user == None:
         entries = get_pub_entries(topic_ids, subtag_ids)
     else:
-        entries = get_priv_entries(topic_ids, subtag_ids)
+        entries = get_all_entries(topic_ids, subtag_ids)
 
     # preprocess data
     DATE_FMT = "%c"
