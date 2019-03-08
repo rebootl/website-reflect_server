@@ -72,8 +72,8 @@ export default {
     //height: 45px;
     a {
       padding: 12px 5px 12px 18px;
-      font-size: 1.1em;
-      font-weight: lighter;
+      //font-size: 1.05em;
+      //font-weight: lighter;
     }
     //position: relative;
     //border-bottom: 1px solid @col-abox-item-border;
@@ -88,5 +88,10 @@ export default {
       right: 0;
     }*/
   }
+  /*li.selected {
+    a {
+      color: #c8c8c8;
+    }
+  }*/
 }
 </style>

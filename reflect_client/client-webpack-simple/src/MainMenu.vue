@@ -57,7 +57,10 @@ export default {
     }
     li.selected {
       background-color: @col_sec_bg_selected;
-      color: @col_sec_text_selected;
+      a {
+        //font-weight: bolder;
+        color: @col_sec_text_selected;
+      }
     }
   }
   a {

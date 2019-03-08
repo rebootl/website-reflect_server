@@ -54,7 +54,8 @@ export default {
 @import (reference) "./style.less";
 @import (reference) "./globals.less";
 #subtags {
-  margin: 15px;
+  //margin: 15px;
+  padding: 20px 15px 15px 15px;
   li {
     display: inline-flex;
     border: 1px solid #333;
