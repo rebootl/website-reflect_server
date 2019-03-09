@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, send_from_directory
+from flask import Flask, jsonify, request
 from flask_cors import cross_origin, CORS
 #from playhouse.shortcuts import model_to_dict
 from flask_jwt_extended import JWTManager, create_access_token, \
@@ -78,12 +78,6 @@ def get_all_entries(topic_ids, subtag_ids):
 def api_hello():
     data = { 'text': "Hello flask API :D" }
     return jsonify(data)
-
-# serve index.html
-
-@app.route('/')
-def root():
-    return send_from_directory('client', 'index.html')
 
 ### login
 
