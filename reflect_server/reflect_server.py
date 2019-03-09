@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import cross_origin, CORS
 #from playhouse.shortcuts import model_to_dict
 from flask_jwt_extended import JWTManager, create_access_token, \
@@ -70,14 +70,20 @@ def get_all_entries(topic_ids, subtag_ids):
 
 ### routes
 
-@app.route('/')
-def hello_world():
-    return 'Hello, World!'
+#@app.route('/')
+#def hello_world():
+#    return 'Hello, World!'
 
 @app.route('/api/hello')
 def api_hello():
     data = { 'text': "Hello flask API :D" }
     return jsonify(data)
+
+# serve index.html
+
+@app.route('/')
+def root():
+    return send_from_directory('client', 'index.html')
 
 ### login
 
@@ -147,6 +153,7 @@ def api_entries_post():
     #    return jsonify({"msg": "Integrity Error. :("}), 400
     ### -> process selection data
     topics, subtags = get_active_topic_tags(sel_data)
+    # -> topics should be min. 1 !!
     for topic in topics:
         # -> try except
         with database.atomic():
