@@ -6,12 +6,18 @@ class MyApp extends HTMLElement {
   constructor() {
     super();
 
-    const shadow = this.attachShadow({mode: 'open'});
+    //const shadow = this.attachShadow({mode: 'open'});
+    this.attachShadow({mode: 'open'});
 
-    const title = document.createElement('h1');
-    title.textContent =  "Hello Webcomponent! minchePog";
+    //const title = document.createElement('h1');
+    //title.textContent =  "Hello Webcomponent! minchePog";
 
-    shadow.appendChild(title);
+    //shadow.appendChild(title);
+
+    const mytempl = (name) => html`<h2>Hi ${name}</h2>`;
+
+    render(mytempl('FOOOT'), this.shadowRoot);
+
   }
 }
 
