@@ -8,7 +8,7 @@ const style = html`
       background-color: var(--bg-floor);
       display: block;
       height: 100vh;
-      width: 100vw;s
+      width: 100vw;
     }
   </style>
 `;
