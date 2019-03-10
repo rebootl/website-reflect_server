@@ -19,6 +19,7 @@ export default {
         commonjs(), // converts date-fns to ES modules
         copy({
           'src/index.html': 'public/index.html',
+          'src/base.css': 'public/base.css',
         }),
         production && terser(), // minify, but only in production
     ]
