@@ -1,14 +1,17 @@
 import {html, render} from 'lit-html';
+import './my-header.js';
 
 const style = html`
   <style>
     :host {
-      --bg-floor: #343434;
+      --bg-floor: #101010;
+      --bg-header: #000;
+      --header-bottom-line: #101010;
 
       background-color: var(--bg-floor);
       display: block;
       height: 100vh;
-      width: 100vw;
+      /*width: 100vw;*/
     }
   </style>
 `;
@@ -16,20 +19,13 @@ const style = html`
 class MyApp extends HTMLElement {
   constructor() {
     super();
-
-    //const shadow = this.attachShadow({mode: 'open'});
     this.attachShadow({mode: 'open'});
 
-    //const title = document.createElement('h1');
-    //title.textContent =  "Hello Webcomponent! minchePog";
-    //shadow.appendChild(title);
-
     const mytempl = (name) => html`${style}
-      <h2>Hi ${name}</h2>
+      <my-header><my-header>
     `;
 
     render(mytempl('nomnomoootl'), this.shadowRoot);
-
   }
 }
 
