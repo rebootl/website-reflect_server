@@ -33,17 +33,9 @@ class UserDropdownButton extends HTMLElement {
     this.attachShadow({mode: 'open'});
     this.update();
   }
-  static get observedAttributes() {
-    return ["userstate"];
-  }
-  attributeChangedCallback(name, old, change) {
-    //this.textContent = change;
-    this.update();
-  }
   update() {
     // unicode user icon: &#x1F464; doesn't work in chromium :(
     const { user } = global_state;
-    //const templ = (user) => ;
     render(html`
       ${style}
       <img id="icon-user" src="layout/icons/user-dark_20.png">

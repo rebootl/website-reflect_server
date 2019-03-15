@@ -23,13 +23,7 @@ const style = html`
     }
     user-dropdown-button {
       float: right;
-      /*min-width: 50px;*/
       height: 100%;
-      /*border-left: 1px solid rgb(20,20,20); /*#222;*/
-    }
-    user-dropdown-button:hover {
-      /*cursor: pointer;*/
-      /*background-color: rgb(10,10,10);*/
     }
   </style>
 `;
@@ -46,9 +40,7 @@ class MyHeader extends HTMLElement {
       <div id="logo-box">
         <img id="logo" src="/layout/logo.png">
       </div>
-      <user-dropdown-button
-        @click=${this.user_menu_toggle}
-        ?userstate=${global_state.user.logged_in}>
+      <user-dropdown-button @click=${this.user_menu_toggle}>
       </user-dropdown-button>
     `
     , this.shadowRoot);
