@@ -4,14 +4,17 @@ import './my-header.js';
 const style = html`
   <style>
     :host {
-      --bg-floor: #101010;
+      --bg-floor: rgb(16,16,16);
       --bg-header: #000;
-      --header-bottom-line: #101010;
+      --header-bottom-line: rgb(20,20,20);
+      --text-color: rgb(200,200,200);
 
       background-color: var(--bg-floor);
       display: block;
       height: 100vh;
       /*width: 100vw;*/
+      color: var(--text-color);
+      font-family: Helvetica, sans-serif;
     }
   </style>
 `;
@@ -21,11 +24,11 @@ class MyApp extends HTMLElement {
     super();
     this.attachShadow({mode: 'open'});
 
-    const mytempl = (name) => html`${style}
+    const mytempl = html`${style}
       <my-header><my-header>
     `;
 
-    render(mytempl('nomnomoootl'), this.shadowRoot);
+    render(mytempl, this.shadowRoot);
   }
 }
 

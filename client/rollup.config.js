@@ -20,7 +20,7 @@ export default {
         copy({
           'src/index.html': 'public/index.html',
           'src/base.css': 'public/base.css',
-          'src/layout/logo.png': 'public/layout/logo.png'
+          'src/layout': 'public/layout'
         }),
         production && terser(), // minify, but only in production
     ]
