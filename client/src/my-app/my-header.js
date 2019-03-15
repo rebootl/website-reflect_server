@@ -1,4 +1,5 @@
 import { html, render } from 'lit-html';
+import { global_state } from './state.js';
 import './user-dropdown-button.js';
 
 const style = html`
@@ -37,15 +38,29 @@ class MyHeader extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({mode: 'open'});
-
-    const templ = html`${style}
+    this.update();
+  }
+  update() {
+    render(html`
+      ${style}
       <div id="logo-box">
         <img id="logo" src="/layout/logo.png">
       </div>
-      <user-dropdown-button></user-dropdown-button>
-    `;
-
-    render(templ, this.shadowRoot);
+      <user-dropdown-button
+        @click=${this.user_menu_toggle}
+        ?userstate=${global_state.user.logged_in}>
+      </user-dropdown-button>
+    `
+    , this.shadowRoot);
+  }
+  user_menu_toggle() {
+    if (global_state.user.logged_in) {
+      global_state.user.logged_in = false;
+    } else {
+      global_state.user.logged_in = true;
+    }
+    console.log(global_state.user.logged_in);
+    this.update();
   }
 }
 
