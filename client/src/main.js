@@ -1,1 +1,1 @@
-import './my-app/my-app.js';
+import './reflect-app/reflect-app.js';

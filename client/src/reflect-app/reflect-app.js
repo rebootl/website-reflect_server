@@ -1,6 +1,6 @@
 import {html, render} from 'lit-html';
 import { global_state } from './state.js';
-import './my-header.js';
+import './main-header.js';
 
 const style = html`
   <style>
@@ -48,7 +48,7 @@ const style = html`
   </style>
 `;
 
-class MyApp extends HTMLElement {
+class ReflectApp extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({mode: 'open'});
@@ -56,8 +56,8 @@ class MyApp extends HTMLElement {
   }
   update() {
     render(html`${style}
-        <my-header @toggleusermenu=${(e) => this.update()}>
-        </my-header>
+        <main-header @toggleusermenu=${(e) => this.update()}>
+        </main-header>
         ${ global_state.user.show_menu ?
           html`<div id="user-menu">
             <h3>Login:</h3>
@@ -76,4 +76,4 @@ class MyApp extends HTMLElement {
   }
 }
 
-customElements.define('my-app', MyApp);
+customElements.define('reflect-app', ReflectApp);

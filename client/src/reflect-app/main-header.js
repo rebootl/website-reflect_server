@@ -33,7 +33,7 @@ const eToggleUserMenu = new CustomEvent('toggleusermenu', {
   composed: true
 });
 
-class MyHeader extends HTMLElement {
+class MainHeader extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({mode: 'open'});
@@ -62,4 +62,4 @@ class MyHeader extends HTMLElement {
   }
 }
 
-customElements.define('my-header', MyHeader);
+customElements.define('main-header', MainHeader);
