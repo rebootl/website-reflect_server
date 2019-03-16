@@ -13,6 +13,9 @@ const style = html`
     :host(:hover) {
       cursor: pointer;
     }
+    :host(.active) {
+      background-color: rgb(15,15,15);
+    }
     #icon-user {
       padding-left: 10px;
     }
@@ -31,6 +34,8 @@ class UserDropdownButton extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({mode: 'open'});
+    this.addEventListener('click',
+      (e)=>this.classList.toggle('active'));
     this.update();
   }
   update() {

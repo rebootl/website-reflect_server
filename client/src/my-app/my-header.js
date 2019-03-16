@@ -28,10 +28,16 @@ const style = html`
   </style>
 `;
 
+const eToggleUserMenu = new CustomEvent('toggleusermenu', {
+  bubbles: true,
+  composed: true
+});
+
 class MyHeader extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({mode: 'open'});
+    this.user_menu_active = "";
     this.update();
   }
   update() {
@@ -46,13 +52,13 @@ class MyHeader extends HTMLElement {
     , this.shadowRoot);
   }
   user_menu_toggle() {
-    if (global_state.user.logged_in) {
-      global_state.user.logged_in = false;
+    if (global_state.user.show_menu) {
+      global_state.user.show_menu = false;
     } else {
-      global_state.user.logged_in = true;
+      global_state.user.show_menu = true;
     }
-    console.log(global_state.user.logged_in);
-    this.update();
+    console.log(global_state.user.show_menu);
+    this.dispatchEvent(eToggleUserMenu);
   }
 }
 
