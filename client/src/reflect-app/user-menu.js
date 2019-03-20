@@ -1,5 +1,5 @@
 import { html, render } from 'lit-html';
-import { global_state } from './state.js';
+import { global_state } from './global_state.js';
 import './user-dropdown-button.js';
 import './user-dropdown-menu.js';
 
