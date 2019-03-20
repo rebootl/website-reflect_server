@@ -1,9 +1,9 @@
 import { html, render } from 'lit-html';
-import { global_state } from './state.js';
-import './text-input.js';
-import './password-input.js';
-import './labelled-button.js';
-import './close-button.js';
+import { global_state } from './global_state.js';
+import './gen-elements/text-input.js';
+import './gen-elements/password-input.js';
+import './gen-elements/labelled-button.js';
+import './gen-elements/close-button.js';
 
 const style = html`
   <style>

@@ -1,5 +1,5 @@
 import { html, render } from 'lit-html';
-import { global_state } from './state.js';
+import { global_state } from './global_state.js';
 import './user-menu.js';
 
 const style = html`
@@ -23,7 +23,6 @@ const style = html`
     }
     user-menu {
       float: right;
-      /*height: 100%;*/
     }
   </style>
 `;
