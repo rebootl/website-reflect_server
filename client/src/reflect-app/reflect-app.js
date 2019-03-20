@@ -1,7 +1,6 @@
 import { html, render } from 'lit-html';
 import { global_state } from './state.js';
 import './main-header.js';
-import './user-menu.js';
 
 const style = html`
   <style>
@@ -37,10 +36,7 @@ class ReflectApp extends HTMLElement {
   }
   update() {
     render(html`${style}
-        <main-header @toggleusermenu=${(e) => this.update()}></main-header>
-        ${ global_state.user.show_menu ?
-          html`<user-menu></user-menu>` :
-          html``}
+        <main-header></main-header>
       `
       , this.shadowRoot);
   }

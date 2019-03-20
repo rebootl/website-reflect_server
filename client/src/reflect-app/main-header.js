@@ -1,6 +1,6 @@
 import { html, render } from 'lit-html';
 import { global_state } from './state.js';
-import './user-dropdown-button.js';
+import './user-menu.js';
 
 const style = html`
   <style>
@@ -21,23 +21,17 @@ const style = html`
       display: block;
       padding-top: 5px;
     }
-    user-dropdown-button {
+    user-menu {
       float: right;
-      height: 100%;
+      /*height: 100%;*/
     }
   </style>
 `;
-
-const eToggleUserMenu = new CustomEvent('toggleusermenu', {
-  bubbles: true,
-  composed: true
-});
 
 class MainHeader extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({mode: 'open'});
-    this.user_menu_active = "";
     this.update();
   }
   update() {
@@ -46,8 +40,7 @@ class MainHeader extends HTMLElement {
       <div id="logo-box">
         <img id="logo" src="/layout/logo.png">
       </div>
-      <user-dropdown-button @click=${this.user_menu_toggle}>
-      </user-dropdown-button>
+      <user-menu></user-menu>
     `
     , this.shadowRoot);
   }

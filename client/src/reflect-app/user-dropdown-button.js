@@ -9,6 +9,7 @@ const style = html`
       display: flex;
       justify-content: center;
       align-items: center;
+      height: 100%;
     }
     :host(:hover) {
       cursor: pointer;
@@ -34,8 +35,8 @@ class UserDropdownButton extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({mode: 'open'});
-    this.addEventListener('click',
-      (e)=>this.classList.toggle('active'));
+    /*this.addEventListener('click',
+      (e)=>this.classList.toggle('active'));*/
     this.update();
   }
   update() {

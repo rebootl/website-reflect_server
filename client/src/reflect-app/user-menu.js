@@ -1,19 +1,21 @@
 import { html, render } from 'lit-html';
 import { global_state } from './state.js';
-import './text-input.js';
-import './password-input.js';
-import './form-button.js';
+import './user-dropdown-button.js';
+import './user-dropdown-menu.js';
 
 const style = html`
   <style>
     :host {
-      background-color: var(--bg-front);
-      padding: 0 25px 20px 25px;
+      height: 100%;
+      postition: relative;
     }
-    #buttonbox {
-      margin-top: 5px;
-      display: flex;
-      justify-content: center;
+    user-dropdown-menu {
+      position: absolute;
+      right: 0;
+      display: none;
+    }
+    .show_menu {
+      display: block;
     }
   </style>
 `;
@@ -25,16 +27,18 @@ class UserMenu extends HTMLElement {
     this.update();
   }
   update() {
-    render(html`${style}
-      <h3>Login:</h3>
-      <text-input id="username"
-                  placeholder="Username"></text-input><br>
-      <password-input id="password"
-                      placeholder="Password"></password-input><br>
-      <div id="buttonbox">
-        <form-button></form-button>
-      </div>`
-      , this.shadowRoot);
+    render(html`
+      ${style}
+      <user-dropdown-button @click=${(e)=>this.toggle_menu()}></user-dropdown-button>
+      <user-dropdown-menu @close=${(e)=>this.toggle_menu()}></user-dropdown-menu>
+    `
+    , this.shadowRoot);
+  }
+  toggle_menu() {
+    this.shadowRoot.querySelector('user-dropdown-button')
+      .classList.toggle('active');
+    this.shadowRoot.querySelector('user-dropdown-menu')
+      .classList.toggle('show_menu');
   }
 }
 

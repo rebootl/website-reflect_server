@@ -6,14 +6,15 @@ const style = html`
       background-color: var(--bg-back);
       color: var(--text);
       border: 1px solid var(--border-back);
-      padding: 5px 15px 5px 15px;
-      font-weight: bold;
+      width: 30px;
+      height: 30px;
+      padding: 4px 0 0 0;
       cursor: pointer;
     }
   </style>
 `;
 
-class FormButton extends HTMLElement {
+class CloseButton extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({mode: 'open'});
@@ -21,9 +22,9 @@ class FormButton extends HTMLElement {
   }
   update() {
     render(html`${style}
-        <button>Login</button>`
+        <button><img src="layout/icons/close_20.png"></button>`
       , this.shadowRoot);
   }
 }
 
-customElements.define('form-button', FormButton);
+customElements.define('close-button', CloseButton);
