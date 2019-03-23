@@ -9,6 +9,7 @@ const style = html`
   <style>
     :host {
       background-color: var(--bg-front);
+      border: 1px solid var(--border-back);
       padding: 0 25px 20px 25px;
       position: relative;
     }

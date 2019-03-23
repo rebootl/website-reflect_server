@@ -1,7 +1,8 @@
 import { html, render } from 'lit-html';
 import { global_state } from './global_state.js';
-import './router.js';
+//import './router.js';
 import './main-header.js';
+import './main-menu.js';
 
 const style = html`
   <style>
@@ -23,14 +24,53 @@ const style = html`
       overflow: auto;
       color: var(--text);
     }
-    user-menu {
-      float: right;
+    @media all and (min-width: 650px){
+      #wrapper-container {
+        display: flex;
+        flex-wrap: wrap;
+      }
+      main-menu {
+        width: 200px;
+        margin-right: 10px;
+      }
+      #main-content-container {
+        min-width: 425px;
+        max-width: 650px;
+        flex: 1;
+      }
+    }
+    @media all and (min-width: 800px) {
+      /* prevent lower box from moving up and
+         squishing main-content to 450px */
+      #main-content-container {
+        min-width: 575px;
+      }
+    }
+    @media all and (min-width: 880px) {
+      #main-content-container {
+        min-width: 650px;
+      }
+    }
+    @media all and (min-width: 1090px) {
+        #wrapper-container {
+          justify-content: space-between;
+        }
+    }
+    #main-content-container {
+      background-color: var(--bg-front);
+      height: 500px;
+    }
+    #spacer-right {
+      height: 80px;
+      min-width: 210px;
+      /*flex: 1;*/
+      border: 1px solid red;
     }
   </style>
 `;
 
 const routes = {
-  'entries': (params) => html`<entries params=${params}></entries>`,
+  'entries': (params) => html`<listed-entries params=${params}></listed-entries>`,
   'add-entry': () => html`<add-entry></add-entry>`,
   'edit-entry': () => html`<edit-entry></edit-entry>`,
   'edit-topic': () => html`<edit-topic></edit-topic>`,
@@ -71,9 +111,12 @@ class ReflectApp extends HTMLElement {
   update() {
     render(html`${style}
         <main-header></main-header>
-        <div id="main-content">
+        <div id="wrapper-container">
           <main-menu></main-menu>
-          ${this.routed_content}
+          <div id="main-content-container">
+            ${this.routed_content}
+          </div>
+          <div id="spacer-right"></div>
         </div>
       `
       , this.shadowRoot);

@@ -11,7 +11,7 @@ const style = html`
     }
     user-dropdown-menu {
       position: absolute;
-      right: 0;
+      right: 12px;
       display: none;
     }
     .show_menu {
