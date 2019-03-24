@@ -27,28 +27,38 @@ const style = html`
     #wrapper-container {
       display: grid;
       grid-template-columns: 100%;
+      grid-template-areas:
+        "main-menu"
+        "add-box"
+        "main-content";
     }
     main-menu {
+      grid-area: main-menu;
+      /*align-self: start;*/
       border: 1px solid red;
     }
     #add-box {
+      grid-area: add-box;
+      /*align-self: start;*/
       height: 50px;
       border: 1px solid blue;
     }
     #main-content-container {
+      grid-area: main-content;
+      /*align-self: start;*/
       background-color: var(--bg-front);
       height: 300px;
     }
     @media all and (min-width: 650px) {
       #wrapper-container {
         grid-template-columns: 200px auto;
-        grid-row-start: 1;
-      }
-      main-menu {
-        grid-column-end: 2;
+        grid-template-rows: auto auto 1fr;
+        grid-template-areas:
+          "main-menu  main-content"
+          "add-box    main-content"
+          ".          main-content";
       }
       #main-content-container {
-        grid-column-start: 2;
         max-width: 650px;
       }
     }
@@ -57,26 +67,18 @@ const style = html`
         grid-gap: 10px;
       }
     }
-    @media all and (min-width: 1050px) {
+    @media all and (min-width: 1070px) {
       #wrapper-container {
         grid-template-columns: 200px auto 200px;
+        grid-template-areas:
+          "main-menu  main-content  add-box";
       }
       #main-content-container {
         width: 650px;
         justify-self: center;
-        position: relative;
       }
     }
     @media all and (min-width: 1070px) {
-      #main-content-container {
-        position: relative;
-      }
-      #add-box {
-        position: absolute;
-        right: 0;
-        top: 48px;
-        width: 200px;
-      }
     }
   </style>
 `;
@@ -124,10 +126,8 @@ class ReflectApp extends HTMLElement {
     render(html`${style}
         <main-header></main-header>
         <div id="wrapper-container">
-          <div id="side-container">
-            <main-menu></main-menu>
-            <div id="add-box"></div>
-          </div>
+          <main-menu></main-menu>
+          <div id="add-box"></div>
           <div id="main-content-container">
             ${this.routed_content}
           </div>
