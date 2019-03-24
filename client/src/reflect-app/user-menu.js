@@ -7,11 +7,10 @@ const style = html`
   <style>
     :host {
       height: 100%;
-      postition: relative;
+      width: 65px;
     }
     user-dropdown-menu {
-      position: absolute;
-      right: 12px;
+      float: right;
       display: none;
     }
     .show_menu {
