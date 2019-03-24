@@ -24,47 +24,59 @@ const style = html`
       overflow: auto;
       color: var(--text);
     }
-    @media all and (min-width: 650px){
-      #wrapper-container {
-        display: flex;
-        flex-wrap: wrap;
-      }
-      main-menu {
-        width: 200px;
-        margin-right: 10px;
-      }
-      #main-content-container {
-        min-width: 425px;
-        max-width: 650px;
-        flex: 1;
-      }
+    #wrapper-container {
+      display: grid;
+      grid-template-columns: 100%;
     }
-    @media all and (min-width: 800px) {
-      /* prevent lower box from moving up and
-         squishing main-content to 450px */
-      #main-content-container {
-        min-width: 575px;
-      }
+    main-menu {
+      border: 1px solid red;
     }
-    @media all and (min-width: 880px) {
-      #main-content-container {
-        min-width: 650px;
-      }
-    }
-    @media all and (min-width: 1090px) {
-        #wrapper-container {
-          justify-content: space-between;
-        }
+    #add-box {
+      height: 50px;
+      border: 1px solid blue;
     }
     #main-content-container {
       background-color: var(--bg-front);
-      height: 500px;
+      height: 300px;
     }
-    #spacer-right {
-      height: 80px;
-      min-width: 210px;
-      /*flex: 1;*/
-      border: 1px solid red;
+    @media all and (min-width: 650px) {
+      #wrapper-container {
+        grid-template-columns: 200px auto;
+        grid-row-start: 1;
+      }
+      main-menu {
+        grid-column-end: 2;
+      }
+      #main-content-container {
+        grid-column-start: 2;
+        max-width: 650px;
+      }
+    }
+    @media all and (min-width: 870px) {
+      #wrapper-container {
+        grid-gap: 10px;
+      }
+    }
+    @media all and (min-width: 1050px) {
+      #wrapper-container {
+        grid-template-columns: 200px auto 200px;
+      }
+      #main-content-container {
+        width: 650px;
+        justify-self: center;
+        position: relative;
+      }
+    }
+    @media all and (min-width: 1070px) {
+      #main-content-container {
+        position: relative;
+      }
+      #add-box {
+        position: absolute;
+        right: 0;
+        top: 48px;
+        width: 200px;
+      }
     }
   </style>
 `;
@@ -112,11 +124,13 @@ class ReflectApp extends HTMLElement {
     render(html`${style}
         <main-header></main-header>
         <div id="wrapper-container">
-          <main-menu></main-menu>
+          <div id="side-container">
+            <main-menu></main-menu>
+            <div id="add-box"></div>
+          </div>
           <div id="main-content-container">
             ${this.routed_content}
           </div>
-          <div id="spacer-right"></div>
         </div>
       `
       , this.shadowRoot);
