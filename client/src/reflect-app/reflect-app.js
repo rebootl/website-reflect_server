@@ -34,18 +34,15 @@ const style = html`
     }
     main-menu {
       grid-area: main-menu;
-      /*align-self: start;*/
       border: 1px solid red;
     }
     #add-box {
       grid-area: add-box;
-      /*align-self: start;*/
       height: 50px;
       border: 1px solid blue;
     }
     #main-content-container {
       grid-area: main-content;
-      /*align-self: start;*/
       background-color: var(--bg-front);
       height: 300px;
     }
@@ -77,8 +74,6 @@ const style = html`
         width: 650px;
         justify-self: center;
       }
-    }
-    @media all and (min-width: 1070px) {
     }
   </style>
 `;
