@@ -43,15 +43,6 @@ class MainHeader extends HTMLElement {
     `
     , this.shadowRoot);
   }
-  user_menu_toggle() {
-    if (global_state.user.show_menu) {
-      global_state.user.show_menu = false;
-    } else {
-      global_state.user.show_menu = true;
-    }
-    console.log(global_state.user.show_menu);
-    this.dispatchEvent(eToggleUserMenu);
-  }
 }
 
 customElements.define('main-header', MainHeader);
