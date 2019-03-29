@@ -5,7 +5,6 @@ const style = html`
     :host {
       background-color: var(--bg-back);
       display: block;
-      flex-shrink: 0;
       height: 200px;
     }
   </style>

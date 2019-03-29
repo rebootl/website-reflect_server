@@ -3,12 +3,13 @@ import { global_state } from './global_state.js';
 //import './router.js';
 import './main-header.js';
 import './main-menu.js';
+import './main-content.js';
 
 const style = html`
   <style>
     :host {
       /* "theme" colors, fonts, etc.
-         -> move to base.css later    */
+         -> evtl. move to base.css later    */
       --bg-floor: rgb(16,16,16);
       --bg-header: rgb(0,0,0);
       --header-bottom-line: rgb(20,20,20);
@@ -34,17 +35,15 @@ const style = html`
     }
     main-menu {
       grid-area: main-menu;
-      border: 1px solid red;
+      /*border: 1px solid red;*/
     }
     #add-box {
       grid-area: add-box;
       height: 50px;
       border: 1px solid blue;
     }
-    #main-content-container {
+    main-content {
       grid-area: main-content;
-      background-color: var(--bg-front);
-      height: 300px;
     }
     @media all and (min-width: 650px) {
       #wrapper-container {
@@ -55,7 +54,7 @@ const style = html`
           "add-box    main-content"
           ".          main-content";
       }
-      #main-content-container {
+      main-content {
         max-width: 650px;
       }
     }
@@ -64,26 +63,20 @@ const style = html`
         grid-gap: 10px;
       }
     }
-    @media all and (min-width: 1070px) {
+    @media all and (min-width: 1082px) {
+      /* 1070px + 12px scrollbar */
       #wrapper-container {
         grid-template-columns: 200px auto 200px;
         grid-template-areas:
           "main-menu  main-content  add-box";
       }
-      #main-content-container {
+      main-content {
         width: 650px;
         justify-self: center;
       }
     }
   </style>
 `;
-
-const routes = {
-  'entries': (params) => html`<listed-entries params=${params}></listed-entries>`,
-  'add-entry': () => html`<add-entry></add-entry>`,
-  'edit-entry': () => html`<edit-entry></edit-entry>`,
-  'edit-topic': () => html`<edit-topic></edit-topic>`,
-};
 
 /* handle params in subcomp.
 const params = new URLSearchParams(params_str);
@@ -98,23 +91,6 @@ class ReflectApp extends HTMLElement {
     super();
     this.attachShadow({mode: 'open'});
 
-    // listen for url changes
-    window.addEventListener('hashchange', ()=>this.urlChange());
-    window.addEventListener('load', ()=>this.urlChange());
-
-    //this.update();
-  }
-  urlChange() {
-    const hash_str = location.hash.slice(1) || '';
-    let ref, params_str;
-    if (hash_str.includes('?')) {
-      [ ref, params_str ] = hash_str.split('?');
-    } else {
-      ref = hash_str;
-      params_str = "";
-    }
-    if (!routes.ref) { ref = 'entries'; }
-    this.routed_content = routes[ref](params_str);
     this.update();
   }
   update() {
@@ -123,9 +99,7 @@ class ReflectApp extends HTMLElement {
         <div id="wrapper-container">
           <main-menu></main-menu>
           <div id="add-box"></div>
-          <div id="main-content-container">
-            ${this.routed_content}
-          </div>
+          <main-content></main-content>
         </div>
       `
       , this.shadowRoot);

@@ -3,15 +3,18 @@ import { html, render } from 'lit-html';
 const style = html`
   <style>
     :host {
-
+      background-color: var(--bg-front);
+      display: block;
+      box-sizing: content-box;
     }
   </style>
 `;
 
-class ReflectApp extends HTMLElement {
+class BaseElement extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({mode: 'open'});
+
     this.update();
   }
   update() {
@@ -22,4 +25,4 @@ class ReflectApp extends HTMLElement {
   }
 }
 
-customElements.define('reflect-app', ReflectApp);
+customElements.define('base-element', BaseElement);
