@@ -1,4 +1,5 @@
 __pycache__/
 Archive/
+venv/
 reflect.db*
 client.save
