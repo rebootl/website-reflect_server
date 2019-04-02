@@ -38,8 +38,11 @@ class MainContent extends HTMLElement {
       ref = hash_str;
       params_str = "";
     }
-    console.log(routes);
-    if (!routes.ref) { console.log('no'); ref = 'entries'; }
+    console.log(ref);
+    if (!routes.hasOwnProperty(ref)) {
+      console.log('route not found, using "entries"');
+      ref = 'entries';
+    }
     this.routed_content = routes[ref](params_str);
     this.update();
   }
