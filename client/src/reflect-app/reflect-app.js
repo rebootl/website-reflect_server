@@ -67,8 +67,10 @@ const style = html`
       /* 1070px + 12px scrollbar */
       #wrapper-container {
         grid-template-columns: 200px auto 200px;
+        grid-template-rows: auto 1fr;
         grid-template-areas:
-          "main-menu  main-content  add-box";
+          "main-menu  main-content  add-box"
+          ".          main-content  .";
       }
       main-content {
         width: 650px;
