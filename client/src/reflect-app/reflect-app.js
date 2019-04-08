@@ -10,13 +10,16 @@ const style = html`
     :host {
       /* "theme" colors, fonts, etc.
          -> evtl. move to base.css later    */
-      --bg-floor: rgb(16,16,16);
-      --bg-header: rgb(0,0,0);
-      --header-bottom-line: rgb(20,20,20);
-      --text: rgb(200,200,200);
-      --bg-front: rgb(41,41,41);
-      --bg-back: rgb(31,31,31);
-      --border-back: rgb(24,24,24);
+      --bg-floor: rgb(16, 16, 16);
+      --bg-header: rgb(0, 0, 0);
+      --header-bottom-line: rgb(20, 20, 20);
+      --text: rgb(200, 200, 200);
+      --bg-front: rgb(41, 41, 41);
+      --bg-back: rgb(31, 31, 31);
+      --border-back: rgb(24, 24, 24);
+      --text-menu-inactive: rgb(120, 120, 120);
+      --text-menu-inactive: rgb(110, 110, 110);
+      --bg-menu-hover: rgb(36, 36, 36);
       font-family: Helvetica, sans-serif;
 
       background-color: var(--bg-floor);

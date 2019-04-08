@@ -8,7 +8,11 @@ const style = html`
       background-color: var(--bg-back);
       display: block;
       /* stub height */
-      height: 100px;
+      min-height: 100px;
+    }
+    #topics ul {
+      padding-left: 0;
+      list-style: none;
     }
   </style>
 `;
@@ -40,23 +44,47 @@ class MainMenu extends HTMLElement {
         console.log(error);
       });
   }
-  toggle_topic() {
-    console.log("click");
+  toggle_topic(topic_el) {
+    //slowelin Today at 3:49 AM
+    const num_int = parseInt(topic_el.getAttribute('id-num'));
+    this.topics.forEach(t => {
+        t.active = (t.id === num_int) ? !t.active : false;
+      });
+    this.gen_subtags_listhtml();
+    this.update();
+  }
+  gen_subtags_listhtml() {
+    // make loop, could be multiple topics
+    this.subtags_lihtml = [];
+    this.topics.forEach(t => {
+      if (t.active) {
+        t.subtags.forEach(s => {
+          this.subtags_lihtml.push(html`<li>${s.label}</li>`);
+          console.log(s.label);
+        });
+      }
+    });
   }
   update() {
+    //gen_subtags_listhtml();
     render(html`${style}
         <nav id="topics">
           <ul>${this.topics.map( (topic) => html`
             <li>
               <topic-menuentry id="topic-${topic.id}"
-                .props=${topic.label}
-                               @click=${(e)=>this.toggle_topic(e.topic_id)}>
+                               class="${ topic.active ? 'active' : ''}"
+                               id-num="${topic.id}"
+                               label="${topic.label}"
+                               @click=${(e)=>this.toggle_topic(e.target)}>
               </topic-menuentry>
             </li>
             `)}
           </ul>
         </nav>
         <nav id="subtags">
+          <ul>
+            ${this.subtags_lihtml}
+          </ul>
         </nav>
       `
       , this.shadowRoot);
