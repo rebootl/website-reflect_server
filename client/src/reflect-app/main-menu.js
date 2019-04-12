@@ -1,6 +1,8 @@
 import { html, render } from 'lit-html';
+import { repeat } from 'lit-html/directives/repeat';
 import { topics_url } from './urls.js';
-import './topic-menuentry.js';
+import './menuentry-topic.js';
+import './menuentry-subtag.js';
 
 const style = html`
   <style>
@@ -10,9 +12,23 @@ const style = html`
       /* stub height */
       min-height: 100px;
     }
-    #topics ul {
+    ul {
       padding-left: 0;
       list-style: none;
+    }
+    #subtags {
+    }
+    #subtags ul {
+      border-top: 1px solid var(--menu-line);
+      padding-top: 16px;
+      padding-left: 10px;
+      padding-right: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    #subtags li {
+      /*display: inline-block;*/
     }
   </style>
 `;
@@ -25,10 +41,13 @@ class MainMenu extends HTMLElement {
     this.topics = {};
 
     this.get_menuentries();
+    //const topics_to_render = this.get_menuentries();
+    //console.log(topics_to_render);
     //this.update();
   }
   get_menuentries() {
-    fetch(topics_url)
+    let topics;
+    return fetch(topics_url)
       .then( (response) => {
         if (!response.ok) {
           throw new Error('HTTP error, status = ' + response.status);
@@ -36,59 +55,114 @@ class MainMenu extends HTMLElement {
         return response.json();
       })
       .then( (data) => {
-        console.log(data);
+        //console.log(data);
+        //topics = data;
+        //return data;
         this.topics = data;
         this.update();
       })
       .catch( (error) => {
         console.log(error);
       });
+    //console.log(topics);
+    //return topics;
   }
-  toggle_topic(topic_el) {
-    //slowelin Today at 3:49 AM
-    const num_int = parseInt(topic_el.getAttribute('id-num'));
-    this.topics.forEach(t => {
-        t.active = (t.id === num_int) ? !t.active : false;
+  toggle_topic(topic) {
+    if (topic.active) {
+      topic.active = false;
+      topic.subtags.forEach(s => {
+        s.active = false;
       });
-    this.gen_subtags_listhtml();
+    } else {
+      this.topics.forEach(t => {
+        t.active = false;
+        t.subtags.forEach(s => s.active = false);
+      });
+      topic.active = true;
+    }
+    /*this.topics.forEach(t => {
+      const selected = t === topic ? !t.active : false;
+      t.active = selected;
+      t.subtags.forEach(s => s.active = !selected);
+    });*/
+    /*this.topics.forEach(t => {
+      //t.active = t.id === topic.id;
+      //t.active = (t.id === topic.id) ? !t.active : false;
+      //t.active = (t.id === topic.id && !t.active);
+      if (t.id === topic.id) {
+        if (t.active) {
+          t.active = false;
+          t.subtags.forEach(s => {
+            s.active = false;
+          })
+        }
+        else {
+          t.active = true;
+        }
+      } else {
+        t.active = false;
+      }
+    });*/
     this.update();
   }
-  gen_subtags_listhtml() {
+  toggle_subtag(subtag) {
+    subtag.active = !subtag.active;
+    this.update();
+  }
+  gen_subtags_torender() {
     // make loop, could be multiple topics
-    this.subtags_lihtml = [];
-    this.topics.forEach(t => {
-      if (t.active) {
-        t.subtags.forEach(s => {
-          this.subtags_lihtml.push(html`<li>${s.label}</li>`);
-          console.log(s.label);
-        });
-      }
-    });
+    //const subtags_to_render = [];
+    //this.topics.forEach(t => {
+    //  if (t.active) {
+    //    console.log(t);
+    //    t.subtags.forEach(s => {
+    //      subtags_torender.push(s);
+    //    });
+    //  }
+    //});
+
+    // improved version
+    //const subtags_to_render = this.topics
+    //  .filter(t => t.active)
+    //  .map(t => t.subtags)
+    //  .reduce((prev, next) => [...prev, ...next], []);
+    // use flat instead
+    //  .flat();
+    const subtags_to_render = this.topics
+      .filter(t => t.active)
+      .flatMap(t => t.subtags);
+    return subtags_to_render;
   }
   update() {
-    //gen_subtags_listhtml();
+    const subtags_to_render = this.gen_subtags_torender();
+    console.log(subtags_to_render);
     render(html`${style}
-        <nav id="topics">
-          <ul>${this.topics.map( (topic) => html`
-            <li>
-              <topic-menuentry id="topic-${topic.id}"
-                               class="${ topic.active ? 'active' : ''}"
-                               id-num="${topic.id}"
-                               label="${topic.label}"
-                               @click=${(e)=>this.toggle_topic(e.target)}>
-              </topic-menuentry>
-            </li>
-            `)}
-          </ul>
-        </nav>
-        <nav id="subtags">
-          <ul>
-            ${this.subtags_lihtml}
-          </ul>
-        </nav>
-      `
-      , this.shadowRoot);
+      <nav id="topics">
+        <ul>${this.topics.map(topic => html`
+          <li>
+            <menuentry-topic id="topic-${topic.id}"
+                             class="${ topic.active ? 'active' : ''}"
+                             @click="${()=>this.toggle_topic(topic)}">
+              ${topic.label}
+            </menuentry-topic>
+          </li>`)}
+        </ul>
+      </nav>
+      <nav id="subtags">
+        <ul>${repeat(subtags_to_render, subtag => subtag.id, subtag => html`
+          <li>
+            <menuentry-subtag id="subtag-${subtag.id}"
+                              class="${ subtag.active ? 'active' : ''}"
+                              @click=${() => this.toggle_subtag(subtag)}>
+              ${subtag.label}
+            </menuentry-subtag>
+          </li>`)}
+        </ul>
+      </nav>`,
+      this.shadowRoot);
   }
+  //${subtags_to_render.length > 0 ? html`
+  //` : ``}
 }
 
 customElements.define('main-menu', MainMenu);

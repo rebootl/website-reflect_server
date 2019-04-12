@@ -19,6 +19,7 @@ const style = html`
       --border-back: rgb(24, 24, 24);
       --text-menu-inactive: rgb(120, 120, 120);
       --text-menu-inactive: rgb(110, 110, 110);
+      --menu-line: rgb(75, 75, 75);
       --bg-menu-hover: rgb(36, 36, 36);
       font-family: Helvetica, sans-serif;
 
