@@ -1,4 +1,5 @@
 import { html, render } from 'lit-html';
+import './listed-entries.js';
 
 const style = html`
   <style>
@@ -34,6 +35,8 @@ class MainContent extends HTMLElement {
     let ref, params_str;
     if (hash_str.includes('?')) {
       [ ref, params_str ] = hash_str.split('?');
+      // -> extract params from params_str
+      
     } else {
       ref = hash_str;
       params_str = "";

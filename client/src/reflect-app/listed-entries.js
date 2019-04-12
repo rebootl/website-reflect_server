@@ -1,4 +1,5 @@
 import { html, render } from 'lit-html';
+import { entries_url } from './urls.js';
 
 const style = html`
   <style>
@@ -8,11 +9,27 @@ const style = html`
   </style>
 `;
 
-class ReflectApp extends HTMLElement {
+class ListedEntries extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({mode: 'open'});
-    this.update();
+
+    this.get_entries();
+  }
+  get_entries() {
+    //let entries;
+    return fetch(entries_url).then(response => {
+        if (!response.ok) {
+          throw new Error('HTTP error, status = ' + response.status);
+        }
+        return response.json();
+      }).then(data => {
+        console.log(data);
+        this.entries = data;
+        this.update();
+      }).catch( (error) => {
+        console.log(error);
+      });
   }
   update() {
     render(html`${style}
@@ -22,4 +39,4 @@ class ReflectApp extends HTMLElement {
   }
 }
 
-customElements.define('reflect-app', ReflectApp);
+customElements.define('listed-entries', ListedEntries);
