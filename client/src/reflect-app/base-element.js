@@ -20,8 +20,7 @@ class BaseElement extends HTMLElement {
   update() {
     render(html`${style}
 
-      `
-      , this.shadowRoot);
+      `, this.shadowRoot);
   }
 }
 

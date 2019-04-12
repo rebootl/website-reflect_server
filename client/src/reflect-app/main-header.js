@@ -40,8 +40,7 @@ class MainHeader extends HTMLElement {
         <img id="logo" src="/layout/logo.png">
       </div>
       <user-menu></user-menu>
-    `
-    , this.shadowRoot);
+    `, this.shadowRoot);
   }
 }
 
