@@ -56,16 +56,12 @@ class MainMenu extends HTMLElement {
       })
       .then( (data) => {
         //console.log(data);
-        //topics = data;
-        //return data;
         this.topics = data;
         this.update();
       })
       .catch( (error) => {
         console.log(error);
       });
-    //console.log(topics);
-    //return topics;
   }
   toggle_topic(topic) {
     if (topic.active) {
@@ -103,11 +99,34 @@ class MainMenu extends HTMLElement {
         t.active = false;
       }
     });*/
+    this.update_url();
     this.update();
   }
   toggle_subtag(subtag) {
     subtag.active = !subtag.active;
+    this.update_url();
     this.update();
+  }
+  update_url() {
+    // generate url
+    // format e.g. #entries?select=true&topic_id[]=3&tag_id[]=2&tag_id[]=3
+    // elements:
+    // #entries?select=true &topic_id[]=3 &tag_id[]=2 &tag_id[]=3
+    let hash_url = "";
+    if (this.topics.some(t => t.active)) {
+      hash_url = "#entries?select=true";
+      this.topics.filter(t => t.active).forEach(t => {
+        console.log(t);
+        hash_url += '&topic_id[]=' + t.id;
+        t.subtags.filter(t => t.active).forEach(s => {
+          hash_url += '&tag_id[]=' + s.id;
+        });
+      });
+    } else {
+      hash_url = "#entries";
+    }
+    // update it
+    window.location.hash = hash_url;
   }
   gen_subtags_torender() {
     // make loop, could be multiple topics
@@ -135,7 +154,7 @@ class MainMenu extends HTMLElement {
   }
   update() {
     const subtags_to_render = this.gen_subtags_torender();
-    console.log(subtags_to_render);
+    //  console.log(subtags_to_render);
     render(html`${style}
       <nav id="topics">
         <ul>${this.topics.map(topic => html`
