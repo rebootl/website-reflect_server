@@ -41,25 +41,18 @@ class MainMenu extends HTMLElement {
     this.topics = {};
 
     this.get_menuentries();
-    //const topics_to_render = this.get_menuentries();
-    //console.log(topics_to_render);
-    //this.update();
   }
   get_menuentries() {
-    let topics;
-    return fetch(topics_url)
-      .then( (response) => {
+    return fetch(topics_url).then(response => {
         if (!response.ok) {
           throw new Error('HTTP error, status = ' + response.status);
         }
         return response.json();
-      })
-      .then( (data) => {
+      }).then(data => {
         //console.log(data);
         this.topics = data;
         this.update();
-      })
-      .catch( (error) => {
+      }).catch(error => {
         console.log(error);
       });
   }
