@@ -24,7 +24,7 @@ class ListedEntries extends HTMLElement {
         }
         return response.json();
       }).then(data => {
-        console.log(data);
+        //console.log(data);
         this.entries = data;
         this.update();
       }).catch( (error) => {
