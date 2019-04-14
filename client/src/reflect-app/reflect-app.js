@@ -1,6 +1,6 @@
 import { html, render } from 'lit-html';
 import { global_state } from './global_state.js';
-//import './router.js';
+import './router.js';
 import './main-header.js';
 import './main-menu.js';
 import './main-content.js';

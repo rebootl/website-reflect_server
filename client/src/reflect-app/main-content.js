@@ -25,8 +25,8 @@ class MainContent extends HTMLElement {
     this.attachShadow({mode: 'open'});
 
     // listen for url changes
-    window.addEventListener('hashchange', ()=>this.urlChange());
-    window.addEventListener('load', ()=>this.urlChange());
+    //window.addEventListener('hashchange', ()=>this.urlChange());
+    //window.addEventListener('load', ()=>this.urlChange());
 
     //this.update();
   }
@@ -36,7 +36,7 @@ class MainContent extends HTMLElement {
     if (hash_str.includes('?')) {
       [ ref, params_str ] = hash_str.split('?');
       // -> extract params from params_str
-      
+
     } else {
       ref = hash_str;
       params_str = "";

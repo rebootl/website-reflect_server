@@ -1,6 +1,7 @@
 import { html, render } from 'lit-html';
 import { repeat } from 'lit-html/directives/repeat';
 import { topics_url } from './urls.js';
+import { Router } from './router.js';
 import './menuentry-topic.js';
 import './menuentry-subtag.js';
 
@@ -33,28 +34,53 @@ const style = html`
   </style>
 `;
 
+const get_api_req = async (api_url) => {
+  try {
+    const response = await fetch(api_url);
+    if (!response.ok) {
+      throw new Error('HTTP error, status = ' + response.status);
+    }
+    const data = await response.json();
+    return data;
+  } catch(err) {
+    console.log(err);
+  }
+}
+
 class MainMenu extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({mode: 'open'});
 
-    this.topics = {};
-
-    this.get_menuentries();
+    Router.register(this);
   }
-  get_menuentries() {
-    return fetch(topics_url).then(response => {
-        if (!response.ok) {
-          throw new Error('HTTP error, status = ' + response.status);
+  // -> evtl. make router_load here !!!
+  /*router_load(url_state_obj) {
+    this.url_state_obj = url_state_obj;
+    this.get_menuentries();
+  }*/
+  async router_update(url_state_obj) {
+    this.url_state_obj = url_state_obj;
+    // -> would prefer something like this.topics = get_menuentries(),
+    //    but that doesn't work because fetch is async...
+    this.topics = await get_api_req(topics_url);
+    this.update_menu_by_url();
+  }
+  update_menu_by_url() {
+    const params = this.url_state_obj.params;
+    //console.log(params);
+    //console.log(this.topics);
+    if (params.hasOwnProperty('select')) {
+      this.topics.forEach(t => {
+        console.log(this.url_state_obj.params.topic_ids);
+        console.log(t.id);
+        if (this.url_state_obj.params.topic_ids.includes(t.id.toString())) {
+          t.active = true;
+          console.log(t.label);
         }
-        return response.json();
-      }).then(data => {
-        //console.log(data);
-        this.topics = data;
-        this.update();
-      }).catch(error => {
-        console.log(error);
       });
+    }
+    this.update();
   }
   toggle_topic(topic) {
     if (topic.active) {
@@ -74,31 +100,13 @@ class MainMenu extends HTMLElement {
       t.active = selected;
       t.subtags.forEach(s => s.active = !selected);
     });*/
-    /*this.topics.forEach(t => {
-      //t.active = t.id === topic.id;
-      //t.active = (t.id === topic.id) ? !t.active : false;
-      //t.active = (t.id === topic.id && !t.active);
-      if (t.id === topic.id) {
-        if (t.active) {
-          t.active = false;
-          t.subtags.forEach(s => {
-            s.active = false;
-          })
-        }
-        else {
-          t.active = true;
-        }
-      } else {
-        t.active = false;
-      }
-    });*/
     this.update_url();
-    this.update();
+    //this.update();
   }
   toggle_subtag(subtag) {
     subtag.active = !subtag.active;
     this.update_url();
-    this.update();
+    //this.update();
   }
   update_url() {
     // generate url
@@ -109,10 +117,10 @@ class MainMenu extends HTMLElement {
     if (this.topics.some(t => t.active)) {
       hash_url = "#entries?select=true";
       this.topics.filter(t => t.active).forEach(t => {
-        console.log(t);
-        hash_url += '&topic_id[]=' + t.id;
+        //console.log(t);
+        hash_url += '&topic_ids[]=' + t.id;
         t.subtags.filter(t => t.active).forEach(s => {
-          hash_url += '&tag_id[]=' + s.id;
+          hash_url += '&tag_ids[]=' + s.id;
         });
       });
     } else {
@@ -122,24 +130,6 @@ class MainMenu extends HTMLElement {
     window.location.hash = hash_url;
   }
   gen_subtags_torender() {
-    // make loop, could be multiple topics
-    //const subtags_to_render = [];
-    //this.topics.forEach(t => {
-    //  if (t.active) {
-    //    console.log(t);
-    //    t.subtags.forEach(s => {
-    //      subtags_torender.push(s);
-    //    });
-    //  }
-    //});
-
-    // improved version
-    //const subtags_to_render = this.topics
-    //  .filter(t => t.active)
-    //  .map(t => t.subtags)
-    //  .reduce((prev, next) => [...prev, ...next], []);
-    // use flat instead
-    //  .flat();
     const subtags_to_render = this.topics
       .filter(t => t.active)
       .flatMap(t => t.subtags);
@@ -147,7 +137,21 @@ class MainMenu extends HTMLElement {
   }
   update() {
     const subtags_to_render = this.gen_subtags_torender();
-    //  console.log(subtags_to_render);
+    //console.log(subtags_to_render);
+
+    // -> get the topic object once (from api server)
+    //    -> maybe later get it on every url change (menu click),
+    //       maybe make it async
+    // on page load/url change  <------------------------------\
+    // -> create a url state object (by parsing the url)       |
+    // -> update the topic object accordingly                  |
+    // -> render                                               |
+    //                                                         |
+    // on click (topic or subtag)                              |
+    // -> update the topic object                              |
+    // -> create url accordingly                               |
+    // -> update url ------------------------------------------/
+
     render(html`${style}
       <nav id="topics">
         <ul>${this.topics.map(topic => html`
