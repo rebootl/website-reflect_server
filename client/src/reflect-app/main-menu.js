@@ -55,28 +55,32 @@ class MainMenu extends HTMLElement {
     Router.register(this);
   }
   // -> evtl. make router_load here !!!
-  /*router_load(url_state_obj) {
-    this.url_state_obj = url_state_obj;
-    this.get_menuentries();
-  }*/
-  async router_update(url_state_obj) {
-    this.url_state_obj = url_state_obj;
-    // -> would prefer something like this.topics = get_menuentries(),
-    //    but that doesn't work because fetch is async...
+  async router_load(url_state_obj) {
     this.topics = await get_api_req(topics_url);
-    this.update_menu_by_url();
+    this.update_menu_by_url(url_state_obj);
   }
-  update_menu_by_url() {
-    const params = this.url_state_obj.params;
-    //console.log(params);
-    //console.log(this.topics);
-    if (params.hasOwnProperty('select')) {
+  router_update(url_state_obj) {
+    //this.topics = await get_api_req(topics_url);
+    // clear topics state!!
+    this.topics.forEach(t => {
+      t.active = false;
+      t.subtags.forEach(s => s.active = false);
+    });
+    this.update_menu_by_url(url_state_obj);
+  }
+  update_menu_by_url(url_state_obj) {
+    const params = url_state_obj.params;
+    if (params.hasOwnProperty('select') && params.hasOwnProperty('topic_ids')) {
       this.topics.forEach(t => {
-        console.log(this.url_state_obj.params.topic_ids);
-        console.log(t.id);
-        if (this.url_state_obj.params.topic_ids.includes(t.id.toString())) {
+        if (params.topic_ids.includes(t.id.toString())) {
           t.active = true;
-          console.log(t.label);
+          if (params.hasOwnProperty('subtag_ids')) {
+            t.subtags.forEach(s => {
+              if (params.subtag_ids.includes(s.id.toString())) {
+                s.active = true;
+              }
+            });
+          }
         }
       });
     }
@@ -120,7 +124,7 @@ class MainMenu extends HTMLElement {
         //console.log(t);
         hash_url += '&topic_ids[]=' + t.id;
         t.subtags.filter(t => t.active).forEach(s => {
-          hash_url += '&tag_ids[]=' + s.id;
+          hash_url += '&subtag_ids[]=' + s.id;
         });
       });
     } else {

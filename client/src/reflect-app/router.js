@@ -23,9 +23,23 @@ export class Router {
   }
   constructor() {
     window.addEventListener('hashchange', ()=>this.url_change());
-    window.addEventListener('load', ()=>this.url_change());
+    window.addEventListener('load', ()=>this.page_load());
+  }
+  page_load() {
+    const route_params_obj = this.parse_url();
+    registered_components.forEach(comp => {
+      console.log("router update");
+      comp.router_load(route_params_obj);
+    })
   }
   url_change() {
+    const route_params_obj = this.parse_url();
+    registered_components.forEach(comp => {
+      console.log("router update");
+      comp.router_update(route_params_obj);
+    })
+  }
+  parse_url() {
     let params = {};
     const hash_str = location.hash.slice(1) || '';
     const route_params = hash_str.split('?');
@@ -47,13 +61,10 @@ export class Router {
         }
       });
     }
-    //console.log(route_params[0]);
-    //console.log(params);
-    registered_components.forEach(comp => {
-      console.log("router update");
-      comp.router_update({ route: route_params[0], params: params });
-    })
+    return { route: route_params[0], params: params }
   }
+}
+
     // old version
     /*let route, params_str;
     if (hash_str.includes('?')) {
@@ -68,6 +79,5 @@ export class Router {
       console.log('route not found, using "entries"');
       ref = 'entries';
     }*/
-}
 
 const myrouter = new Router();
