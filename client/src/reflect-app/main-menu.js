@@ -119,7 +119,7 @@ class MainMenu extends HTMLElement {
     // #entries?select=true &topic_id[]=3 &tag_id[]=2 &tag_id[]=3
     let hash_url = "";
     if (this.topics.some(t => t.active)) {
-      hash_url = "#entries?select=true";
+      hash_url = "#entries?select";
       this.topics.filter(t => t.active).forEach(t => {
         //console.log(t);
         hash_url += '&topic_ids[]=' + t.id;
