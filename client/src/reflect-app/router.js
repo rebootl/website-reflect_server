@@ -27,15 +27,15 @@ export class Router {
   }
   page_load() {
     const route_params_obj = this.parse_url();
+    console.log("router load");
     registered_components.forEach(comp => {
-      console.log("router load");
       comp.router_load(route_params_obj);
     })
   }
   url_change() {
     const route_params_obj = this.parse_url();
+    console.log("router update");
     registered_components.forEach(comp => {
-      console.log("router update");
       comp.router_update(route_params_obj);
     })
   }

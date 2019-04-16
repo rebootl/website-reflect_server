@@ -1,4 +1,5 @@
 import { html, render } from 'lit-html';
+import { Router } from './router.js';
 import './listed-entries.js';
 
 const style = html`
@@ -13,10 +14,10 @@ const style = html`
 `;
 
 const routes = {
-  'entries': (params) => html`<listed-entries params=${params}></listed-entries>`,
-  'add-entry': (a) => html`<add-entry></add-entry>`,
-  'edit-entry': (a) => html`<edit-entry></edit-entry>`,
-  'edit-topic': (a) => html`<edit-topic></edit-topic>`,
+  'entries': (params) => html`<listed-entries .params=${params}></listed-entries>`,
+  //'add-entry': (a) => html`<add-entry></add-entry>`,
+  //'edit-entry': (a) => html`<edit-entry></edit-entry>`,
+  //'edit-topic': (a) => html`<edit-topic></edit-topic>`,
 };
 
 class MainContent extends HTMLElement {
@@ -24,36 +25,23 @@ class MainContent extends HTMLElement {
     super();
     this.attachShadow({mode: 'open'});
 
-    // listen for url changes
-    //window.addEventListener('hashchange', ()=>this.urlChange());
-    //window.addEventListener('load', ()=>this.urlChange());
-
-    //this.update();
+    Router.register(this);
   }
-  urlChange() {
-    const hash_str = location.hash.slice(1) || '';
-    let ref, params_str;
-    if (hash_str.includes('?')) {
-      [ ref, params_str ] = hash_str.split('?');
-      // -> extract params from params_str
-
+  router_load(url_state_obj) {
+    this.router_update(url_state_obj);
+  }
+  router_update(url_state_obj) {
+    if (routes.hasOwnProperty(url_state_obj.route)) {
+      this.routed_content = routes[url_state_obj.route](url_state_obj.params);
     } else {
-      ref = hash_str;
-      params_str = "";
+      this.routed_content = html`route not found :(`;
     }
-    console.log(ref);
-    if (!routes.hasOwnProperty(ref)) {
-      console.log('route not found, using "entries"');
-      ref = 'entries';
-    }
-    this.routed_content = routes[ref](params_str);
     this.update();
   }
   update() {
     render(html`${style}
         ${this.routed_content}
-      `
-      , this.shadowRoot);
+      `, this.shadowRoot);
   }
 }
 
