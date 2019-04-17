@@ -3,13 +3,13 @@ import { html, render } from 'lit-html';
 const style = html`
   <style>
     :host {
-      background-color: var(--bg-back);
       display: block;
       box-sizing: content-box;
       height: 50px;
       line-height: 50px;
       padding-left: 20px;
       color: var(--text-menu-inactive);
+      font-size: 18px;
     }
     :host(:hover) {
       cursor: pointer;
@@ -17,7 +17,7 @@ const style = html`
     }
     :host(.active) {
       color: var(--text);
-      /*background-color: var(--bg-menu-active);*/
+      background-color: var(--bg-menu-hover);
     }
   </style>
 `;

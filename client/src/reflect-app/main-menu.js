@@ -8,7 +8,7 @@ import './menuentry-subtag.js';
 const style = html`
   <style>
     :host {
-      background-color: var(--bg-back);
+      background-color: var(--bg-menu);
       display: block;
       /* stub height */
       min-height: 100px;

@@ -10,17 +10,17 @@ const style = html`
     :host {
       /* "theme" colors, fonts, etc.
          -> evtl. move to base.css later    */
-      --bg-floor: rgb(16, 16, 16);
+      --bg-floor: rgb(15, 15, 15);
       --bg-header: rgb(0, 0, 0);
       --header-bottom-line: rgb(20, 20, 20);
       --text: rgb(200, 200, 200);
       --bg-front: rgb(41, 41, 41);
-      --bg-back: rgb(31, 31, 31);
+      --bg-back: rgb(30, 30, 30);
+      --bg-menu: rgb(20, 20, 20);
       --border-back: rgb(24, 24, 24);
-      --text-menu-inactive: rgb(120, 120, 120);
-      --text-menu-inactive: rgb(110, 110, 110);
-      --menu-line: rgb(75, 75, 75);
-      --bg-menu-hover: rgb(36, 36, 36);
+      --text-menu-inactive: rgb(90, 90, 90);
+      --menu-line: rgb(45, 45, 45);
+      --bg-menu-hover: rgb(25, 25, 25);
       font-family: Helvetica, sans-serif;
 
       background-color: var(--bg-floor);

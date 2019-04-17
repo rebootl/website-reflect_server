@@ -3,7 +3,6 @@ import { html, render } from 'lit-html';
 const style = html`
   <style>
     :host {
-      background-color: var(--bg-back);
       display: block;
       box-sizing: content-box;
       /*height: 30px;
@@ -21,7 +20,6 @@ const style = html`
     :host(.active) {
       color: var(--text);
       background-color: var(--bg-menu-hover);
-      /*background-color: var(--bg-menu-active);*/
     }
   </style>
 `;
