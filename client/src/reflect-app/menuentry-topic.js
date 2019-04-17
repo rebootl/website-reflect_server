@@ -16,7 +16,7 @@ const style = html`
       background-color: var(--bg-menu-hover);
     }
     :host(.active) {
-      color: var(--text);
+      color: var(--text-menu);
       background-color: var(--bg-menu-hover);
     }
   </style>

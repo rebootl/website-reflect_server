@@ -14,6 +14,7 @@ const style = html`
       --bg-header: rgb(0, 0, 0);
       --header-bottom-line: rgb(20, 20, 20);
       --text: rgb(200, 200, 200);
+      --text-menu: rgb(170, 170, 170);
       --bg-front: rgb(41, 41, 41);
       --bg-back: rgb(30, 30, 30);
       --bg-menu: rgb(20, 20, 20);
