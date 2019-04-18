@@ -5,11 +5,12 @@ const style = html`
     :host {
       display: block;
       box-sizing: content-box;
-      height: 50px;
-      line-height: 50px;
+      height: 60px;
+      line-height: 60px;
       padding-left: 20px;
       color: var(--text-menu-inactive);
       font-size: 18px;
+      font-weight: lighter;
     }
     :host(:hover) {
       cursor: pointer;
@@ -18,6 +19,7 @@ const style = html`
     :host(.active) {
       color: var(--text-menu);
       background-color: var(--bg-menu-hover);
+      font-weight: normal;
     }
   </style>
 `;

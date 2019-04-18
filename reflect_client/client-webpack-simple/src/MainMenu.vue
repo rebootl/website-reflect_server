@@ -10,7 +10,7 @@ import Topics from './Topics.vue';
 import Subtags from './Subtags.vue';
 import { global_state } from './main.js';
 
-const get_sel_data_url = "http://hplaptop:5010/api/topics";
+const get_sel_data_url = "http://localhost:5010/api/topics";
 
 export default {
   name: 'main-menu',
