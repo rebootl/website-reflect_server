@@ -12,7 +12,6 @@ const style = html`
       border-radius: 9px;
       margin: 7px 5px 7px 5px;
       color: var(--text-menu-inactive);
-      font-weight: lighter;
     }
     :host(:hover) {
       cursor: pointer;
