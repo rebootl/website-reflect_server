@@ -34,7 +34,9 @@ class MainContent extends HTMLElement {
     if (routes.hasOwnProperty(url_state_obj.route)) {
       this.routed_content = routes[url_state_obj.route](url_state_obj.params);
     } else {
-      this.routed_content = html`route not found :(`;
+      // -> maybe flash msg here... `route not found :(`
+      // default to entries
+      this.routed_content = routes['entries'](url_state_obj.params);
     }
     this.update();
   }
