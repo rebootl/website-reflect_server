@@ -18,7 +18,7 @@ const style = html`
     }
     :host(.active) {
       color: var(--text-menu);
-      background-color: var(--bg-menu-hover);
+      background-color: var(--bg-menu-active);
       font-weight: normal;
     }
   </style>
