@@ -2,6 +2,7 @@ import { html, render } from 'lit-html';
 import { repeat } from 'lit-html/directives/repeat';
 import { topics_url } from './urls.js';
 import { Router } from './router.js';
+import { get_api_req } from './api_request_helpers.js';
 import './menuentry-topic.js';
 import './menuentry-subtag.js';
 
@@ -33,19 +34,6 @@ const style = html`
     }
   </style>
 `;
-
-const get_api_req = async (api_url) => {
-  try {
-    const response = await fetch(api_url);
-    if (!response.ok) {
-      throw new Error('HTTP error, status = ' + response.status);
-    }
-    const data = await response.json();
-    return data;
-  } catch(err) {
-    console.log(err);
-  }
-}
 
 class MainMenu extends HTMLElement {
   constructor() {

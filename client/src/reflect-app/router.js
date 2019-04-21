@@ -61,7 +61,11 @@ export class Router {
         }
       });
     }
-    return { route: route_params[0], params: params }
+    return {
+      route: route_params[0],
+      params: params,
+      params_str: route_params[1]
+    }
   }
 }
 

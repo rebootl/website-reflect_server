@@ -14,9 +14,9 @@ const style = html`
 `;
 
 const routes = {
-  'entries': (params) => html`<listed-entries .params=${params}></listed-entries>`,
+  'entries': (url_state_obj) => html`<listed-entries .url_state_obj=${url_state_obj}></listed-entries>`,
   //'add-entry': (a) => html`<add-entry></add-entry>`,
-  //'edit-entry': (a) => html`<edit-entry></edit-entry>`,
+  'edit-entry': (a) => html`<edit-entry></edit-entry>`,
   //'edit-topic': (a) => html`<edit-topic></edit-topic>`,
 };
 
@@ -32,11 +32,11 @@ class MainContent extends HTMLElement {
   }
   router_update(url_state_obj) {
     if (routes.hasOwnProperty(url_state_obj.route)) {
-      this.routed_content = routes[url_state_obj.route](url_state_obj.params);
+      this.routed_content = routes[url_state_obj.route](url_state_obj);
     } else {
       // -> maybe flash msg here... `route not found :(`
       // default to entries
-      this.routed_content = routes['entries'](url_state_obj.params);
+      this.routed_content = routes['entries'](url_state_obj);
     }
     this.update();
   }

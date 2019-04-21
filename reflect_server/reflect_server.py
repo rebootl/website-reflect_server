@@ -258,8 +258,8 @@ def api_entries():
     # (debug prints)
     #print(request.args.getlist('topics[]'))
     #print(request.args.getlist('tags[]'))
-    topic_ids = request.args.getlist('topics[]')
-    subtag_ids = request.args.getlist('tags[]')
+    topic_ids = request.args.getlist('topic_ids[]')
+    subtag_ids = request.args.getlist('subtag_ids[]')
 
     curr_user = get_jwt_identity()
     print(curr_user)
