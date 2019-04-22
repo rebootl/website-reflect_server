@@ -8,7 +8,7 @@ const style = html`
       background-color: var(--bg-front);
       display: block;
       box-sizing: content-box;
-      height: 300px;
+      padding: 25px 30px 15px 30px;
     }
   </style>
 `;

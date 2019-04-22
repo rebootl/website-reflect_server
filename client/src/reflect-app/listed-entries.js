@@ -2,6 +2,7 @@ import { html, render } from 'lit-html';
 import { repeat } from 'lit-html/directives/repeat';
 import { entries_url } from './urls.js';
 import { get_api_req } from './api_request_helpers.js';
+import './list-entry.js';
 
 const style = html`
   <style>
@@ -31,17 +32,15 @@ class ListedEntries extends HTMLElement {
     this.state_update();
   }
   async state_update() {
-    console.log("entries comp., state update");
-    console.log(this.url_state_obj.params_str);
-    // -> get entries
+    //console.log("entries comp., state update");
+    //console.log(this.url_state_obj.params_str);
     this.entries_obj = await get_api_req(entries_url + '?' + this.url_state_obj.params_str);
     this.update();
   }
   update() {
-    console.log(this.entries_obj);
     render(html`${style}
       <ul id="entries-list">${repeat(this.entries_obj.entries, entry => entry.id, entry => html`
-        <li><list-entry>${entry.content.text}</list-entry></li>`)}
+        <li><list-entry .entry=${entry}></list-entry></li>`)}
       </ul>`, this.shadowRoot);
   }
 }
