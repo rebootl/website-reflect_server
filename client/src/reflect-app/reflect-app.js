@@ -18,8 +18,9 @@ const style = html`
       /* general */
       --bg-front: rgb(41, 41, 41);
       --bg-back: rgb(30, 30, 30);
-      --text: rgb(200, 200, 200);
+      --text: rgb(175, 175, 175);
       --border-back: rgb(24, 24, 24);
+      --link-text: rgb(156, 222, 222);
       /* menu */
       --bg-menu: rgb(20, 20, 20);
       --bg-menu-hover: rgb(25, 25, 25);
@@ -27,6 +28,8 @@ const style = html`
       --text-menu: rgb(170, 170, 170);
       --text-menu-inactive: rgb(110, 110, 110);
       --menu-line: rgb(45, 45, 45);
+      /* entries */
+      --text-inactive: rgb(90, 90, 90);
       font-family: Helvetica, sans-serif;
 
       background-color: var(--bg-floor);
@@ -34,6 +37,9 @@ const style = html`
       height: 100vh;
       overflow: auto;
       color: var(--text);
+    }
+    a {
+      color: var(--link-text);
     }
     #wrapper-container {
       display: grid;

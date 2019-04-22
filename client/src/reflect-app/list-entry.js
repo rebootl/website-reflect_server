@@ -1,7 +1,11 @@
 import { html, render } from 'lit-html';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html';
-const md = window.markdownit();
-//const result = md.render('# markdown-it rulezz!');
+const md = window.markdownit().use(window.markdownitEmoji);
+// add twemojis
+// (attribution req.)
+md.renderer.rules.emoji = (token, idx) => {
+  return twemoji.parse(token[idx].content);
+};
 // -> also https://github.com/commonmark/commonmark.js looks kinda nice,
 //    used by https://github.com/intcreator/markdown-element
 
@@ -10,13 +14,21 @@ const style = html`
     :host {
     }
     .listentry-header {
-      color: var(--text-menu-inactive);
+      font-size: 0.8em;
+      color: var(--text-inactive);
     }
     .listentry-body {
       margin: 15px 15px 15px 15px;
       padding-left: 50px;
       padding-right: 50px;
-      border-left: 1px solid var(--text-menu-inactive);
+      border-left: 1px solid var(--text-inactive);
+    }
+    .emoji {
+      height: 1.5em;
+      vertical-align: middle;
+    }
+    a {
+      color: var(--link-text);
     }
   </style>
 `;
@@ -39,12 +51,11 @@ class ListEntry extends HTMLElement {
     this.update();
   }
   update() {
-    console.log(this.entry);
-    const html_text = md.render(this.entry.content.text);
-    console.log(html_text);
     render(html`${style}
-      <small class="listentry-header">${this.entry.timestamp} entry_${this.entry.id}</small>
-      <div class="listentry-body">${unsafeHTML(html_text)}</div>
+      <small class="listentry-header">${this.entry.timestamp}
+        <a href="#entry?id=${this.entry.id}">#entry?id=${this.entry.id}</a>
+      </small>
+      <div class="listentry-body">${unsafeHTML(md.render(this.entry.content.text))}</div>
       `, this.shadowRoot);
   }
 }
