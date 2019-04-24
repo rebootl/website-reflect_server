@@ -2,6 +2,10 @@ import { html, render } from 'lit-html';
 
 const style = html`
   <style>
+    :host {
+      display: block;
+      box-sizing: content-box;
+    }
     button {
       background-color: var(--bg-back);
       color: var(--text);

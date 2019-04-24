@@ -32,14 +32,15 @@ class UserMenu extends HTMLElement {
   update() {
     render(html`
       ${style}
-      <user-dropdown-button @click=${(e)=>this.toggle_menu()}></user-dropdown-button>
-      <user-dropdown-menu @close=${(e)=>this.toggle_menu()}></user-dropdown-menu>
+      <user-dropdown-button @click=${()=>this.toggle_menu()}></user-dropdown-button>
+      <user-dropdown-menu @close=${()=>this.toggle_menu()}></user-dropdown-menu>
     `
     , this.shadowRoot);
   }
   toggle_menu() {
-    this.shadowRoot.querySelector('user-dropdown-button')
-      .classList.toggle('active');
+    const user_dd_button_el = this.shadowRoot.querySelector('user-dropdown-button');
+    user_dd_button_el.classList.toggle('active');
+    user_dd_button_el.update();
     this.shadowRoot.querySelector('user-dropdown-menu')
       .classList.toggle('show_menu');
   }
