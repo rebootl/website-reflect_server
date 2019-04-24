@@ -22,6 +22,8 @@ const style = html`
       padding-left: 50px;
       padding-right: 50px;
       border-left: 1px solid var(--text-inactive);
+      /*font-size: 18px;*/
+      line-height: 1.5em;
     }
     .emoji {
       height: 1.5em;
