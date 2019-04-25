@@ -25,6 +25,9 @@ export class Router {
     window.addEventListener('hashchange', ()=>this.url_change());
     window.addEventListener('load', ()=>this.page_load());
   }
+  trigger_update() {
+    this.url_change();
+  }
   page_load() {
     const route_params_obj = this.parse_url();
     console.log("router load");
@@ -84,4 +87,4 @@ export class Router {
       ref = 'entries';
     }*/
 
-const myrouter = new Router();
+export const myrouter = new Router();

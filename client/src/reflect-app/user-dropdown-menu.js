@@ -5,6 +5,7 @@ import './gen-elements/password-input.js';
 import './gen-elements/labelled-button.js';
 import './gen-elements/close-button.js';
 import auth from './auth.js';
+import { myrouter } from './router.js';
 
 const style = html`
   <style>
@@ -55,8 +56,7 @@ class UserDropdownMenu extends HTMLElement {
       // -> update dropdown-menu, clear form
       // -> update content
       //console.log('login successful');
-      this.close();
-      this.update();
+      this.update_after_success();
     }
     //else {
       // login unsuccessful
@@ -65,13 +65,18 @@ class UserDropdownMenu extends HTMLElement {
       //console.log('login unsuccessful');
     //}
   }
+  logout() {
+    auth.logout();
+    // -> check return ?
+    this.update_after_success();
+  }
   close() {
     this.dispatchEvent(event_close);
   }
-  logout() {
-    auth.logout();
+  update_after_success() {
     this.close();
     this.update();
+    myrouter.trigger_update();
   }
   get_login_content() {
     if (global_state.user.logged_in) {

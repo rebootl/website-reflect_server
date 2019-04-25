@@ -31,7 +31,7 @@ export default {
       password: pw
     });
     // check login login_resp
-    console.log(login_resp);
+    //console.log(login_resp);
     if (!login_resp) {
       console.log("Login unsuccessful :(");
       return false;

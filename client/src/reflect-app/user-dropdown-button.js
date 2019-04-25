@@ -42,7 +42,7 @@ class UserDropdownButton extends HTMLElement {
   update() {
     // unicode user icon: &#x1F464; doesn't work in chromium :(
     const user = global_state.user;
-    console.log(user);
+    //console.log(user);
     render(html`
       ${style}
       <img id="icon-user" src="layout/icons/user-dark_20.png">
