@@ -31,10 +31,14 @@ const style = html`
       --menu-line: rgb(45, 45, 45);
       /* entries */
       --text-inactive: rgb(90, 90, 90);
+      --bg-private: rgb(25, 25, 25);
+      --text-private: rgb(125, 125, 125);
+      --link-private: rgb(180, 88, 175);
       font-family: Helvetica, sans-serif;
 
       background-color: var(--bg-floor);
       display: block;
+      box-sizing: content-box;
       height: 100vh;
       overflow: auto;
       color: var(--text);

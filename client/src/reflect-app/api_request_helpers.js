@@ -1,7 +1,9 @@
 
-export const get_api_req = async (api_url) => {
+export const api_req_get = async (api_url, header) => {
   try {
-    const response = await fetch(api_url);
+    const response = await fetch(api_url, {
+      headers: header
+    });
     if (!response.ok) {
       throw new Error('HTTP error, status = ' + response.status);
     }

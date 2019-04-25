@@ -12,15 +12,26 @@ md.renderer.rules.emoji = (token, idx) => {
 const style = html`
   <style>
     :host {
+      display: block;
+      box-sizing: content-box;
+      padding: 5px 15px 5px 15px;
+    }
+    :host(.private) {
+      background-color: var(--bg-private);
+      color: var(--text-private);
+    }
+    :host(.private) a {
+      color: var(--link-private);
     }
     .listentry-header {
-      font-size: 0.8em;
+      /*font-size: 0.8em;*/
       color: var(--text-inactive);
     }
     .listentry-body {
-      margin: 15px 15px 15px 15px;
-      padding-left: 50px;
-      padding-right: 50px;
+      /*overflow: hidden;*/
+      box-sizing: border-box;
+      margin: 0 15px 5px 15px;
+      padding: 0 50px 5px 50px;
       border-left: 1px solid var(--text-inactive);
       /*font-size: 18px;*/
       line-height: 1.5em;
@@ -28,6 +39,10 @@ const style = html`
     .emoji {
       height: 1.5em;
       vertical-align: middle;
+    }
+    .private-icon {
+      vertical-align: middle;
+      /*float: right;*/
     }
     a {
       color: var(--link-text);
@@ -50,10 +65,16 @@ class ListEntry extends HTMLElement {
     this.state_update();
   }
   state_update() {
+    if (!this.entry.public) {
+      this.shadowRoot.host.classList.add('private');
+    }
     this.update();
   }
   update() {
+    //<div >
+    //</div>
     render(html`${style}
+      ${ this.entry.public ? html`` : html`<img class="private-icon" src="layout/icons/private_32.png">` }
       <small class="listentry-header">${this.entry.timestamp}
         <a href="#entry?id=${this.entry.id}">#entry?id=${this.entry.id}</a>
       </small>

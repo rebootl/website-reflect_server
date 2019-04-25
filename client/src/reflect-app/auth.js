@@ -68,8 +68,12 @@ export default {
   },
 
   get_auth_header() {
-    return {
-      'Authorization':  'Bearer ' + localStorage.getItem('access_token')
+    if (global_state.user.logged_in) {
+      return {
+        'Authorization':  'Bearer ' + localStorage.getItem('access_token')
+      }
+    } else {
+      return {}
     }
   }
 

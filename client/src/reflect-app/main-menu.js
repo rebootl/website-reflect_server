@@ -2,7 +2,7 @@ import { html, render } from 'lit-html';
 import { repeat } from 'lit-html/directives/repeat';
 import { topics_url } from './urls.js';
 import { Router } from './router.js';
-import { get_api_req } from './api_request_helpers.js';
+import { api_req_get } from './api_request_helpers.js';
 import './menuentry-topic.js';
 import './menuentry-subtag.js';
 
@@ -44,7 +44,7 @@ class MainMenu extends HTMLElement {
   }
   // -> evtl. make router_load here !!!
   async router_load(url_state_obj) {
-    this.topics = await get_api_req(topics_url);
+    this.topics = await api_req_get(topics_url, {});
     this.update_menu_by_url(url_state_obj);
   }
   router_update(url_state_obj) {
