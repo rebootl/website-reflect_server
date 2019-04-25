@@ -74,6 +74,7 @@ class ListEntry extends HTMLElement {
     //<div >
     //</div>
     render(html`${style}
+      ${ this.entry.pinned ? html`<img class="private-icon" src="layout/icons/pin_16.png">` : html`` }
       ${ this.entry.public ? html`` : html`<img class="private-icon" src="layout/icons/private_32.png">` }
       <small class="listentry-header">${this.entry.timestamp}
         <a href="#entry?id=${this.entry.id}">#entry?id=${this.entry.id}</a>

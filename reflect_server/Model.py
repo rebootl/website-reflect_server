@@ -31,7 +31,7 @@ class Entry(BaseModel):
     @classmethod
     def get_batch(cls, limit = 10, offset = None):
         return (Entry.select()
-                     .order_by(Entry.mod_timestamp.desc())
+                     .order_by(Entry.pinned.desc(), Entry.timestamp.desc())
                      .limit(limit)
                      .offset(offset)
                      .dicts())
@@ -39,8 +39,8 @@ class Entry(BaseModel):
     @classmethod
     def get_public_batch(cls, limit = 10, offset = None):
         return (Entry.select()
-                     .where(Entry.public == True)
-                     .order_by(Entry.mod_timestamp.desc())
+                     .where(Entry.pinned.desc(), Entry.public == True)
+                     .order_by(Entry.timestamp.desc())
                      .limit(limit)
                      .offset(offset)
                      .dicts())
@@ -50,50 +50,41 @@ class Entry(BaseModel):
         return (Entry.select()
                      .join(TopicToEntry)
                      .where(TopicToEntry.topic == topic_id)
-                     .order_by(Entry.mod_timestamp.desc())
+                     .order_by(Entry.pinned.desc(), Entry.timestamp.desc())
                      .limit(limit)
                      .offset(offset)
                      .dicts())
 
     @classmethod
-    def get_public_batch_by_topic(cls,
-                                  topic_id,
-                                  limit = 10,
-                                  offset = None):
+    def get_public_batch_by_topic(cls, topic_id, limit = 10, offset = None):
         return (Entry.select()
                      .join(TopicToEntry)
                      .where(
                         (TopicToEntry.topic == topic_id) &
                         (Entry.public == True))
-                     .order_by(Entry.mod_timestamp.desc())
+                     .order_by(Entry.pinned.desc(), Entry.timestamp.desc())
                      .limit(limit)
                      .offset(offset)
                      .dicts())
 
     @classmethod
-    def get_batch_by_tags(cls,
-                          tag_ids,
-                          limit = 10,
-                          offset = None):
+    def get_batch_by_tags(cls, tag_ids, limit = 10, offset = None):
         return (Entry.select()
                      .join(TagToEntry)
                      .where(TagToEntry.tag << tag_ids)
-                     .order_by(Entry.mod_timestamp.desc())
+                     .order_by(Entry.pinned.desc(), Entry.timestamp.desc())
                      .limit(limit)
                      .offset(offset)
                      .dicts())
 
     @classmethod
-    def get_public_batch_by_tags(cls,
-                                 tag_ids,
-                                 limit = 10,
-                                 offset = None):
+    def get_public_batch_by_tags(cls, tag_ids, limit = 10, offset = None):
         return (Entry.select()
                      .join(TagToEntry)
                      .where(
                         (TagToEntry.tag << tag_ids) &
                         (Entry.public == True))
-                     .order_by(Entry.mod_timestamp.desc())
+                     .order_by(Entry.pinned.desc(), Entry.mod_timestamp.desc())
                      .limit(limit)
                      .offset(offset)
                      .dicts())
