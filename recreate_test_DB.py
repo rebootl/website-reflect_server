@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 #
 # script to recreate test-db
 #
@@ -12,4 +12,6 @@ if os.path.isfile(Model.database.database):
     sys.exit()
 
 Model.create_tables()
-Model.create_testdata()
+#Model.create_testdata()
+for d in Model.testdata_map:
+    Model.import_data(d[0], d[1])

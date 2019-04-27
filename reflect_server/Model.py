@@ -1,4 +1,5 @@
 import datetime
+import json
 
 from peewee import Model, SqliteDatabase
 from peewee import (TextField, CharField, BooleanField, DateTimeField,
@@ -26,7 +27,7 @@ class Entry(BaseModel):
     content = TextField()
     author = CharField()
     pinned = BooleanField(default = False)
-    public = BooleanField(default = True)
+    private = BooleanField(default = False)
 
     @classmethod
     def get_batch(cls, limit = 10, offset = None):
@@ -113,6 +114,21 @@ def create_tables():
 # and execute the following:
 # >>> from app import *
 # >>> create_tables()
+
+# testdata json exports
+testdata_map = [
+    [ Entry, 'db-testdata/entry.json' ],
+    [ Topic, 'db-testdata/topic.json' ],
+    [ Tag, 'db-testdata/tag.json' ],
+    [ TopicToEntry, 'db-testdata/topictoentry.json' ],
+    [ TagToEntry, 'db-testdata/tagtoentry.json' ]
+]
+
+def import_data(table, file):
+    with open(file, 'r') as f:
+        data = json.load(f)
+    for d in data:
+        table.create(**d)
 
 ### create some test data
 def create_testdata():
