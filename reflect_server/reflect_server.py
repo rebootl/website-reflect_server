@@ -60,11 +60,11 @@ def get_all_entries(topic_ids, subtag_ids):
     print("PRIVATE & PUBLIC")
     # get corresponding entries from db
     if topic_ids == [] and subtag_ids == []:
-        return Entry.get_batch()
+        return Entry.get_comb_batch()
     elif len(topic_ids) == 1 and subtag_ids == []:
-        return Entry.get_batch_by_topic(topic_ids[0])
+        return Entry.get_comb_batch_by_topic(topic_ids[0])
     elif len(topic_ids) == 1 and len(subtag_ids) > 0:
-        return Entry.get_batch_by_tags(subtag_ids)
+        return Entry.get_comb_batch_by_tags(subtag_ids)
     else:
         return []
 

@@ -30,27 +30,17 @@ class Entry(BaseModel):
     private = BooleanField(default = False)
 
     @classmethod
-    def get_batch(cls, limit = 10, offset = None):
+    def get_public_batch(cls, limit = 10, offset = None):
         return (Entry.select()
+                     .where(Entry.private == False)
                      .order_by(Entry.pinned.desc(), Entry.timestamp.desc())
                      .limit(limit)
                      .offset(offset)
                      .dicts())
 
     @classmethod
-    def get_public_batch(cls, limit = 10, offset = None):
+    def get_comb_batch(cls, limit = 10, offset = None):
         return (Entry.select()
-                     .where(Entry.pinned.desc(), Entry.public == True)
-                     .order_by(Entry.timestamp.desc())
-                     .limit(limit)
-                     .offset(offset)
-                     .dicts())
-
-    @classmethod
-    def get_batch_by_topic(cls, topic_id, limit = 10, offset = None):
-        return (Entry.select()
-                     .join(TopicToEntry)
-                     .where(TopicToEntry.topic == topic_id)
                      .order_by(Entry.pinned.desc(), Entry.timestamp.desc())
                      .limit(limit)
                      .offset(offset)
@@ -62,17 +52,17 @@ class Entry(BaseModel):
                      .join(TopicToEntry)
                      .where(
                         (TopicToEntry.topic == topic_id) &
-                        (Entry.public == True))
+                        (Entry.private == False))
                      .order_by(Entry.pinned.desc(), Entry.timestamp.desc())
                      .limit(limit)
                      .offset(offset)
                      .dicts())
 
     @classmethod
-    def get_batch_by_tags(cls, tag_ids, limit = 10, offset = None):
+    def get_comb_batch_by_topic(cls, topic_id, limit = 10, offset = None):
         return (Entry.select()
-                     .join(TagToEntry)
-                     .where(TagToEntry.tag << tag_ids)
+                     .join(TopicToEntry)
+                     .where(TopicToEntry.topic == topic_id)
                      .order_by(Entry.pinned.desc(), Entry.timestamp.desc())
                      .limit(limit)
                      .offset(offset)
@@ -84,8 +74,18 @@ class Entry(BaseModel):
                      .join(TagToEntry)
                      .where(
                         (TagToEntry.tag << tag_ids) &
-                        (Entry.public == True))
+                        (Entry.private == False))
                      .order_by(Entry.pinned.desc(), Entry.mod_timestamp.desc())
+                     .limit(limit)
+                     .offset(offset)
+                     .dicts())
+
+    @classmethod
+    def get_comb_batch_by_tags(cls, tag_ids, limit = 10, offset = None):
+        return (Entry.select()
+                     .join(TagToEntry)
+                     .where(TagToEntry.tag << tag_ids)
+                     .order_by(Entry.pinned.desc(), Entry.timestamp.desc())
                      .limit(limit)
                      .offset(offset)
                      .dicts())
@@ -130,7 +130,7 @@ def import_data(table, file):
     for d in data:
         table.create(**d)
 
-### create some test data
+### create some test data, DEPRECATED, use import_data above
 def create_testdata():
     top1 = Topic.create(ref="astro", label="Astro")
     top2 = Topic.create(ref="chess", label="Chess")

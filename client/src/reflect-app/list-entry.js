@@ -65,7 +65,7 @@ class ListEntry extends HTMLElement {
     this.state_update();
   }
   state_update() {
-    if (!this.entry.public) {
+    if (this.entry.private) {
       this.shadowRoot.host.classList.add('private');
     }
     this.update();
@@ -75,7 +75,7 @@ class ListEntry extends HTMLElement {
     //</div>
     render(html`${style}
       ${ this.entry.pinned ? html`<img class="private-icon" src="layout/icons/pin_16.png">` : html`` }
-      ${ this.entry.public ? html`` : html`<img class="private-icon" src="layout/icons/private_32.png">` }
+      ${ this.entry.private ? html`<img class="private-icon" src="layout/icons/private_32.png">` : html`` }
       <small class="listentry-header">${this.entry.timestamp}
         <a href="#entry?id=${this.entry.id}">#entry?id=${this.entry.id}</a>
       </small>
