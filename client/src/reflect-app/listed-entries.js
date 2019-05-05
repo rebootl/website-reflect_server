@@ -2,8 +2,10 @@ import { html, render } from 'lit-html';
 import { repeat } from 'lit-html/directives/repeat';
 import { entries_url } from './urls.js';
 import { api_req_get } from './api_request_helpers.js';
+import { global_state } from './global_state.js';
 import auth from './auth.js';
 import './list-entry.js';
+import './create-entry.js';
 
 const style = html`
   <style>
@@ -43,7 +45,9 @@ class ListedEntries extends HTMLElement {
   update() {
     //console.log(this.entries_obj.entries);
     render(html`${style}
-      <ul id="entries-list">${repeat(this.entries_obj.entries, entry => entry.id, entry => html`
+      ${ global_state.user.logged_in ? html`<create-entry></create-entry>` : html`` }
+      <ul id="entries-list">
+        ${repeat(this.entries_obj.entries, entry => entry.id, entry => html`
         <li><list-entry .entry=${entry}></list-entry></li>`)}
       </ul>`, this.shadowRoot);
   }
