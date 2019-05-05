@@ -25,9 +25,13 @@ class TextInput extends HTMLElement {
   get value() {
     return this.shadowRoot.querySelector('input').value;
   }
+  get size() {
+    if (!this.getAttribute('size')) return 10;
+    else return this.getAttribute('size');
+  }
   update() {
     render(html`${style}
-      <input id="${this.getAttribute('id')}" type="text" size="10"
+      <input id="${this.getAttribute('id')}" type="text" size="${this.size}"
              placeholder="${this.getAttribute('placeholder')}">`
       , this.shadowRoot);
   }
