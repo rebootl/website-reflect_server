@@ -10,6 +10,7 @@ import { myrouter } from './router.js';
 const style = html`
   <style>
     :host {
+      box-sizing: border-box;
       background-color: var(--bg-front);
       border: 1px solid var(--border-back);
       padding: 0 25px 20px 25px;

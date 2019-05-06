@@ -5,7 +5,7 @@ const style = html`
   <style>
     :host {
       display: block;
-      box-sizing: content-box;
+      box-sizing: border-box;
       padding: 5px 15px 25px 25px;
       border-bottom: 1px solid var(--border-back);
     }
@@ -35,7 +35,7 @@ class CreateEntry extends HTMLElement {
   inputchange() {
     console.log("inputchaaaaaange :D");
     // -> debounce!!
-    
+
   }
   update() {
     //<div >

@@ -4,7 +4,7 @@ const style = html`
   <style>
     :host {
       display: block;
-      box-sizing: content-box;
+      box-sizing: border-box;
       height: 60px;
       line-height: 60px;
       padding-left: 20px;

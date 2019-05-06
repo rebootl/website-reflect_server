@@ -11,7 +11,7 @@ const style = html`
   <style>
     :host {
       display: block;
-      box-sizing: content-box;
+      box-sizing: border-box;
     }
     #entries-list {
       list-style: none;

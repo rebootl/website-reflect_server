@@ -3,9 +3,9 @@ import { html, render } from 'lit-html';
 const style = html`
   <style>
     :host {
-      background-color: var(--bg-front);
       display: block;
-      box-sizing: content-box;
+      box-sizing: border-box;
+      background-color: var(--bg-front);
     }
   </style>
 `;

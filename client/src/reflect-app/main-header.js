@@ -5,9 +5,9 @@ import './user-menu.js';
 const style = html`
   <style>
     :host {
-      background-color: var(--bg-header);
       display: block;
-      box-sizing: content-box;
+      box-sizing: border-box;
+      background-color: var(--bg-header);
       height: 48px;
       border-bottom: 1px solid var(--header-bottom-line);
     }

@@ -3,9 +3,9 @@ import { html, render } from 'lit-html';
 const style = html`
   <style>
     :host {
-      background-color: rgba(0,0,0,0);
-      box-sizing: content-box;
       display: flex;
+      box-sizing: border-box;
+      background-color: rgba(0,0,0,0);
       justify-content: center;
       align-items: center;
     }

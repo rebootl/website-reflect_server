@@ -9,8 +9,9 @@ import './menuentry-subtag.js';
 const style = html`
   <style>
     :host {
-      background-color: var(--bg-menu);
       display: block;
+      box-sizing: border-box;
+      background-color: var(--bg-menu);
       /* stub height */
       min-height: 100px;
     }

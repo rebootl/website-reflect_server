@@ -4,7 +4,7 @@ const style = html`
   <style>
     :host {
       display: block;
-      box-sizing: content-box;
+      box-sizing: border-box;
     }
     input {
       background-color: var(--bg-back);

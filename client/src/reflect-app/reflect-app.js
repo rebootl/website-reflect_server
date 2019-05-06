@@ -36,9 +36,9 @@ const style = html`
       --link-private: rgb(180, 88, 175);
       font-family: Helvetica, sans-serif;
 
-      background-color: var(--bg-floor);
       display: block;
-      box-sizing: content-box;
+      box-sizing: border-box;
+      background-color: var(--bg-floor);
       height: 100vh;
       overflow: auto;
       color: var(--text);

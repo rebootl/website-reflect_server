@@ -6,6 +6,8 @@ import './user-dropdown-menu.js';
 const style = html`
   <style>
     :host {
+      display: block;
+      box-sizing: border-box;
       height: 100%;
       /*width: 65px;*/
       overflow: visible;

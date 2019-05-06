@@ -5,9 +5,9 @@ import './listed-entries.js';
 const style = html`
   <style>
     :host {
-      background-color: var(--bg-front);
       display: block;
       box-sizing: content-box;
+      background-color: var(--bg-front);
       padding: 20px 0 15px 0;
     }
   </style>
