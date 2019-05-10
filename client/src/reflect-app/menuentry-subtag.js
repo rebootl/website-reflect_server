@@ -7,20 +7,21 @@ const style = html`
       box-sizing: border-box;
       /*height: 30px; --> 25px maybe
       line-height: 30px;*/
-      padding: 10px 7px 10px 7px;
-      border: 1px solid var(--menu-line);
-      border-radius: 9px;
+      padding: 11px 9px 11px 9px;
+      border: 2px solid var(--on-surface-line);
+      border-radius: 12px;
       margin: 7px 5px 7px 5px;
-      color: var(--text-menu-inactive);
+      color: var(--light-text-med-emph);
+      font-size: 17px;
     }
     :host(:hover) {
       cursor: pointer;
-      background-color: var(--bg-menu-hover);
+      color: var(--light-text-hig-emph);
+      background-color: rgba(255, 255, 255, 0.04);
     }
     :host(.active) {
-      background-color: var(--bg-menu-active);
-      color: var(--text-menu);
-      font-weight: normal;
+      color: var(--light-text-hig-emph);
+      background-color: rgba(255, 255, 255, 0.08);
     }
   </style>
 `;

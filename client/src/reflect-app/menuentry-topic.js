@@ -8,18 +8,23 @@ const style = html`
       height: 60px;
       line-height: 60px;
       padding-left: 20px;
-      color: var(--text-menu-inactive);
-      font-size: 18px;
+      margin: 0 5px 5px 5px;
+      border-radius: 3px;
+      /*color: var(--text-menu-inactive);*/
+      /*background-color: var(--surface);*/
+      color: var(--light-text-med-emph);
+      font-size: 20px;
       font-weight: lighter;
     }
     :host(:hover) {
       cursor: pointer;
-      background-color: var(--bg-menu-hover);
+      color: var(--light-text-hig-emph);
+      background-color: rgba(255, 255, 255, 0.04);
     }
     :host(.active) {
-      color: var(--text-menu);
-      background-color: var(--bg-menu-active);
+      color: var(--light-text-hig-emph);
       font-weight: normal;
+      background-color: rgba(255, 255, 255, 0.08);
     }
   </style>
 `;

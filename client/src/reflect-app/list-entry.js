@@ -15,24 +15,25 @@ const style = html`
       display: block;
       box-sizing: border-box;
       padding: 5px 15px 5px 15px;
+      color: var(--light-text-med-emph);
     }
     :host(.private) {
-      background-color: var(--bg-private);
-      color: var(--text-private);
+      /*background-color: var(--bg-private);
+      color: var(--text-private);*/
     }
     :host(.private) a {
-      color: var(--link-private);
+      color: var(--secondary);
     }
     .listentry-header {
       /*font-size: 0.8em;*/
-      color: var(--text-inactive);
+      color: var(--light-text-disabled);
     }
     .listentry-body {
       /*overflow: hidden;*/
       box-sizing: border-box;
       margin: 0 15px 5px 15px;
       padding: 0 50px 5px 50px;
-      border-left: 1px solid var(--text-inactive);
+      border-left: 1px solid var(--on-background-border);
       /*font-size: 18px;*/
       line-height: 1.5em;
     }
@@ -45,7 +46,7 @@ const style = html`
       /*float: right;*/
     }
     a {
-      color: var(--link-text);
+      color: var(--primary);
     }
   </style>
 `;

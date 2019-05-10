@@ -11,6 +11,27 @@ const style = html`
     :host {
       /* "theme" colors, fonts, etc.
          -> evtl. move to base.css later    */
+
+      /* material dark theme color scheme */
+      --primary: #9cdede;
+      --primary-variant: #287b7b;
+      --secondary: #c47be0;
+      --background: #121212;
+      --surface: #121212;
+      --error: #cf6679;
+      --on-primary: #000;
+      --on-secondary: #000;
+      --on-background: #fff;
+      --on-surface: #fff;
+      --on-error: #000;
+
+      --light-text-hig-emph: rgba(255, 255, 255, 0.87);
+      --light-text-med-emph: rgba(255, 255, 255, 0.6);
+      --light-text-disabled: rgba(255, 255, 255, 0.38);
+
+      --on-background-border: #222;
+      --on-surface-line: #333;
+
       /* header */
       --bg-header: rgb(0, 0, 0);
       --header-bottom-line: rgb(20, 20, 20);
@@ -31,20 +52,20 @@ const style = html`
       --menu-line: rgb(45, 45, 45);
       /* entries */
       --text-inactive: rgb(90, 90, 90);
-      --bg-private: rgb(25, 25, 25);
+      --bg-private: rgb(35, 35, 35);
       --text-private: rgb(125, 125, 125);
-      --link-private: rgb(180, 88, 175);
+      --link-private: rgb(196, 123, 224);
       font-family: Helvetica, sans-serif;
 
       display: block;
       box-sizing: border-box;
-      background-color: var(--bg-floor);
+      background-color: var(--background);
       height: 100vh;
       overflow: auto;
-      color: var(--text);
+      color: var(--on-background);
     }
     a {
-      color: var(--link-text);
+      color: var(--primary);
     }
     #wrapper-container {
       display: grid;
@@ -53,6 +74,8 @@ const style = html`
         "main-menu"
         "add-box"
         "main-content";
+      margin: 10px;
+      grid-gap: 10px;
     }
     main-menu {
       grid-area: main-menu;
@@ -61,14 +84,14 @@ const style = html`
     #add-box {
       grid-area: add-box;
       height: 50px;
-      border: 1px solid blue;
+      border: 1px dashed #333;
     }
     main-content {
       grid-area: main-content;
     }
-    @media all and (min-width: 650px) {
+    @media all and (min-width: 680px) {
       #wrapper-container {
-        grid-template-columns: 200px auto;
+        grid-template-columns: 230px auto;
         grid-template-rows: auto auto 1fr;
         grid-template-areas:
           "main-menu  main-content"
@@ -81,13 +104,13 @@ const style = html`
     }
     @media all and (min-width: 870px) {
       #wrapper-container {
-        grid-gap: 10px;
+        /*grid-gap: 10px;*/
       }
     }
-    @media all and (min-width: 1082px) {
+    @media all and (min-width: 1142px) {
       /* 1070px + 12px scrollbar */
       #wrapper-container {
-        grid-template-columns: 200px auto 200px;
+        grid-template-columns: 230px auto 230px;
         grid-template-rows: auto 1fr;
         grid-template-areas:
           "main-menu  main-content  add-box"

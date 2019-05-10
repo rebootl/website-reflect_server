@@ -11,21 +11,32 @@ const style = html`
     :host {
       display: block;
       box-sizing: border-box;
-      background-color: var(--bg-menu);
+      background-color: var(--surface);
+      color: var(--light-text-hig-emph);
       /* stub height */
       min-height: 100px;
+      border-radius: 10px;
+      /*margin-top: 10px;
+      margin-left: 10px;*/
+      overflow: hidden;
+      /*border: 1px dashed #333;*/
+    }
+    .elevation-01dp {
+      width: 100%;
+      height: 100%;
+      background-color: rgb(255, 255, 255, 0.05);
+      padding-top: 5px;
     }
     ul {
+      margin: 0;
       padding-left: 0;
       list-style: none;
     }
     #subtags {
     }
     #subtags ul {
-      border-top: 1px solid var(--menu-line);
-      padding-top: 16px;
-      padding-left: 10px;
-      padding-right: 10px;
+      border-top: 1px solid var(--on-surface-line);
+      padding: 5px;
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
@@ -146,28 +157,30 @@ class MainMenu extends HTMLElement {
     // -> update url ------------------------------------------/
 
     render(html`${style}
-      <nav id="topics">
-        <ul>${this.topics.map(topic => html`
-          <li>
-            <menuentry-topic id="topic-${topic.id}"
-                             class="${ topic.active ? 'active' : ''}"
-                             @click="${()=>this.toggle_topic(topic)}">
-              ${topic.label}
-            </menuentry-topic>
-          </li>`)}
-        </ul>
-      </nav>
-      <nav id="subtags">
-        <ul>${repeat(subtags_to_render, subtag => subtag.id, subtag => html`
-          <li>
-            <menuentry-subtag id="subtag-${subtag.id}"
-                              class="${ subtag.active ? 'active' : ''}"
-                              @click=${() => this.toggle_subtag(subtag)}>
-              ${subtag.label}
-            </menuentry-subtag>
-          </li>`)}
-        </ul>
-      </nav>`,
+      <div class="elevation-01dp">
+        <nav id="topics">
+          <ul>${this.topics.map(topic => html`
+            <li>
+              <menuentry-topic id="topic-${topic.id}"
+                               class="${ topic.active ? 'active' : ''}"
+                               @click="${()=>this.toggle_topic(topic)}">
+                ${topic.label}
+              </menuentry-topic>
+            </li>`)}
+          </ul>
+        </nav>
+        <nav id="subtags">
+          <ul>${repeat(subtags_to_render, subtag => subtag.id, subtag => html`
+            <li>
+              <menuentry-subtag id="subtag-${subtag.id}"
+                                class="${ subtag.active ? 'active' : ''}"
+                                @click=${() => this.toggle_subtag(subtag)}>
+                ${subtag.label}
+              </menuentry-subtag>
+            </li>`)}
+          </ul>
+        </nav>
+      <div>`,
       this.shadowRoot);
   }
   //${subtags_to_render.length > 0 ? html`
