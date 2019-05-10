@@ -1,4 +1,5 @@
 import re
+import urllib.request
 
 def create_ref(s):
     '''create a ref from a string
@@ -16,3 +17,8 @@ def get_active_topic_tags(sel_data):
         for subtag in topic["subtags"]:
             if subtag["active"]: subtags.append(subtag)
     return topics, subtags
+
+def fetch_url(url):
+    with urllib.request.urlopen(url) as response:
+        print(response)
+        #html = response.read()

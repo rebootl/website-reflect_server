@@ -248,6 +248,11 @@ def api_subtag_put(id):
     else:
         return jsonify({ "id": id })
 
+@app.route('/api/url_info/<url>')
+@jwt_required
+def api_url_info():
+    pass
+
 ### partially protected routes
 
 @app.route('/api/entries')
