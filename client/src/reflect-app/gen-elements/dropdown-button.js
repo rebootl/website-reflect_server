@@ -5,7 +5,7 @@ const style = html`
     :host {
       display: flex;
       box-sizing: border-box;
-      background-color: rgba(0,0,0,0);
+      background-color: rgba(0, 0, 0, 0);
       justify-content: center;
       align-items: center;
     }

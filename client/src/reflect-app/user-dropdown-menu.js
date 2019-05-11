@@ -10,25 +10,35 @@ import { myrouter } from './router.js';
 const style = html`
   <style>
     :host {
+      display: block;
       box-sizing: border-box;
-      background-color: var(--bg-front);
-      border: 1px solid var(--border-back);
-      padding: 0 25px 20px 25px;
+      background-color: var(--surface);
+      /*border: 1px solid var(--border-back);*/
+      border-radius: 10px;
       position: relative;
+      overflow: hidden;
+      color: var(--light-text-hig-emph);
     }
-    close-button {
+    .overlay {
+      background-color: rgba(255, 255, 255, 0.16);
+      padding: 20px 25px 20px 25px;
+    }
+    /*close-button {
       position: absolute;
       right: 20px;
       top: 12px;
+    }*/
+    .inputfield {
+      margin-bottom: 15px;
     }
     #buttonbox {
       margin-top: 5px;
       display: flex;
       justify-content: center;
     }
-    #logout-button {
+    /*#logout-button {
       margin-top: 15px;
-    }
+    }*/
   </style>
 `;
 
@@ -85,22 +95,26 @@ class UserDropdownMenu extends HTMLElement {
                                    @click=${()=>this.logout()}
                                    label="Logout"></labelled-button>`;
     } else {
-      return html`<h3>Login:</h3>
-      <close-button @click=${()=>this.close()}></close-button>
+      return html`
       <form>
-        <text-input id="username"
-                    placeholder="Username"></text-input><br>
-        <password-input id="password"
-                        placeholder="Password"></password-input><br>
+        <text-input id="username" class="inputfield"
+                    placeholder="Username"></text-input>
+        <password-input id="password" class="inputfield"
+                        placeholder="Password"></password-input>
         <div id="buttonbox">
-          <labelled-button @click=${()=>this.submit()} label="Login"></labelled-button>
+          <labelled-button @click=${()=>this.submit()}
+                           label="Login"></labelled-button>
         </div>
       </form>`;
     }
   }
+  /*<h3>Login:</h3>
+  <close-button @click=${()=>this.close()}></close-button>*/
   update() {
     render(html`${style}
-      ${this.get_login_content()}
+      <div class="overlay">
+        ${this.get_login_content()}
+      </div>
       `, this.shadowRoot);
   }
 }

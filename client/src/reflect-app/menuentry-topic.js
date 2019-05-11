@@ -13,7 +13,7 @@ const style = html`
       /*color: var(--text-menu-inactive);*/
       /*background-color: var(--surface);*/
       color: var(--light-text-med-emph);
-      font-size: 20px;
+      font-size: 18px;
       font-weight: lighter;
     }
     :host(:hover) {

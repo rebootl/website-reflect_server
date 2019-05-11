@@ -7,11 +7,14 @@ const style = html`
       box-sizing: border-box;
     }
     input {
-      background-color: var(--bg-back);
-      border: 1px solid var(--border-back);
-      padding-left: 10px;
-      height: 2em;
-      color: var(--text);
+      /*background-color: var(--surface);*/
+      background-color: rgba(0, 0, 0, 0.3);
+      border: 2px solid rgba(0, 0, 0, 0.1);
+      border-radius: 15px;
+      padding: 10px;
+      line-height: 1.6em;
+      font-size: 16px;
+      color: var(--light-text-med-emph);
     }
   </style>
 `;

@@ -12,7 +12,7 @@ const style = html`
       border-radius: 12px;
       margin: 7px 5px 7px 5px;
       color: var(--light-text-med-emph);
-      font-size: 17px;
+      font-size: 16px;
     }
     :host(:hover) {
       cursor: pointer;

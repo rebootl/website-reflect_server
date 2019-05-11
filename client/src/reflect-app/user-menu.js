@@ -16,7 +16,8 @@ const style = html`
     user-dropdown-menu {
       /*float: right;*/
       position: absolute;
-      right: 0;
+      right: 10px;
+      top: 57px;
       display: none;
     }
     .show_menu {

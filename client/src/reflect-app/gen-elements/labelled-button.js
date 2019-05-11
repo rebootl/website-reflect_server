@@ -7,11 +7,13 @@ const style = html`
       box-sizing: border-box;
     }
     button {
-      background-color: var(--bg-back);
-      color: var(--text);
-      border: 1px solid var(--border-back);
+      background-color: rgba(0, 0, 0, 0.4);
+      color: var(--light-text-hig-emph);
+      border: 2px solid rgba(0, 0, 0, 0.1); /*var(--on-surface-line);*/
+      border-radius: 10px;
       padding: 5px 15px 5px 15px;
       font-weight: bold;
+      font-size: 16px;
       cursor: pointer;
     }
   </style>
