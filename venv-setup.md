@@ -11,6 +11,16 @@ Before you work on your project, activate the corresponding environment:
 
 ## Install Flask
 
-Within the activated environment, use the following command to install Flask:
+Within the activated environment, use the following command to install stuff:
 
-  $ pip install Flask
+  $ pip install <package>
+
+## Dependencies
+
+Use deps file:
+
+ $ pip install -r deps.txt
+
+Create deps file:
+
+ $ pip freeze > deps.txt
