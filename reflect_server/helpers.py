@@ -1,5 +1,6 @@
 import re
 import urllib.request
+from bs4 import BeautifulSoup
 
 def create_ref(s):
     '''create a ref from a string
@@ -18,7 +19,43 @@ def get_active_topic_tags(sel_data):
             if subtag["active"]: subtags.append(subtag)
     return topics, subtags
 
-def fetch_url(url):
-    with urllib.request.urlopen(url) as response:
-        print(response)
-        #html = response.read()
+def get_url_info(url):
+    # return objs.
+    # r = { 'success': false,
+    #       'err_msg': 'code/msg' }
+    # r = { 'success': true,
+    #       'cont_type': 'text/html',
+    #       'title': 'blabla website' }
+    req = urllib.request.Request(url, headers = {'User-Agent' : "Magic Browser"})
+    try:
+        response = urllib.request.urlopen(req)
+    except urllib.error.HTTPError as e:
+        print(e.code)
+        return { 'success': False, 'err_msg': e.code }
+    except urllib.error.URLError as e:
+        print(e.reason)
+        return { 'success': False, 'err_msg': str(e.reason) }
+    #except:
+    #    print("error :(")
+    #    return { 'success': False, 'err_msg': "unknown error..." }
+    else:
+        # get link type
+        headers = dict((k, v) for k, v in response.getheaders())
+        # (debug print)
+        #print(headers)
+        if 'text/html' in headers['Content-Type']:
+            # get the page title
+            soup = BeautifulSoup(response.read(), 'html.parser')
+            link_title = soup.title.string
+            print(link_title)
+            return { 'success': True,
+                'cont_type': 'text/html',
+                'title': link_title }
+        elif headers['Content-Type'].startswith('image'):
+            return { 'success': True,
+                'cont_type': headers['Content-Type'],
+                'title': "" }
+        else:
+            return { 'success': True,
+                'cont_type': headers['Content-Type'],
+                'title': "" }

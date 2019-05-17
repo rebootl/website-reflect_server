@@ -1,17 +1,19 @@
 from flask import Flask, jsonify, request
 from flask_cors import cross_origin, CORS
 #from playhouse.shortcuts import model_to_dict
-from flask_jwt_extended import JWTManager, create_access_token, \
-    jwt_required, get_jwt_identity, jwt_optional
+from flask_jwt_extended import (JWTManager, create_access_token,
+    jwt_required, get_jwt_identity, jwt_optional)
 from werkzeug.security import check_password_hash
 from peewee import IntegrityError
 
 import markdown
 import json
+from urllib.parse import unquote
 
-from reflect_server.Model import database, Topic, Tag, Entry, \
-    TopicToEntry, TagToEntry
-from reflect_server.helpers import create_ref, get_active_topic_tags
+from reflect_server.Model import (database, Topic, Tag, Entry,
+    TopicToEntry, TagToEntry)
+from reflect_server.helpers import (create_ref, get_active_topic_tags,
+    get_url_info)
 
 app = Flask(__name__)
 CORS(app)
@@ -248,10 +250,14 @@ def api_subtag_put(id):
     else:
         return jsonify({ "id": id })
 
-@app.route('/api/url_info/<url>')
+@app.route('/api/url_info')
 @jwt_required
 def api_url_info():
-    pass
+    url_enc = request.args.get('url')
+    if not url_enc: return jsonify({'success': False, 'err_msg': "no url provided"})
+    url = unquote(url_enc)
+    url_info = get_url_info(url)
+    return jsonify(url_info)
 
 ### partially protected routes
 
