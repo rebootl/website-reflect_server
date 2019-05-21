@@ -272,6 +272,17 @@ def api_entries():
     topic_ids = request.args.getlist('topic_ids[]')
     subtag_ids = request.args.getlist('subtag_ids[]')
 
+    # verify id params
+    # this gets triggered only by an OPTIONS request D:
+    # no idea what goin on tbh... probably something goin on
+    # w/ the cors module as well *derp*
+    for id in topic_ids + subtag_ids:
+        try:
+            int(id)
+        except ValueError:
+            print("Error: BAD ID VALUE")
+            return jsonify({"msg": "Parameter Error, should be int..."}), 400
+
     curr_user = get_jwt_identity()
     print(curr_user)
     # get public entries
