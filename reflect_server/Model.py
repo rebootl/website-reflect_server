@@ -92,6 +92,7 @@ class Entry(BaseModel):
                      .order_by(Entry.pinned.desc(), Entry.timestamp.desc())
                      .limit(limit)
                      .offset(offset)
+                     .distinct()
                      .dicts())
 
 class TopicToEntry(BaseModel):
