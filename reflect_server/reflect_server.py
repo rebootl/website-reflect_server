@@ -113,6 +113,7 @@ def login_post():
 @jwt_required
 def api_entries_post():
     '''add a new entry'''
+    #return jsonify({"msg": "Not yet implemented :(..."}), 400
     det_type = request.json.get('det_type', None)
     text = request.json.get('text', None)
     author = request.json.get('author', None)
@@ -123,12 +124,12 @@ def api_entries_post():
     if det_type == "note":
         ### -> create note entry here
         # -> process markdown into html (python-markdown)
-        text_html = markdown.markdown(text)
+        #text_html = markdown.markdown(text)
         # -> make rich urls (python-micawber)
         #
         content = {
             "text": text,
-            "text_html": text_html
+            #"text_html": text_html
         }
     elif det_type == "link":
         ### -> create link entry here
