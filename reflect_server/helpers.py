@@ -35,9 +35,9 @@ def get_url_info(url):
     except urllib.error.URLError as e:
         print(e.reason)
         return { 'success': False, 'err_msg': str(e.reason) }
-    #except:
-    #    print("error :(")
-    #    return { 'success': False, 'err_msg': "unknown error..." }
+    except:
+        print("error :(")
+        return { 'success': False, 'err_msg': "unknown error..." }
     else:
         # get link type
         headers = dict((k, v) for k, v in response.getheaders())
@@ -46,16 +46,25 @@ def get_url_info(url):
         if 'text/html' in headers['Content-Type']:
             # get the page title
             soup = BeautifulSoup(response.read(), 'html.parser')
-            link_title = soup.title.string
+            try:
+                link_title = soup.title.string
+            except AttributeError:
+                return { 'success': True,
+                         'cont_type': headers['Content-Type'],
+                         'title': "Error: Parse error..." }
+            except:
+                return { 'success': True,
+                         'cont_type': headers['Content-Type'],
+                         'title': "Error: Unknown parse error..." }
             print(link_title)
             return { 'success': True,
-                'cont_type': 'text/html',
-                'title': link_title }
-        elif headers['Content-Type'].startswith('image'):
-            return { 'success': True,
-                'cont_type': headers['Content-Type'],
-                'title': "" }
+                     'cont_type': 'text/html',
+                     'title': link_title }
+        #elif headers['Content-Type'].startswith('image'):
+        #    return { 'success': True,
+        #             'cont_type': headers['Content-Type'],
+        #             'title': "" }
         else:
             return { 'success': True,
-                'cont_type': headers['Content-Type'],
-                'title': "" }
+                     'cont_type': headers['Content-Type'],
+                     'title': "" }
