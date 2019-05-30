@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 #
-# script to recreate test-db
+# script to create test-db
 #
 import os
 import sys

@@ -1,0 +1,10 @@
+CREATE TABLE IF NOT EXISTS "entry" ("id" INTEGER NOT NULL PRIMARY KEY, "type" VARCHAR(255) NOT NULL, "timestamp" DATETIME NOT NULL, "mod_timestamp" DATETIME NOT NULL, "content" TEXT NOT NULL, "author" VARCHAR(255) NOT NULL, "pinned" INTEGER NOT NULL, "private" INTEGER NOT NULL);
+CREATE TABLE IF NOT EXISTS "topic" ("id" INTEGER NOT NULL PRIMARY KEY, "label" VARCHAR(255) NOT NULL, "description" VARCHAR(255) NOT NULL);
+CREATE TABLE IF NOT EXISTS "tag" ("id" INTEGER NOT NULL PRIMARY KEY, "topic_id" INTEGER NOT NULL, "label" VARCHAR(255) NOT NULL, "description" VARCHAR(255) NOT NULL, FOREIGN KEY ("topic_id") REFERENCES "topic" ("id"));
+CREATE INDEX "tag_topic_id" ON "tag" ("topic_id");
+CREATE TABLE IF NOT EXISTS "tagtoentry" ("id" INTEGER NOT NULL PRIMARY KEY, "tag_id" INTEGER NOT NULL, "entry_id" INTEGER NOT NULL, FOREIGN KEY ("tag_id") REFERENCES "tag" ("id"), FOREIGN KEY ("entry_id") REFERENCES "entry" ("id"));
+CREATE INDEX "tagtoentry_tag_id" ON "tagtoentry" ("tag_id");
+CREATE INDEX "tagtoentry_entry_id" ON "tagtoentry" ("entry_id");
+CREATE TABLE IF NOT EXISTS "topictoentry" ("id" INTEGER NOT NULL PRIMARY KEY, "topic_id" INTEGER NOT NULL, "entry_id" INTEGER NOT NULL, FOREIGN KEY ("topic_id") REFERENCES "topic" ("id"), FOREIGN KEY ("entry_id") REFERENCES "entry" ("id"));
+CREATE INDEX "topictoentry_topic_id" ON "topictoentry" ("topic_id");
+CREATE INDEX "topictoentry_entry_id" ON "topictoentry" ("entry_id");
