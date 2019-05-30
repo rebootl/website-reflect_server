@@ -1,26 +1,26 @@
 import datetime
 import json
 
-from peewee import Model, SqliteDatabase
 from peewee import (TextField, CharField, BooleanField, DateTimeField,
                     ForeignKeyField)
+from playhouse.flask_utils import FlaskDB
 
-database = SqliteDatabase('reflect.db')
+db_wrapper = FlaskDB()
 
-class BaseModel(Model):
-    class Meta:
-        database = database
+#class BaseModel(db_wrapper.Model):
+#    class Meta:
+#        database = database
 
-class Topic(BaseModel):
+class Topic(db_wrapper.Model):
     label = CharField()     # -> not null ?
     description = CharField(default = "")
 
-class Tag(BaseModel):
+class Tag(db_wrapper.Model):
     topic = ForeignKeyField(Topic, backref='tags')
     label = CharField()     # -> not null ? unique ?
     description = CharField(default = "")
 
-class Entry(BaseModel):
+class Entry(db_wrapper.Model):
     type = CharField()
     timestamp = DateTimeField(default = datetime.datetime.now)
     mod_timestamp = DateTimeField(default = datetime.datetime.now)
@@ -95,11 +95,11 @@ class Entry(BaseModel):
                      .distinct()
                      .dicts())
 
-class TopicToEntry(BaseModel):
+class TopicToEntry(db_wrapper.Model):
     topic = ForeignKeyField(Topic)
     entry = ForeignKeyField(Entry)
 
-class TagToEntry(BaseModel):
+class TagToEntry(db_wrapper.Model):
     tag = ForeignKeyField(Tag)
     entry = ForeignKeyField(Entry)
 

@@ -4,45 +4,40 @@ from flask_cors import cross_origin, CORS
 from flask_jwt_extended import (JWTManager, create_access_token,
     jwt_required, get_jwt_identity, jwt_optional)
 from werkzeug.security import check_password_hash
-from peewee import IntegrityError
+from peewee import SqliteDatabase, IntegrityError
 
 import markdown
 import json
 from urllib.parse import unquote
 
-from reflect_server.Model import (database, Topic, Tag, Entry,
-    TopicToEntry, TagToEntry)
-from reflect_server.helpers import (create_ref, get_active_topic_tags,
+from Model import (db_wrapper, Topic,
+    Tag, Entry, TopicToEntry, TagToEntry)
+from helpers import (create_ref, get_active_topic_tags,
     get_url_info)
 
+### initialize app
 app = Flask(__name__)
 CORS(app)
 
-### config
+### load config
+app.config.from_object('config')
 
-entry_types = [ 'note', 'link' ]
+### initialize db
+app.config['DATABASE'] = SqliteDatabase('/appdata/reflect.db')
+db_wrapper.init_app(app)
 
-### users
-
-# -> make a user list here
-app.config['USER'] = 'cem'
-# (pw: 'tutut')
-# -> how did I create this hash ?
-app.config['PW_SEC_HASH'] = 'pbkdf2:sha256:50000$yxnrweL8$db95937f8fc8dc4caebf8e6e2cf650b896105fd7d71fe0d42ac22bd7806297cb'
-
-# Setup the Flask-JWT-Extended extension
-app.config['JWT_SECRET_KEY'] = 'super-secret'  # Change this!
+### initialize jwt
 jwt = JWTManager(app)
 
-### db setup
-
+### before/after
 @app.before_request
 def before_request():
-    database.connect()
+    #database.connect()
+    pass
 
 @app.after_request
 def after_request(response):
-    database.close()
+    #database.close()
     return response
 
 ### helpers
