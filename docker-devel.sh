@@ -11,10 +11,12 @@ case $1 in
   ;;
   stop)
     docker stop myreflectserver-devel
+  ;;
+  clean)
     docker rm myreflectserver-devel
   ;;
   restart)
-    $0 stop && $0 start
+    $0 stop && $0 clean && $0 start
   ;;
   *)
     echo "nothing..."
