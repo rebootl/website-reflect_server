@@ -2,4 +2,5 @@ __pycache__/
 Archive/
 venv*/
 reflect.db*
-client.save
+config-prod.py
+config-prod-db.sh
