@@ -25,6 +25,7 @@ app.config.from_object('config')
 ### initialize db
 app.config['DATABASE'] = SqliteDatabase('/appdata/reflect.db')
 db_wrapper.init_app(app)
+database = db_wrapper.database
 
 ### initialize jwt
 jwt = JWTManager(app)
