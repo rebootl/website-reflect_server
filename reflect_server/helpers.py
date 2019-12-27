@@ -49,13 +49,11 @@ def get_url_info(url):
             try:
                 link_title = soup.title.string
             except AttributeError:
-                return { 'success': True,
-                         'cont_type': headers['Content-Type'],
-                         'title': "Error: Parse error..." }
+                return { 'success': False,
+                         'err_msg': "Error: Parse error..." }
             except:
-                return { 'success': True,
-                         'cont_type': headers['Content-Type'],
-                         'title': "Error: Unknown parse error..." }
+                return { 'success': False,
+                         'err_msg': "Error: Unknown parse error..." }
             print(link_title)
             return { 'success': True,
                      'cont_type': 'text/html',
@@ -65,6 +63,6 @@ def get_url_info(url):
         #             'cont_type': headers['Content-Type'],
         #             'title': "" }
         else:
-            return { 'success': True,
+            return { 'success': False,
                      'cont_type': headers['Content-Type'],
                      'title': "" }
