@@ -1,6 +1,6 @@
-__Info: this server got replaced by a nodejs version:__ [reflectapp](https://github.com/rebootl/reflectapp) (client and server)
+__Info: This server got replaced by a nodejs version:__ [reflectapp](https://github.com/rebootl/reflectapp) (client and server)
 
-__this is kept for reference only__
+__This repository is kept for reference only.__
 
 ---
 
