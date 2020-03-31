@@ -1,3 +1,9 @@
+__Info: this server got replaced by a nodejs version:__ [reflectapp](https://github.com/rebootl/reflectapp) (client and server)
+
+__this is kept for reference only__
+
+---
+
 # reflect
 
 "manage notes, links, images aso. w/ a modern looking webapplication"
